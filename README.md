@@ -21,6 +21,13 @@ npx create-react-app my-app
 타입스크립트로 프로젝트 시작하기
 ```
 npx create-react-app my-app --template typescript
-
 ```
-
+### 3. visual code 로 프로그램 합니다.
+```
+cmd
+code my-app
+```
+### 4. 개발 서버를 시작합니다:
+```
+npm start
+```
