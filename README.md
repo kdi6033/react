@@ -10,11 +10,17 @@ React는 Node.js 환경에서 동작하므로 먼저 Node.js를 설치해야 합
 node -v
 npm -v
 ```
-2. React 프로젝트 생성    
+### 2. React 프로젝트 생성    
 React 프로젝트를 시작하기 위해 Facebook에서 제공하는 create-react-app 도구를 사용할 수 있습니다.    
 터미널이나 명령 프롬프트에서 원하는 디렉토리로 이동합니다.    
 다음 명령어로 새 React 프로젝트를 생성합니다:
 ```
 npx create-react-app my-app
+```
+저는 typescript를 사용합니다. ChatGPT에게 장점을 물어보세요 자세하게 설명해주고 이를 추천 합니다. 여기서는 그 장점의 기술은 생략합니다.
+타입스크립트로 프로젝트 시작하기
+```
+npx create-react-app my-app --template typescript
+
 ```
 
