@@ -43,8 +43,51 @@ npm start
 
 이 React 프로그램은 두 개의 컴포넌트, App과 ShoppingList로 구성됩니다. App 컴포넌트는 화면에 "Shopping List" 제목과 ShoppingList 컴포넌트를 표시합니다. ShoppingList 컴포넌트는 products 배열을 사용하여 리스트를 만들고, 각 항목의 isFruit 값에 따라 색상을 다르게 표시합니다. 과일이면 magenta, 아니면 darkgreen 색상으로 렌더링됩니다.   
 
-### Example Program Name
+App.tsx
 ```
-console.log("Hello, world!");
+import React from 'react';
+import logo from './logo.svg';
+import './App.css';
+import ShoppingList from './ShoppingList';
+
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+      <h1>Shopping List</h1>
+      <ShoppingList />
+      </header>
+    </div>
+  );
+}
+
+export default App;
+```
+ShoppingList.tsx
+```
+import React from 'react';
+
+const products = [
+  { title: 'Cabbage', isFruit: false, id: 1 },
+  { title: 'Garlic', isFruit: false, id: 2 },
+  { title: 'Apple', isFruit: true, id: 3 },
+];
+
+export default function ShoppingList() {
+  const listItems = products.map(product =>
+    <li
+      key={product.id}
+      style={{
+        color: product.isFruit ? 'magenta' : 'darkgreen'
+      }}
+    >
+      {product.title}
+    </li>
+  );
+
+  return (
+    <ul>{listItems}</ul>
+  );
+}
 ```
 
