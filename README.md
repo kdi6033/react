@@ -143,8 +143,45 @@ export default App;
 <a href="https://youtu.be/rGYzcYTOtps">
     <img src="https://github.com/user-attachments/assets/b5d6327c-2e5f-47d5-b65f-15b9eaae36fb" alt="Using Hooks" width="400">
 </a>
-![25-7  React  Updating hooks](https://github.com/user-attachments/assets/b5d6327c-2e5f-47d5-b65f-15b9eaae36fb)
 
 [프로그램소스](https://github.com/kdi6033/react/releases/tag/react-updating-the-screen-v1.0)   
 
 App.tsx   
+```
+import React, { useState } from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+interface MyButtonProps {
+  count: number;
+  onClick: () => void;
+}
+
+function App() {
+  const [count, setCount] = useState<number>(0); // 상태에 타입 명시
+
+  function handleClick() {
+    setCount(count + 1);
+  }
+
+  return (
+    <div className="App">
+      <header className="App-header">
+        <h1>Counters that update together</h1>
+        <MyButton count={count} onClick={handleClick} />
+        <MyButton count={count} onClick={handleClick} />
+      </header>
+    </div>
+  );
+}
+
+function MyButton({ count, onClick }: MyButtonProps) { // props에 타입 지정
+  return (
+    <button onClick={onClick}>
+      Clicked {count} times
+    </button>
+  );
+}
+
+export default App;
+```
