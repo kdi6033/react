@@ -93,3 +93,13 @@ export default function ShoppingList() {
 }
 ```
 
+### [프로젝트] Updating the screen
+이 프로그램은 React로 작성된 간단한 애플리케이션으로, 두 개의 버튼이 각각 독립적으로 클릭 횟수를 카운트합니다. useState Hook을 사용해 각 버튼의 상태를 관리하며, 버튼을 클릭할 때마다 해당 버튼의 카운터가 1씩 증가합니다. 각 버튼은 독립적으로 동작해 서로의 카운터에 영향을 주지 않습니다.
+<a href="https://youtu.be/IHZnE8cBzhs">
+    <img src="https://github.com/user-attachments/assets/3d2b1371-7171-4dcc-8a14-dc06a16065b8" alt="Updating the screen" width="400">
+</a>
+![25-6  React  Updating the screen](https://github.com/user-attachments/assets/3d2b1371-7171-4dcc-8a14-dc06a16065b8)
+
+[프로그램소스](https://github.com/kdi6033/react/releases/tag/react-rendering-lists-v1.0)   
+
+
