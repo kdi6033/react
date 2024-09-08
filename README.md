@@ -100,6 +100,6 @@ export default function ShoppingList() {
     <img src="https://github.com/user-attachments/assets/3d2b1371-7171-4dcc-8a14-dc06a16065b8" alt="Updating the screen" width="400">
 </a>
 
-[프로그램소스](https://github.com/kdi6033/react/releases/tag/react-rendering-lists-v1.0)   
+[프로그램소스](https://github.com/kdi6033/react/releases/tag/react-updating-the-screen-v1.0)   
 
 
