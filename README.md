@@ -2,6 +2,8 @@
 react 프로그램과 이를 Data Science와 AI Science에 응용합니다.    
 [React Learn 공식 사이트](https://react.dev/learn)
 
+[프로젝트 섹션으로 이동](https://github.com/kdi6033/react/edit/main/README.md#25-1)
+
 # react 시작하기    
 ### 1. Node.js 설치    
 React는 Node.js 환경에서 동작하므로 먼저 Node.js를 설치해야 합니다.    
@@ -32,7 +34,7 @@ code my-app
 ```
 npm start
 ```
-#[프로젝트]-버튼,-설명문
+#25-1
 
 ### [프로젝트] 버튼, 설명문, 스타일, 데이터, 그림 만들기
 이 React 프로그램은 세 가지 컴포넌트로 구성된 간단한 웹 애플리케이션입니다. App 컴포넌트는 메인 컴포넌트로, MyButton, AboutPage, Profile 컴포넌트를 렌더링합니다. 
