@@ -32,7 +32,7 @@ code my-app
 ```
 npm start
 ```
-### 25-1
+### 25-2
 ### [프로젝트] 버튼, 설명문, 스타일, 데이터, 그림 만들기
 이 React 프로그램은 세 가지 컴포넌트로 구성된 간단한 웹 애플리케이션입니다. App 컴포넌트는 메인 컴포넌트로, MyButton, AboutPage, Profile 컴포넌트를 렌더링합니다. 
 - MyButton은 단순히 "I'm a button" 텍스트가 있는 버튼을 표시합니다.
@@ -126,11 +126,12 @@ Profile.css
   }
 ```
 
-### 25-2
+### 25-3
 ### [프로젝트] Conditional rendering
 [프로그램소스](https://github.com/kdi6033/react/releases/tag/conditional-rendering-v1.0)    
 이 프로그램은 useState를 사용해 로그인 여부를 상태로 관리하며, 로그인 상태에 따라 다른 UI를 보여주는 조건부 렌더링을 구현했습니다. 사용자가 로그인 버튼을 클릭하면 isLoggedIn 상태가 true로 변경되어 로그인 화면이 나타나고, 로그아웃 버튼을 클릭하면 false로 변경되어 로그아웃 화면이 나타납니다.    
 
+### 25-4
 ### [프로젝트] Rendering lists
 이 React 프로그램은 두 개의 컴포넌트, App과 ShoppingList로 구성됩니다. App 컴포넌트는 화면에 "Shopping List" 제목과 ShoppingList 컴포넌트를 표시합니다. ShoppingList 컴포넌트는 products 배열을 사용하여 리스트를 만들고, 각 항목의 isFruit 값에 따라 색상을 다르게 표시합니다. 과일이면 magenta, 아니면 darkgreen 색상으로 렌더링됩니다.   
 유튜브 보기    
@@ -187,7 +188,7 @@ export default function ShoppingList() {
   );
 }
 ```
-
+### 25-6
 ### [프로젝트] Updating the screen
 이 프로그램은 React로 작성된 간단한 애플리케이션으로, 두 개의 버튼이 각각 독립적으로 클릭 횟수를 카운트합니다. useState Hook을 사용해 각 버튼의 상태를 관리하며, 버튼을 클릭할 때마다 해당 버튼의 카운터가 1씩 증가합니다. 각 버튼은 독립적으로 동작해 서로의 카운터에 영향을 주지 않습니다.    
 
@@ -231,7 +232,7 @@ function MyButton() {
 
 export default App;
 ```
-
+### 25-7
 ### [프로젝트] Using Hooks
 이 React 프로그램은 상태 관리 훅 useState를 사용하여 두 개의 버튼에서 공유되는 카운터를 구현합니다. App 컴포넌트는 count 상태를 관리하며, MyButton 컴포넌트는 버튼을 클릭할 때마다 count 값을 1씩 증가시킵니다. 두 버튼은 동일한 count 값을 공유하여 동시에 업데이트됩니다. TypeScript를 사용해 props와 상태의 타입을 명시했습니다. 
 
