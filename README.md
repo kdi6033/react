@@ -2,8 +2,6 @@
 react 프로그램과 이를 Data Science와 AI Science에 응용합니다.    
 [React Learn 공식 사이트](https://react.dev/learn)
 
-[프로젝트 섹션으로 이동](https://github.com/kdi6033/react#버튼-설명문-스타일-데이터-그림만들기)
-
 # react 시작하기    
 ### 1. Node.js 설치    
 React는 Node.js 환경에서 동작하므로 먼저 Node.js를 설치해야 합니다.    
@@ -35,7 +33,7 @@ code my-app
 npm start
 ```
 ### 25-1
-### 버튼 설명문 스타일 데이터 그림만들기
+### [프로젝트] 버튼, 설명문, 스타일, 데이터, 그림 만들기
 이 React 프로그램은 세 가지 컴포넌트로 구성된 간단한 웹 애플리케이션입니다. App 컴포넌트는 메인 컴포넌트로, MyButton, AboutPage, Profile 컴포넌트를 렌더링합니다. 
 - MyButton은 단순히 "I'm a button" 텍스트가 있는 버튼을 표시합니다.
 - AboutPage는 제목과 함께 간단한 소개 텍스트를 렌더링하고,
@@ -128,6 +126,7 @@ Profile.css
   }
 ```
 
+### 25-2
 ### [프로젝트] Conditional rendering
 [프로그램소스](https://github.com/kdi6033/react/releases/tag/conditional-rendering-v1.0)    
 이 프로그램은 useState를 사용해 로그인 여부를 상태로 관리하며, 로그인 상태에 따라 다른 UI를 보여주는 조건부 렌더링을 구현했습니다. 사용자가 로그인 버튼을 클릭하면 isLoggedIn 상태가 true로 변경되어 로그인 화면이 나타나고, 로그아웃 버튼을 클릭하면 false로 변경되어 로그아웃 화면이 나타납니다.    
