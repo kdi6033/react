@@ -43,8 +43,7 @@ npm start
 </a>
 
 [프로그램소스](https://github.com/kdi6033/react/releases/tag/react-button-avatar-v1.0)   
-<img src="https://github.com/user-attachments/assets/e50f3c9f-3ece-410a-8ca8-88c272f42afd" alt="메뉴" width="400">
-![25-2 menu](https://github.com/user-attachments/assets/e50f3c9f-3ece-410a-8ca8-88c272f42afd)
+<img src="https://github.com/user-attachments/assets/e50f3c9f-3ece-410a-8ca8-88c272f42afd" alt="메뉴" width="300">
 
 App.tsx
 ```
