@@ -137,3 +137,14 @@ function MyButton() {
 export default App;
 ```
 
+### [프로젝트] Using Hooks
+이 React 프로그램은 상태 관리 훅 useState를 사용하여 두 개의 버튼에서 공유되는 카운터를 구현합니다. App 컴포넌트는 count 상태를 관리하며, MyButton 컴포넌트는 버튼을 클릭할 때마다 count 값을 1씩 증가시킵니다. 두 버튼은 동일한 count 값을 공유하여 동시에 업데이트됩니다. TypeScript를 사용해 props와 상태의 타입을 명시했습니다. 
+
+<a href="https://youtu.be/rGYzcYTOtps">
+    <img src="https://github.com/user-attachments/assets/b5d6327c-2e5f-47d5-b65f-15b9eaae36fb" alt="Using Hooks" width="400">
+</a>
+![25-7  React  Updating hooks](https://github.com/user-attachments/assets/b5d6327c-2e5f-47d5-b65f-15b9eaae36fb)
+
+[프로그램소스](https://github.com/kdi6033/react/releases/tag/react-updating-the-screen-v1.0)   
+
+App.tsx   
