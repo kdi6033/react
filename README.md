@@ -144,7 +144,7 @@ export default App;
     <img src="https://github.com/user-attachments/assets/b5d6327c-2e5f-47d5-b65f-15b9eaae36fb" alt="Using Hooks" width="400">
 </a>
 
-[프로그램소스](https://github.com/kdi6033/react/releases/tag/react-updating-the-screen-v1.0)   
+[프로그램소스](https://github.com/kdi6033/react/releases/tag/react-using-hooks-v1.0)   
 
 App.tsx   
 ```
