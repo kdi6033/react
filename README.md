@@ -42,9 +42,88 @@ npm start
     <img src="https://github.com/user-attachments/assets/381c244f-c24c-4ab5-ada0-07c0701e2598" alt="버튼, 설명문, 스타일, 데이터, 그림" width="400">
 </a>
 
-[프로그램소스](https://github.com/kdi6033/react/releases/tag/react-rendering-lists-v1.0)   
+[프로그램소스](https://github.com/kdi6033/react/releases/tag/react-button-avatar-v1.0)   
 
 App.tsx
+```
+import React from 'react';
+import logo from './logo.svg';
+import './App.css';
+import AboutPage from './components/AboutPage'; // Add this line
+import Profile from './components/Profile'; // Add this line
+
+function MyButton() {
+  return (
+    <button>I'm a button</button>
+  );
+}
+
+
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <MyButton />
+        <AboutPage />
+        <Profile />
+      </header>
+    </div>
+  );
+}
+
+export default App;
+```
+AboutPage.tsx
+```
+import React from 'react';
+
+export default function AboutPage() {
+  return (
+    <>
+      <h1>About</h1>
+      <p>Hello there.<br />How do you do?</p>
+    </>
+  );
+}
+
+```
+Profile.tsx
+```
+// src/components/Profile.tsx
+import React from 'react';
+import './Profile.css'; // CSS 파일을 불러오기
+
+
+const user = {
+  name: '김동일',
+  imageUrl: 'https://i2r.link/images/i2r.png',
+  imageSize: 90,
+};
+
+export default function Profile() {
+  return (
+    <>
+      <h1>{user.name}</h1>
+      <img
+        className="avatar"
+        src={user.imageUrl}
+        alt={'Photo of ' + user.name}
+        style={{
+          width: user.imageSize,
+          height: user.imageSize
+        }}
+      />
+    </>
+  );
+}
+```
+Profile.css
+```
+/* In your CSS */
+.avatar {
+    border-radius: 50%;
+  }
+```
 
 ### [프로젝트] Conditional rendering
 [프로그램소스](https://github.com/kdi6033/react/releases/tag/conditional-rendering-v1.0)    
