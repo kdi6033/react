@@ -189,6 +189,41 @@ export default function ShoppingList() {
   );
 }
 ```
+
+### 25-5
+### [프로젝트] Responding to events 
+이 프로그램은 React로 작성된 간단한 웹 애플리케이션입니다. App 컴포넌트는 페이지의 주요 구조를 담당하며, MyButton 컴포넌트를 포함합니다. MyButton 컴포넌트는 "Click me" 버튼을 렌더링하며, 사용자가 버튼을 클릭하면 handleClick 함수가 실행되어 "You clicked me!"라는 알림창이 뜹니다. 이를 통해 사용자 상호작용을 간단하게 구현할 수 있습니다.
+App.tsx   
+```
+import React from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+function MyButton() {
+  function handleClick() {
+    alert('You clicked me!');
+  }
+
+  return (
+    <button onClick={handleClick}>
+      Click me
+    </button>
+  );
+}
+
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <MyButton />
+      </header>
+    </div>
+  );
+}
+
+export default App;
+```
+
 ### 25-6
 ### [프로젝트] Updating the screen
 이 프로그램은 React로 작성된 간단한 애플리케이션으로, 두 개의 버튼이 각각 독립적으로 클릭 횟수를 카운트합니다. useState Hook을 사용해 각 버튼의 상태를 관리하며, 버튼을 클릭할 때마다 해당 버튼의 카운터가 1씩 증가합니다. 각 버튼은 독립적으로 동작해 서로의 카운터에 영향을 주지 않습니다.    
