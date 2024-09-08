@@ -102,4 +102,38 @@ export default function ShoppingList() {
 
 [프로그램소스](https://github.com/kdi6033/react/releases/tag/react-updating-the-screen-v1.0)   
 
+App.tsx   
+```
+import React, { useState } from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <h1>Counters that update separately</h1>
+        <MyButton />
+        <MyButton />
+      </header>
+    </div>
+  );
+}
+
+function MyButton() {
+  const [count, setCount] = useState(0);
+
+  function handleClick() {
+    setCount(count + 1);
+  }
+
+  return (
+    <button onClick={handleClick}>
+      Clicked {count} times
+    </button>
+  );
+}
+
+export default App;
+```
 
