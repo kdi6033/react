@@ -2,7 +2,7 @@
 react 프로그램과 이를 Data Science와 AI Science에 응용합니다.    
 [React Learn 공식 사이트](https://react.dev/learn)
 
-[프로젝트 섹션으로 이동](https://github.com/kdi6033/react/blob/main/README.md#25-1)
+[프로젝트 섹션으로 이동](https://github.com/kdi6033/react#[프로젝트]-버튼,-설명문,-스타일,-데이터,-그림 만들기)
 
 # react 시작하기    
 ### 1. Node.js 설치    
