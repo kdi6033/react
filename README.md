@@ -1,7 +1,7 @@
 # react
 react 프로그램과 이를 Data Science와 AI Science에 응용합니다.    
 [React Learn 공식 사이트](https://react.dev/learn)    
-[React Doc 공식 사이트]([https://react.dev/learn](https://docs.github.com/ko/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#links))
+[React Doc 공식 사이트]([https://react.dev/learn](https://docs.github.com/ko/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#links)
 
 # react 시작하기    
 ### 1. Node.js 설치    
