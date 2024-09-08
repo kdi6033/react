@@ -34,8 +34,7 @@ code my-app
 ```
 npm start
 ```
-### 설치방법
-
+### 25-1
 ### 버튼 설명문 스타일 데이터 그림만들기
 이 React 프로그램은 세 가지 컴포넌트로 구성된 간단한 웹 애플리케이션입니다. App 컴포넌트는 메인 컴포넌트로, MyButton, AboutPage, Profile 컴포넌트를 렌더링합니다. 
 - MyButton은 단순히 "I'm a button" 텍스트가 있는 버튼을 표시합니다.
