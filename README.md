@@ -42,7 +42,6 @@ npm start
 <a href="https://youtu.be/4Dkc7G_tbng">
     <img src="https://github.com/user-attachments/assets/381c244f-c24c-4ab5-ada0-07c0701e2598" alt="버튼, 설명문, 스타일, 데이터, 그림" width="400">
 </a>
-
 [프로그램소스](https://github.com/kdi6033/react/releases/tag/react-button-avatar-v1.0)   
 <img src="https://github.com/user-attachments/assets/e50f3c9f-3ece-410a-8ca8-88c272f42afd" alt="메뉴" width="300">
 
