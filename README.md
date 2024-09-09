@@ -134,7 +134,50 @@ Profile.css
 <a href="https://youtu.be/VZIVyQeKRKg">
     <img src="https://github.com/user-attachments/assets/cbe0daaf-da91-427e-b8b8-3ad4e7181b23" alt="Conditional rendering" width="400">
 </a>
-[프로그램소스](https://github.com/kdi6033/react/releases/tag/react-rendering-lists-v1.0) 
+[프로그램소스](https://github.com/kdi6033/react/releases/tag/react-rendering-lists-v1.0)    
+
+App.tsx
+```
+import React, { useState } from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+function App() {
+  // 로그인 상태를 관리하는 useState 훅
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // 로그인 버튼을 클릭했을 때 상태를 변경하는 함수
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+
+  // 로그아웃 버튼을 클릭했을 때 상태를 변경하는 함수
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+  };
+
+  return (
+    <div className="App">
+      <header className="App-header">
+        {/* 조건부 렌더링 */}
+        {isLoggedIn ? (
+          <div>
+            <h2>You are logged in!</h2>
+            <button onClick={handleLogout}>Logout</button>
+          </div>
+        ) : (
+          <div>
+            <h2>Please log in</h2>
+            <button onClick={handleLogin}>Login</button>
+          </div>
+        )}
+      </header>
+    </div>
+  );
+}
+
+export default App;
+```
 
 ### 25-4
 ### [프로젝트] Rendering lists
