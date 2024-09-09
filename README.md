@@ -192,32 +192,24 @@ export default function ShoppingList() {
 
 ### 25-5
 ### [프로젝트] Responding to events 
-이 프로그램은 React로 작성된 간단한 웹 애플리케이션입니다. App 컴포넌트는 페이지의 주요 구조를 담당하며, MyButton 컴포넌트를 포함합니다. MyButton 컴포넌트는 "Click me" 버튼을 렌더링하며, 사용자가 버튼을 클릭하면 handleClick 함수가 실행되어 "You clicked me!"라는 알림창이 뜹니다. 이를 통해 사용자 상호작용을 간단하게 구현할 수 있습니다.
+이 React 프로그램은 간단한 버튼을 생성합니다. App 컴포넌트 안에 있는 버튼을 클릭하면 handleClick 함수가 호출되어 "You clicked me!"라는 알림(alert)이 화면에 나타납니다. 이 프로그램의 핵심은 버튼에 onClick 이벤트를 설정해 클릭 시 특정 동작(여기서는 알림)을 수행하게 만든 것입니다.    
+프로그램이 간단해서 소스파일은 않올립니다.
 App.tsx   
 ```
+
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-function MyButton() {
-  function handleClick() {
-    alert('You clicked me!');
-  }
-
-  return (
-    <button onClick={handleClick}>
-      Click me
-    </button>
-  );
+function handleClick() {
+  alert('You clicked me!');
 }
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <MyButton />
-      </header>
-    </div>
+    <button onClick={handleClick}>
+      Click me
+    </button>
   );
 }
 
