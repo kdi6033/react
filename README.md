@@ -276,7 +276,6 @@ export default App;
 App.tsx   
 ```
 import React, { useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
@@ -320,7 +319,6 @@ export default App;
 App.tsx   
 ```
 import React, { useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 interface MyButtonProps {
