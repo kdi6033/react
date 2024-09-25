@@ -98,7 +98,7 @@ import './Profile.css'; // CSS 파일을 불러오기
 
 const user = {
   name: '김동일',
-  imageUrl: 'https://i2r.link/images/i2r.png',
+  imageUrl: 'http://i2r.link/images/i2r.png',
   imageSize: 90,
 };
 
