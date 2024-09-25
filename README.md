@@ -354,3 +354,111 @@ function MyButton({ count, onClick }: MyButtonProps) { // props에 타입 지정
 
 export default App;
 ```
+### 25-8 MQTT
+- 리엑트 프로글갬을 새로 만들어 시작합니다.
+```
+npx create-react-app mqtt --template typescript
+```
+생성된 App.tsx 에서 필요한 부분만 가지고 프로그램을 시작 합니다.
+[지식] 웹과 mqtt는 웹소켙으로 통신을 합니다. 보통은 1883포트로 사용하고 ai.doowon.ac.kr에서 웹소켙은 1803으로 설정 되었습니다. 그리고 프로그램을 구성하는데 필요한 서브프로그램은 /components 라는 디렉토리를 만들어 여기에 저장하는 것이 관리하기 용이 합니다.
+[ChatGPT 25-8]
+```
+import React from 'react';
+import './App.css';
+
+const App: React.FC = () => {
+  return (
+    <div className="App">
+      <header className="App-header">
+      </header>
+    </div>
+  );
+}
+
+export default App;
+mqtt 연결프로그램 만들어줘
+브로커주소:ai.doowon.ac.kr 포트:1803 intopic:kdi6033@gmail.com/intopic  outtopic:kdi6033@gmail.com/outtopic
+mqtt 프로그램은 components 디렉토리 만들어서 여기에 만들어줘
+```
+[생성된 프로그램]
+![25-8-1](https://github.com/user-attachments/assets/f313dc21-d6bc-4f6f-b3f2-96a9e78bdb64)
+
+App.tsx
+```
+import React from 'react';
+import './App.css';
+import MQTTClient from './components/MQTTClient';  // 경로 수정
+
+const App: React.FC = () => {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <h1>Welcome to MQTT Client Application</h1>
+      </header>
+      <main>
+        <MQTTClient />
+      </main>
+    </div>
+  );
+}
+
+export default App;
+```
+MQTTClient.tsx
+```
+import React, { useEffect, useState } from 'react';
+import mqtt, { MqttClient } from 'mqtt';
+
+const MQTTClient: React.FC = () => {
+  const [message, setMessage] = useState<string>('');
+
+  useEffect(() => {
+    // MQTT 브로커에 연결
+    const client: MqttClient = mqtt.connect('mqtt://ai.doowon.ac.kr:1803');
+
+    // MQTT 연결 성공 시 호출되는 함수
+    client.on('connect', () => {
+      console.log('MQTT 연결 성공');
+      
+      // 'outtopic'에서 메시지 수신 대기
+      client.subscribe('kdi6033@gmail.com/outtopic', (err) => {
+        if (!err) {
+          console.log('outtopic 구독 성공');
+        }
+      });
+
+      // 5초마다 'intopic'으로 메시지 전송
+      const intervalId = setInterval(() => {
+        const messageToSend = '김동일';
+        client.publish('kdi6033@gmail.com/intopic', messageToSend);
+        console.log(`메시지 발행: ${messageToSend}`);
+      }, 5000);
+
+      // 컴포넌트 언마운트 시 interval 정리
+      return () => clearInterval(intervalId);
+    });
+
+    // 메시지 수신 시 호출되는 함수
+    client.on('message', (topic: string, payload: Buffer) => {
+      if (topic === 'kdi6033@gmail.com/outtopic') {
+        const receivedMessage = payload.toString();
+        setMessage(receivedMessage);
+        console.log(`수신된 메시지: ${receivedMessage}`);
+      }
+    });
+
+    // 컴포넌트 언마운트 시 클라이언트 종료
+    return () => {
+      client.end();
+    };
+  }, []);
+
+  return (
+    <div>
+      <h1>MQTT 수신 메시지: {message}</h1>
+    </div>
+  );
+};
+
+export default MQTTClient;
+```
