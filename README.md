@@ -355,7 +355,7 @@ function MyButton({ count, onClick }: MyButtonProps) { // props에 타입 지정
 export default App;
 ```
 ### 25-8 MQTT
-- 리엑트 프로글갬을 새로 만들어 시작합니다.
+- 리엑트 프로그램을 새로 만들어 시작합니다.
 ```
 npx create-react-app mqtt --template typescript
 ```
