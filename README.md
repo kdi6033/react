@@ -473,4 +473,4 @@ const MQTTClient = () => {
 
 export default MQTTClient;
 ```
-[node red 소스파일](https://github.com/kdi6033/react/blob/main/file/nodere-25-8.json)
+[node red 25-8 소스파일](https://github.com/kdi6033/react/blob/main/file/nodere-25-8.json)
