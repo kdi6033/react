@@ -355,11 +355,16 @@ function MyButton({ count, onClick }: MyButtonProps) { // props에 타입 지정
 export default App;
 ```
 ### 25-8 MQTT
-- 리엑트 프로그램을 새로 만들어 시작합니다.
+이 프로그램은 MQTT 브로커에 연결하고, 주기적으로 메시지를 전송하며, 지정된 토픽에서 수신한 메시지를 화면에 출력하는 기능을 수행합니다.
+- 브로커에 연결: MQTT 클라이언트가 브로커(ai.doowon.ac.kr:1803)에 연결됩니다.
+- 토픽 구독: outtopic을 구독하고, 5초마다 intopic에 '김동일' 메시지를 전송합니다.
+- 메시지 수신: 구독한 outtopic에서 수신된 메시지를 messages 배열에 저장하고 이를 화면에 출력합니다.
+- 화면 출력: 수신된 메시지가 리스트로 출력됩니다.    
+리엑트 프로그램을 새로 만들어 시작합니다.
 ```
 npx create-react-app mqtt --template typescript
 ```
-생성된 App.tsx 에서 필요한 부분만 가지고 프로그램을 시작 합니다.    
+생성된 App.tsx 에서 아래와 같이 필요한 부분만 가지고 프로그램을 시작 합니다.    
 [관련지식] 웹과 mqtt는 웹소켙으로 통신을 합니다. 보통은 1883포트로 사용하고 ai.doowon.ac.kr에서 웹소켙은 1803으로 설정 되었습니다. 그리고 프로그램을 구성하는데 필요한 서브프로그램은 /components 라는 디렉토리를 만들어 여기에 저장하는 것이 관리하기 용이 합니다.    
 [ChatGPT 25-8]
 ```
