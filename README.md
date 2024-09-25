@@ -407,55 +407,61 @@ export default App;
 MQTTClient.tsx
 ```
 import React, { useEffect, useState } from 'react';
-import mqtt, { MqttClient } from 'mqtt';
+import mqtt from 'mqtt';
 
-const MQTTClient: React.FC = () => {
-  const [message, setMessage] = useState<string>('');
+const MQTTClient = () => {
+  const [messages, setMessages] = useState<string[]>([]); // string[] 타입으로 수정
+  const brokerUrl = 'mqtt://ai.doowon.ac.kr:1803';
+  const intopic = 'kdi6033@gmail.com/intopic';
+  const outtopic = 'kdi6033@gmail.com/outtopic';
 
   useEffect(() => {
-    // MQTT 브로커에 연결
-    const client: MqttClient = mqtt.connect('mqtt://ai.doowon.ac.kr:1803');
+    const client = mqtt.connect(brokerUrl);
 
-    // MQTT 연결 성공 시 호출되는 함수
     client.on('connect', () => {
-      console.log('MQTT 연결 성공');
-      
-      // 'outtopic'에서 메시지 수신 대기
-      client.subscribe('kdi6033@gmail.com/outtopic', (err) => {
+      console.log('Connected to broker');
+      client.subscribe(outtopic, (err) => {
         if (!err) {
-          console.log('outtopic 구독 성공');
+          console.log(`Subscribed to ${outtopic}`);
         }
       });
 
-      // 5초마다 'intopic'으로 메시지 전송
-      const intervalId = setInterval(() => {
-        const messageToSend = '김동일';
-        client.publish('kdi6033@gmail.com/intopic', messageToSend);
-        console.log(`메시지 발행: ${messageToSend}`);
+      const interval = setInterval(() => {
+        client.publish(intopic, '김동일');
+        console.log(`Message sent to ${intopic}: 김동일`);
       }, 5000);
 
-      // 컴포넌트 언마운트 시 interval 정리
-      return () => clearInterval(intervalId);
+      return () => {
+        clearInterval(interval);
+        client.end();
+      };
     });
 
-    // 메시지 수신 시 호출되는 함수
-    client.on('message', (topic: string, payload: Buffer) => {
-      if (topic === 'kdi6033@gmail.com/outtopic') {
-        const receivedMessage = payload.toString();
-        setMessage(receivedMessage);
-        console.log(`수신된 메시지: ${receivedMessage}`);
+    client.on('message', (topic, message) => {
+      if (topic === outtopic) {
+        const newMessage = message.toString();
+        setMessages((prevMessages) => [...prevMessages, newMessage]);
+        console.log(`Received message from ${outtopic}: ${newMessage}`);
       }
     });
 
-    // 컴포넌트 언마운트 시 클라이언트 종료
-    return () => {
+    client.on('error', (err) => {
+      console.error('Connection error:', err);
       client.end();
-    };
-  }, []);
+    });
+  }, [brokerUrl, intopic, outtopic]);
 
   return (
     <div>
-      <h1>MQTT 수신 메시지: {message}</h1>
+      <h1>MQTT Client</h1>
+      <div>
+        <h2>Messages from {outtopic}</h2>
+        <ul>
+          {messages.map((msg, index) => (
+            <li key={index}>{msg}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
