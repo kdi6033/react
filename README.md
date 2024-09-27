@@ -43,7 +43,7 @@ npm start
     <img src="https://github.com/user-attachments/assets/381c244f-c24c-4ab5-ada0-07c0701e2598" alt="버튼, 설명문, 스타일, 데이터, 그림" width="400">
 </a>
 
-[프로그램소스](https://github.com/kdi6033/react/releases/tag/react-button-avatar-v1.0)   
+[프로그램 다운로드 25-2](https://github.com/kdi6033/react/releases/tag/react-button-avatar-v1.0)   
 <img src="https://github.com/user-attachments/assets/e50f3c9f-3ece-410a-8ca8-88c272f42afd" alt="메뉴" width="300">
 
 App.tsx
@@ -134,7 +134,7 @@ Profile.css
 <a href="https://youtu.be/VZIVyQeKRKg">
     <img src="https://github.com/user-attachments/assets/cbe0daaf-da91-427e-b8b8-3ad4e7181b23" alt="Conditional rendering" width="400">
 </a>
-[프로그램소스](https://github.com/kdi6033/react/releases/tag/react-rendering-lists-v1.0)    
+[프로그램 다운로드 25-3](https://github.com/kdi6033/react/releases/tag/react-rendering-lists-v1.0)    
 
 App.tsx
 ```
@@ -187,7 +187,7 @@ export default App;
     <img src="https://github.com/user-attachments/assets/93b32829-9d85-4c03-bc30-586c811839fd" alt="Rendering lists" width="400">
 </a>
 
-[프로그램소스](https://github.com/kdi6033/react/releases/tag/react-rendering-lists-v1.0)   
+[프로그램 다운로드 25-4](https://github.com/kdi6033/react/releases/tag/react-rendering-lists-v1.0)   
 
 App.tsx
 ```
@@ -271,7 +271,7 @@ export default App;
     <img src="https://github.com/user-attachments/assets/3d2b1371-7171-4dcc-8a14-dc06a16065b8" alt="Updating the screen" width="400">
 </a>
 
-[프로그램소스](https://github.com/kdi6033/react/releases/tag/react-updating-the-screen-v1.0)   
+[프로그램 다운로드 25-6](https://github.com/kdi6033/react/releases/tag/react-updating-the-screen-v1.0)   
 
 App.tsx   
 ```
@@ -314,7 +314,7 @@ export default App;
     <img src="https://github.com/user-attachments/assets/b5d6327c-2e5f-47d5-b65f-15b9eaae36fb" alt="Using Hooks" width="400">
 </a>
 
-[프로그램소스](https://github.com/kdi6033/react/releases/tag/react-using-hooks-v1.0)   
+[프로그램 다운로드 25-7](https://github.com/kdi6033/react/releases/tag/react-using-hooks-v1.0)   
 
 App.tsx   
 ```
