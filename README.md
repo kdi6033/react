@@ -477,5 +477,6 @@ const MQTTClient = () => {
 export default MQTTClient;
 ```
 다음 nodered 프로그램을 만들어 react 프로그램과 mqtt 통신을 테스트 하겠습니다. 
-<img src="https://github.com/user-attachments/assets/c7c7dde4-4a2a-44a8-838b-d63f9a6b3b63" alt="nodered 25-8" width="400">
+<img src="https://github.com/user-attachments/assets/c7c7dde4-4a2a-44a8-838b-d63f9a6b3b63" alt="nodered 25-8" width="400">   
+아래 node red 프로그램 링크를 사용해서 프로그램 하세요.
 [node red 25-8 소스파일](https://github.com/kdi6033/react/blob/main/file/nodere-25-8.json)   
