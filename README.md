@@ -492,7 +492,7 @@ export default MQTTClient;
 - MQTT 브로커(mqtt://ai.doowon.ac.kr:1803)에 연결한 후, 특정 토픽에서 메시지를 구독합니다.
 - 메시지가 들어오면 이를 즉시 화면에 출력합니다.
 - 클라이언트가 페이지를 벗어나면 연결이 해제됩니다.     
-App.tsx
+[App.tsx]
 - App.js는 React 애플리케이션의 기본 구조를 정의합니다.
 - MQTTClient라는 컴포넌트를 호출하여 MQTT 통신을 처리합니다.
 - 주요 구조는 header와 main으로 나뉘며, main 섹션에서 MQTTClient 컴포넌트를 렌더링합니다.
@@ -516,7 +516,7 @@ function App() {
 
 export default App;
 ```
-MQTTClient.tsx
+[MQTTClient.tsx]
 - MQTTClient.js는 실제 MQTT 통신을 처리하는 핵심 컴포넌트입니다.
 - mqtt 라이브러리를 사용하여 mqtt://ai.doowon.ac.kr:1803 브로커에 연결합니다.
 - 연결 후 i2r/kdi@gmail.com/out 토픽을 구독하고, 해당 토픽에서 수신한 메시지를 화면에 출력합니다.
