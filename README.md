@@ -483,3 +483,102 @@ export default MQTTClient;
 아래 node red 프로그램 링크를 사용해서 프로그램 하세요.    
 <img src="https://github.com/user-attachments/assets/c7c7dde4-4a2a-44a8-838b-d63f9a6b3b63" alt="nodered 25-8" width="400">   
 [node red 25-8 소스파일](https://github.com/kdi6033/react/blob/main/file/nodere-25-8.json)   
+
+### 25-9 MQTT i2r-03 IoT PLC 연결
+이제부터 i2r-03 IoT PLC 를 연결하는 과정을 설명 드리겠습니다.    
+앞에서 설명한 MQTT 프로그램에서 topic을 PLC의 토픽과 일치 시키면 통신을 진행 할수 있습니다. 브로커에서 토픽이 중볻되지 않게 자신의 이메일을 입력하여 사용하세요
+
+-브로커를 결정하새요 다음 예시는 ai.doowon.ac.kr 을 사용하는 것으로 하겠습니다.
+- MQTT 브로커(mqtt://ai.doowon.ac.kr:1803)에 연결한 후, 특정 토픽에서 메시지를 구독합니다.
+- 메시지가 들어오면 이를 즉시 화면에 출력합니다.
+- 클라이언트가 페이지를 벗어나면 연결이 해제됩니다.
+App.tsx
+- App.js는 React 애플리케이션의 기본 구조를 정의합니다.
+- MQTTClient라는 컴포넌트를 호출하여 MQTT 통신을 처리합니다.
+- 주요 구조는 header와 main으로 나뉘며, main 섹션에서 MQTTClient 컴포넌트를 렌더링합니다.
+```
+import React from 'react';
+import './App.css';
+import MQTTClient from './components/MQTTClient';
+
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        MQTT 통신 프로그램
+      </header>
+      <main>
+        <MQTTClient />
+      </main>
+    </div>
+  );
+}
+
+export default App;
+```
+MQTTClient.tsx
+- MQTTClient.js는 실제 MQTT 통신을 처리하는 핵심 컴포넌트입니다.
+- mqtt 라이브러리를 사용하여 mqtt://ai.doowon.ac.kr:1803 브로커에 연결합니다.
+- 연결 후 i2r/kdi@gmail.com/out 토픽을 구독하고, 해당 토픽에서 수신한 메시지를 화면에 출력합니다.
+- 수신된 메시지는 messages라는 상태 변수에 저장되며, 이 값은 화면에 리스트로 나타납니다.
+- 메시지를 수신할 때마다 이전 메시지를 덮어씁니다.
+- 연결 오류가 발생하면 오류 로그를 출력하고 클라이언트를 종료합니다.
+```
+import React, { useEffect, useState } from 'react';
+import mqtt from 'mqtt';
+
+const MQTTClient = () => {
+  const [messages, setMessages] = useState<string[]>([]);
+  const brokerUrl = 'mqtt://ai.doowon.ac.kr:1803';
+  const intopic = 'i2r/kdi@gmail.com/out';
+  const outtopic = 'i2r/kdi@gmail.com/in';
+
+  useEffect(() => {
+    const client = mqtt.connect(brokerUrl);
+
+    client.on('connect', () => {
+      console.log('Connected to broker');
+      client.subscribe(intopic, (err) => {
+        if (!err) {
+          console.log(`Subscribed to ${intopic}`);
+        }
+      });
+    });
+
+    client.on('message', (topic, message) => {
+      if (topic === intopic) {
+        const newMessage = message.toString();
+        // 새로운 메시지로 덮어쓰기 (기존 메시지 배열은 초기화)
+        setMessages([newMessage]);
+        console.log(`Received message from ${intopic}: ${newMessage}`);
+      }
+    });
+
+    client.on('error', (err) => {
+      console.error('Connection error:', err);
+      client.end();
+    });
+
+    // 클라이언트가 컴포넌트가 언마운트 될 때 정리되도록 함
+    return () => {
+      client.end();
+    };
+  }, [brokerUrl, intopic]);
+
+  return (
+    <div>
+      <h1>MQTT Client</h1>
+      <div>
+        <h2>Messages from {intopic}</h2>
+        <ul>
+          {messages.map((msg, index) => (
+            <li key={index}>{msg}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+export default MQTTClient;
+```
