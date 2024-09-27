@@ -359,7 +359,10 @@ export default App;
 - 브로커에 연결: MQTT 클라이언트가 브로커(ai.doowon.ac.kr:1803)에 연결됩니다.
 - 토픽 구독: outtopic을 구독하고, 5초마다 intopic에 '김동일' 메시지를 전송합니다.
 - 메시지 수신: 구독한 outtopic에서 수신된 메시지를 messages 배열에 저장하고 이를 화면에 출력합니다.
-- 화면 출력: 수신된 메시지가 리스트로 출력됩니다.    
+- 화면 출력: 수신된 메시지가 리스트로 출력됩니다.
+<a href="https://youtu.be/hsZt9NN4e48">
+    <img src="https://github.com/user-attachments/assets/63189d1d-ee99-4720-b30d-5bdf89376905" alt="Updating the screen" width="400">
+</a>
 리엑트 프로그램을 새로 만들어 시작합니다.
 ```
 npx create-react-app mqtt --template typescript
