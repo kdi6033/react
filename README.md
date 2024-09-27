@@ -583,3 +583,187 @@ const MQTTClient = () => {
 
 export default MQTTClient;
 ```
+### 25-10 MQTT Hook i2r-03 IoT PLC 연결
+[ChatGPT 25-10]
+```
+이 프로그램에서 ui창을 별도의 서브 프로그램으로 만들어줘
+Display라는 별도의 컴포넌트를 만들고 
+mqtt로 들어온 메세지는 App.tsx 로 전달해 하위 모든 서브 프로그램이 바로 반영 할 수 있게 프로그램 해줘 그리고 이러한 것에 대해 니가 분석하고 추천해줘
+들어온 정보를 하드웨어에 기록도 해야 함으로 app.tsx와 같은 상위단에 기록해서 hook을 사용하려고 해
+```
+프로그램 구조를 개선하기 위해, UI 창을 Display라는 컴포넌트로 분리하고, MQTT 메시지를 App.tsx에서 관리해 모든 하위 컴포넌트에 상태를 전달하는 방법을 제안합니다. 이를 통해 메시지 상태를 상위에서 관리하고, 각 컴포넌트에서 실시간으로 반영할 수 있습니다. 이와 함께, 하드웨어에 기록하기 위해 상위에서 hook을 사용해 메시지를 처리하도록 구현할 수 있습니다.    
+App.tsx
+- MQTT 메시지를 처리하고 상태를 useState로 관리합니다.
+- Display와 같은 하위 컴포넌트에 상태를 전달하여 UI에 메시지를 반영합니다.
+- 하드웨어에 기록할 수 있는 기능을 추가합니다.
+```
+import React, { useState, useEffect } from 'react';
+import './App.css';
+import MQTTClient from './components/MQTTClient';
+import Display from './components/Display';
+
+function App() {
+  const [mqttMessage, setMqttMessage] = useState<string | null>(null);
+
+  // MQTTClient에서 메시지를 수신할 때 이 함수를 호출하여 상태 업데이트
+  const handleMqttMessage = (message: string) => {
+    setMqttMessage(message);
+    // 하드웨어 기록 로직
+    console.log("하드웨어 기록: ", message);
+    // 이 부분에 하드웨어 기록 관련 함수나 로직을 추가할 수 있음
+  };
+
+  return (
+    <div className="App">
+      <header className="App-header">
+        MQTT 통신 프로그램
+      </header>
+      <main>
+        <MQTTClient onMessage={handleMqttMessage} />
+        <Display message={mqttMessage} />
+      </main>
+    </div>
+  );
+}
+
+export default App;
+```
+
+MQTTClient.tsx
+- MQTT 연결 및 메시지 구독을 처리하며, 수신된 메시지를 App.tsx로 전달합니다.
+```
+import React, { useEffect } from 'react';
+import mqtt from 'mqtt';
+
+interface MQTTClientProps {
+  onMessage: (message: string) => void; // 메시지를 전달받을 함수
+}
+
+const MQTTClient: React.FC<MQTTClientProps> = ({ onMessage }) => {
+  const brokerUrl = 'mqtt://ai.doowon.ac.kr:1803';
+  const intopic = 'i2r/kdi@gmail.com/out';
+
+  useEffect(() => {
+    const client = mqtt.connect(brokerUrl);
+
+    client.on('connect', () => {
+      console.log('Connected to broker');
+      client.subscribe(intopic, (err) => {
+        if (!err) {
+          console.log(`Subscribed to ${intopic}`);
+        }
+      });
+    });
+
+    client.on('message', (topic, message) => {
+      if (topic === intopic) {
+        const newMessage = message.toString();
+        onMessage(newMessage); // 수신된 메시지를 App으로 전달
+        console.log(`Received message from ${intopic}: ${newMessage}`);
+      }
+    });
+
+    client.on('error', (err) => {
+      console.error('Connection error:', err);
+      client.end();
+    });
+
+    return () => {
+      client.end();
+    };
+  }, [brokerUrl, intopic, onMessage]);
+
+  return <div>MQTT 연결 중...</div>;
+};
+
+export default MQTTClient;
+```
+
+Display.tsx
+- App.tsx에서 전달된 메시지를 받아 UI에 표시하는 컴포넌트입니다.
+```
+import React from 'react';
+
+interface DisplayProps {
+  message: string | null; // 수신된 메시지
+}
+
+const Display: React.FC<DisplayProps> = ({ message }) => {
+  return (
+    <div>
+      <h1>Display Component</h1>
+      <div>
+        <h2>Received Message</h2>
+        <p>{message ? message : 'No message received yet'}</p>
+      </div>
+    </div>
+  );
+};
+
+export default Display;
+```
+분석 및 추천:
+- 상위에서 상태 관리:
+App.tsx에서 MQTT 메시지를 상태로 관리하면, 다른 컴포넌트에서도 이 메시지를 쉽게 사용할 수 있습니다. 이를 통해 메시지가 여러 컴포넌트에 실시간으로 반영됩니다.
+
+- 하드웨어 기록:
+메시지가 상위에서 관리되므로, handleMqttMessage 함수 내에서 하드웨어 기록 관련 로직을 추가할 수 있습니다. 이 방법은 상태를 한 곳에서만 관리하므로, 데이터 일관성을 유지하면서 하드웨어 작업을 쉽게 처리할 수 있습니다.
+
+- 컴포넌트 구조 분리:
+UI와 비즈니스 로직(MQTT 통신)을 분리함으로써 유지보수성이 높아집니다. Display 컴포넌트는 UI만 담당하며, 재사용 가능성이 높습니다.
+
+- 효율적인 상태 관리:
+useState와 useEffect를 적절히 사용해 효율적으로 상태 변화를 관리하고, MQTT 메시지에 즉각적으로 대응할 수 있습니다.
+이 구조는 확장성과 유지보수성 측면에서 매우 적합합니다.    
+
+위 프로그램은 여러개의 IoT PLC가 연결되어 있으면 데이터가 혼합되어 관측하기 어려워 선택한 기기만 볼수 있게 프로그램을 수정 합니다.    
+
+[ChatGPT]
+멕어드레스는 자신의 프로그램에 들어오는 주소로 대체하세요.
+```
+Display 에서 "mac":"D8:13:2A:C3:73:58" 인것만 표시해줘
+```
+Display 컴포넌트에서 수신된 메시지 중 "mac":"D8:13:2A:C3:73:58"이 포함된 것만 필터링하여 표시하도록 수정할 수 있습니다. 이를 위해 메시지를 JSON 형식으로 변환한 후, mac 필드가 원하는 값과 일치하는지 확인하여 UI에 반영하면 됩니다.    
+Display.tsx
+```
+import React from 'react';
+
+interface DisplayProps {
+  message: string | null; // 수신된 메시지
+}
+
+const Display: React.FC<DisplayProps> = ({ message }) => {
+  let macMessage = null;
+
+  if (message) {
+    try {
+      // 메시지를 JSON으로 파싱
+      const parsedMessage = JSON.parse(message);
+
+      // "mac" 필드가 "D8:13:2A:C3:73:58"과 일치하는지 확인
+      if (parsedMessage.mac === 'D8:13:2A:C3:73:58') {
+        macMessage = message; // 조건에 맞는 메시지 저장
+      }
+    } catch (error) {
+      console.error('Invalid JSON format:', error);
+    }
+  }
+
+  return (
+    <div>
+      <h1>Display Component</h1>
+      <div>
+        <h2>Received Message</h2>
+        {macMessage ? <p>{macMessage}</p> : <p>No matching message</p>}
+      </div>
+    </div>
+  );
+};
+
+export default Display;
+```
+설명:    
+- JSON 파싱: 수신된 JSON 형식이라고 가정하고, JSON.parse로 메시지를 파싱합니다.    
+- MAC 주소 확인: 파싱된 메시지의 "mac" 필드가 "D8:13:2A:C3:73:58"인지 확인합니다. 일치하는 경우에만 메시지를 macMessage 변수에 저장합니다.
+- UI 표시: macMessage에 값이 있으면 해당 메시지를 화면에 표시하고, 값이 없으면 "No matching message"를 표시합니다.
+이 방식으로 원하는 MAC 주소를 포함한 메시지만 필터링하여 UI에 표시할 수 있습니다.
