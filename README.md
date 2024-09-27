@@ -593,8 +593,9 @@ mqtt로 들어온 메세지는 App.tsx 로 전달해 하위 모든 서브 프로
 ```
 - 프로그램 구조를 개선하기 위해, UI 창을 Display라는 컴포넌트로 분리하고, MQTT 메시지를 App.tsx에서 관리해 모든 하위 컴포넌트에 상태를 전달합니다. 
 - 이를 통해 메시지 상태를 상위에서 관리하고, 각 컴포넌트에서 실시간으로 반영합니다.
-- 이와 함께, 하드웨어에 기록하기 위해 상위에서 hook을 사용해 메시지를 처리하도록 구현할 수 있습니다.    
-App.tsx
+- 이와 함께, 하드웨어에 기록하기 위해 상위에서 hook을 사용해 메시지를 처리하도록 구현할 수 있습니다.
+
+[App.tsx]
 - MQTT 메시지를 처리하고 상태를 useState로 관리합니다.
 - Display와 같은 하위 컴포넌트에 상태를 전달하여 UI에 메시지를 반영합니다.
 - 하드웨어에 기록할 수 있는 기능을 추가합니다.
@@ -631,7 +632,7 @@ function App() {
 export default App;
 ```
 
-MQTTClient.tsx
+[MQTTClient.tsx]
 - MQTT 연결 및 메시지 구독을 처리하며, 수신된 메시지를 App.tsx로 전달합니다.
 ```
 import React, { useEffect } from 'react';
@@ -681,7 +682,7 @@ const MQTTClient: React.FC<MQTTClientProps> = ({ onMessage }) => {
 export default MQTTClient;
 ```
 
-Display.tsx
+[Display.tsx]
 - App.tsx에서 전달된 메시지를 받아 UI에 표시하는 컴포넌트입니다.
 ```
 import React from 'react';
