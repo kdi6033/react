@@ -485,6 +485,11 @@ export default MQTTClient;
 [node red 25-8 소스파일](https://github.com/kdi6033/react/blob/main/file/nodere-25-8.json)   
 
 ### 25-9 MQTT i2r-03 IoT PLC 연결
+<a href="https://youtu.be/NTLkgPB4hpE">
+    <img src="https://github.com/user-attachments/assets/10b281ca-17da-4c78-b42e-9e6b298c21f5" alt="Updating the screen" width="400">
+</a>
+![25-9 mqtt basic program i2r-03 board](https://github.com/user-attachments/assets/10b281ca-17da-4c78-b42e-9e6b298c21f5)
+
 이제부터 i2r-03 IoT PLC 를 연결하는 과정을 설명 드리겠습니다.    
 앞에서 설명한 MQTT 프로그램에서 topic을 PLC의 토픽과 일치 시키면 통신을 진행 할수 있습니다. 브로커에서 토픽이 중볻되지 않게 자신의 이메일을 입력하여 사용하세요
 
