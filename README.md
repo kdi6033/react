@@ -591,7 +591,6 @@ export default MQTTClient;
 <a href="https://youtu.be/ymZNHD4hQZE">
     <img src="https://github.com/user-attachments/assets/6fda3a19-e210-40a2-a23d-e5abb8f74e62" alt="Updating the screen" width="400">
 </a>    
-![25-10 mqtt hook basic program i2r-03 board  - 복사본](https://github.com/user-attachments/assets/6fda3a19-e210-40a2-a23d-e5abb8f74e62)
 
 [ChatGPT 25-10]
 ```
