@@ -487,8 +487,7 @@ export default MQTTClient;
 ### 25-9 MQTT i2r-03 IoT PLC 연결
 <a href="https://youtu.be/NTLkgPB4hpE">
     <img src="https://github.com/user-attachments/assets/10b281ca-17da-4c78-b42e-9e6b298c21f5" alt="Updating the screen" width="400">
-</a>
-![25-9 mqtt basic program i2r-03 board](https://github.com/user-attachments/assets/10b281ca-17da-4c78-b42e-9e6b298c21f5)
+</a>    
 
 이제부터 i2r-03 IoT PLC 를 연결하는 과정을 설명 드리겠습니다.    
 앞에서 설명한 MQTT 프로그램에서 topic을 PLC의 토픽과 일치 시키면 통신을 진행 할수 있습니다. 브로커에서 토픽이 중볻되지 않게 자신의 이메일을 입력하여 사용하세요
@@ -589,6 +588,11 @@ const MQTTClient = () => {
 export default MQTTClient;
 ```
 ### 25-10 MQTT Hook i2r-03 IoT PLC 연결
+<a href="https://youtu.be/ymZNHD4hQZE">
+    <img src="https://github.com/user-attachments/assets/6fda3a19-e210-40a2-a23d-e5abb8f74e62" alt="Updating the screen" width="400">
+</a>    
+![25-10 mqtt hook basic program i2r-03 board  - 복사본](https://github.com/user-attachments/assets/6fda3a19-e210-40a2-a23d-e5abb8f74e62)
+
 [ChatGPT 25-10]
 ```
 이 프로그램에서 ui창을 별도의 서브 프로그램으로 만들어줘
