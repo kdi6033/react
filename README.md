@@ -793,3 +793,31 @@ if (parsedMessage.mac === 'D8:13:2A:C3:73:58') {
 저장을 누르면 입력한 정보를 프로그램에 바로 적용해줘
 contexts/ConfigContext.tsx를 만들고 email, mac 을 전역 변수로 만들고 mqtt 에서는 이를 참조로 intopic outtopic 만들어서 프로그램 해줘
 ```
+
+ConfigContext.tsx에서 이메일과 MAC 주소를 전역 상태로 관리하고, 로컬 스토리지에 저장합니다.
+MQTTClient는 이메일을 참조하여 intopic, outtopic을 설정합니다.
+Display.tsx에서는 사용자가 입력한 이메일과 MAC 주소를 저장하고, 수신한 메시지의 MAC 주소와 비교하여 메시지를 필터링합니다.
+프로그램이 시작될 때 로컬 스토리지에서 저장된 값을 불러옵니다.
+
+### 25-12 [UI 만들기] Led와 스위치를 만들어 IoT PLC와 연동한다.
+[ChatGPT 12-1] Led 만들어 mqtt 데이터 연결
+```
+{"type":3,"email":"kdi6033@gmail.com","mac":"D8:13:2A:C3:73:58","temp":28.1,"humi":48,"in":[0,0,0,0],"out":[0,0,0,0]}
+다음과 같이 메세지가 들어 옵니다. "in":[0,0,0,0] 으로 들어오는 데이터를 4개의 led를 만들어서 연결해줘
+```
+설명:
+LED 상태 관리: ledStates라는 상태 변수를 추가하여 "in" 배열 값을 저장합니다.
+LED 상태 렌더링: ledStates 배열에 따라 4개의 LED가 렌더링되며, 각 값이 1이면 on, 0이면 off로 상태가 표시됩니다.
+CSS: 각 LED는 원형으로 표현되며, 상태에 따라 초록색(켜짐)과 빨간색(꺼짐)으로 표시됩니다.
+useEffect: 메시지가 들어올 때마다 MAC 주소를 확인하고, 일치하면 "in" 값으로 LED 상태를 업데이트합니다.
+
+[ChatGPT 12-2] 스위치 만들어 mqtt 통신으로 데이터 보냄
+
+[IoT PLC 통신프로토콜 보기](https://github.com/kdi6033/i2r?tab=readme-ov-file#%ED%94%84%EB%A1%9C%ED%86%A0%EC%BD%9C)    
+```
+스위치 4개를 만들고 첫번째 스위치를 on 시키면
+{"mac":"해당맥어드레스","order":2,"no":1,"value":true}
+다음을 mqtt로 보내줘
+두번째 스위치는 no=1, 세번째 스위치 no=2, 네번째 스위치 no=3 입니다.
+led 그대로 놔두고 스위치 추가해줘
+```
