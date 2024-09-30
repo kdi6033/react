@@ -780,3 +780,16 @@ export default Display;
 - MAC 주소 확인: 파싱된 메시지의 "mac" 필드가 "D8:13:2A:C3:73:58"인지 확인합니다. 일치하는 경우에만 메시지를 macMessage 변수에 저장합니다.
 - UI 표시: macMessage에 값이 있으면 해당 메시지를 화면에 표시하고, 값이 없으면 "No matching message"를 표시합니다.
 이 방식으로 원하는 MAC 주소를 포함한 메시지만 필터링하여 UI에 표시할 수 있습니다.
+
+### 25-11 [정보 저장과 읽기] 이메일 맥어드레스 입력창 만들고 정보 저장하고 읽기
+[ChatGPT 11]
+```
+Display.tsx 에 이메일 입력과 맥어드레스 입력을 만들고 저장을 누르면 컴퓨터에 저장하고 프로그램 시작할 때 이값을 읽어오게 해줘
+outtopic 은 i2r/이메일/in 으로  intopic은 i2r/이메일/out 만들어줘
+if (parsedMessage.mac === 'D8:13:2A:C3:73:58') {
+        macMessage = message; // 조건에 맞는 메시지 저장
+      }
+이 부분은 입력한 맥 어드레스로 대체해줘  
+저장을 누르면 입력한 정보를 프로그램에 바로 적용해줘
+contexts/ConfigContext.tsx를 만들고 email, mac 을 전역 변수로 만들고 mqtt 에서는 이를 참조로 intopic outtopic 만들어서 프로그램 해줘
+```
