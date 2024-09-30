@@ -783,7 +783,8 @@ export default Display;
 
 ### 25-11 [정보 저장과 읽기] 이메일 맥어드레스 입력창 만들고 정보 저장하고 읽기
 [프로그램 다운로드 25-11](https://github.com/kdi6033/react/releases/tag/react-25-11-v1.0)    
-IoT PLC에서 mqtt로 들어오는 데이터를 4개의 Led를 만들어 연동합니다.
+IoT PLC에서 mqtt로 들어오는 데이터를 4개의 Led를 만들어 연동합니다.    
+
 [ChatGPT 11]
 ```
 Display.tsx 에 이메일 입력과 맥어드레스 입력을 만들고 저장을 누르면 컴퓨터에 저장하고 프로그램 시작할 때 이값을 읽어오게 해줘
