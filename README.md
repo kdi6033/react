@@ -782,7 +782,8 @@ export default Display;
 이 방식으로 원하는 MAC 주소를 포함한 메시지만 필터링하여 UI에 표시할 수 있습니다.
 
 ### 25-11 [정보 저장과 읽기] 이메일 맥어드레스 입력창 만들고 정보 저장하고 읽기
-[프로그램 다운로드 25-11](https://github.com/kdi6033/react/releases/tag/react-25-11-v1.0)   
+[프로그램 다운로드 25-11](https://github.com/kdi6033/react/releases/tag/react-25-11-v1.0)    
+IoT PLC에서 mqtt로 들어오는 데이터를 4개의 Led를 만들어 연동합니다.
 [ChatGPT 11]
 ```
 Display.tsx 에 이메일 입력과 맥어드레스 입력을 만들고 저장을 누르면 컴퓨터에 저장하고 프로그램 시작할 때 이값을 읽어오게 해줘
@@ -802,6 +803,7 @@ contexts/ConfigContext.tsx를 만들고 email, mac 을 전역 변수로 만들�
 
 ### 25-12 [UI 만들기] Led와 스위치를 만들어 IoT PLC와 연동한다.
 [프로그램 다운로드 25-12](https://github.com/kdi6033/react/releases/tag/react-25-12-v1.0)   
+React에서 4개의 스위치를 만들어 동작 시키면 IoT PLC 가 동작하게 프로그램 합니다.
 [ChatGPT 12-1] Led 만들어 mqtt 데이터 연결
 ```
 {"type":3,"email":"kdi6033@gmail.com","mac":"D8:13:2A:C3:73:58","temp":28.1,"humi":48,"in":[0,0,0,0],"out":[0,0,0,0]}
