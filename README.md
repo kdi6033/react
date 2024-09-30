@@ -129,7 +129,7 @@ Profile.css
 
 ### 25-3
 ### [프로젝트] Conditional rendering
-[프로그램소스](https://github.com/kdi6033/react/releases/tag/conditional-rendering-v1.0)    
+[프로그램 다운로드 25-3](https://github.com/kdi6033/react/releases/tag/conditional-rendering-v1.0)    
 이 프로그램은 useState를 사용해 로그인 여부를 상태로 관리하며, 로그인 상태에 따라 다른 UI를 보여주는 조건부 렌더링을 구현했습니다. 사용자가 로그인 버튼을 클릭하면 isLoggedIn 상태가 true로 변경되어 로그인 화면이 나타나고, 로그아웃 버튼을 클릭하면 false로 변경되어 로그아웃 화면이 나타납니다.    
 <a href="https://youtu.be/VZIVyQeKRKg">
     <img src="https://github.com/user-attachments/assets/cbe0daaf-da91-427e-b8b8-3ad4e7181b23" alt="Conditional rendering" width="400">
@@ -591,6 +591,8 @@ export default MQTTClient;
 <a href="https://youtu.be/ymZNHD4hQZE">
     <img src="https://github.com/user-attachments/assets/6fda3a19-e210-40a2-a23d-e5abb8f74e62" alt="Updating the screen" width="400">
 </a>    
+
+[프로그램 다운로드 25-10](https://github.com/kdi6033/react/releases/tag/react-25-10-MqttHookIotPlc-v1.0)   
 
 [ChatGPT 25-10]
 ```
