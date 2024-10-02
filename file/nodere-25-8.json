@@ -1,10 +1,10 @@
 [
     {
-        "id": "b45b7dde4e1d3b0e",
+        "id": "f19773620117601d",
         "type": "mqtt out",
-        "z": "9ba5d5581f98279f",
+        "z": "a9ac1b37b127160c",
         "name": "",
-        "topic": "kdi6033@gmail.com/outtopic",
+        "topic": "i2r/kdi60331@gmail.com/out",
         "qos": "0",
         "retain": "false",
         "respTopic": "",
@@ -13,14 +13,14 @@
         "correl": "",
         "expiry": "",
         "broker": "f15d66b3.c7edf8",
-        "x": 500,
+        "x": 440,
         "y": 100,
         "wires": []
     },
     {
-        "id": "db2455efa9ef5aa0",
+        "id": "fe73c67ba986b3f0",
         "type": "inject",
-        "z": "9ba5d5581f98279f",
+        "z": "a9ac1b37b127160c",
         "name": "",
         "props": [
             {
@@ -38,20 +38,20 @@
         "topic": "",
         "payload": "테스트",
         "payloadType": "str",
-        "x": 290,
+        "x": 230,
         "y": 100,
         "wires": [
             [
-                "b45b7dde4e1d3b0e"
+                "f19773620117601d"
             ]
         ]
     },
     {
-        "id": "b9854f2c80122bc0",
+        "id": "5ad3abbf16f55299",
         "type": "mqtt in",
-        "z": "9ba5d5581f98279f",
+        "z": "a9ac1b37b127160c",
         "name": "",
-        "topic": "kdi6033@gmail.com/intopic",
+        "topic": "i2r/kdi60331@gmail.com/in",
         "qos": "0",
         "datatype": "auto-detect",
         "broker": "f15d66b3.c7edf8",
@@ -59,18 +59,18 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 340,
+        "x": 270,
         "y": 200,
         "wires": [
             [
-                "665f2bbef0060d8b"
+                "0748bb1943015c5b"
             ]
         ]
     },
     {
-        "id": "665f2bbef0060d8b",
+        "id": "0748bb1943015c5b",
         "type": "debug",
-        "z": "9ba5d5581f98279f",
+        "z": "a9ac1b37b127160c",
         "name": "debug 5",
         "active": true,
         "tosidebar": true,
@@ -79,7 +79,7 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 560,
+        "x": 500,
         "y": 200,
         "wires": []
     },
@@ -119,9 +119,9 @@
         "cert": "",
         "key": "",
         "ca": "",
-        "certname": "94191b3ef7-certificate.pem.crt",
-        "keyname": "94191b3ef7-private.pem.key",
-        "caname": "MtestCA.pem",
+        "certname": "994029d689d1e0812df9e162610c9df73501214f79d8a5005f64717a8fadd899-certificate.pem.crt",
+        "keyname": "994029d689d1e0812df9e162610c9df73501214f79d8a5005f64717a8fadd899-private.pem.key",
+        "caname": "AmazonRootCA1.pem",
         "servername": "",
         "verifyservercert": true,
         "alpnprotocol": ""
