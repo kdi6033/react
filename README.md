@@ -392,23 +392,21 @@ mqtt 연결프로그램 만들어줘
 mqtt 프로그램은 components 디렉토리 만들어서 여기에 만들어줘
 ```
 
-
+유튜브 쵤연 후에 i2r 보드와 연결하기 위해 topic을 수정 했습니다.
 [생성된 프로그램] 
 App.tsx
 ```
 import React from 'react';
 import './App.css';
-import MQTTClient from './components/MQTTClient';  // 경로 수정
+import MQTTClient from './components/MQTTClient';
 
-const App: React.FC = () => {
+function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Welcome to MQTT Client Application</h1>
+        <h1>MQTT 통신 프로그램</h1>
       </header>
-      <main>
-        <MQTTClient />
-      </main>
+      <MQTTClient />
     </div>
   );
 }
@@ -423,22 +421,22 @@ import mqtt from 'mqtt';
 const MQTTClient = () => {
   const [messages, setMessages] = useState<string[]>([]); // string[] 타입으로 수정
   const brokerUrl = 'mqtt://ai.doowon.ac.kr:1803';
-  const intopic = 'kdi6033@gmail.com/intopic';
-  const outtopic = 'kdi6033@gmail.com/outtopic';
+  const intopic = 'i2r/kdi60331@gmail.com/out';
+  const outtopic = 'i2r/kdi60331@gmail.com/in';
 
   useEffect(() => {
     const client = mqtt.connect(brokerUrl);
 
     client.on('connect', () => {
       console.log('Connected to broker');
-      client.subscribe(outtopic, (err) => {
+      client.subscribe(intopic, (err) => {
         if (!err) {
-          console.log(`Subscribed to ${outtopic}`);
+          console.log(`Subscribed to ${intopic}`);
         }
       });
 
       const interval = setInterval(() => {
-        client.publish(intopic, '김동일');
+        client.publish(outtopic, '김동일');
         console.log(`Message sent to ${intopic}: 김동일`);
       }, 5000);
 
@@ -449,7 +447,7 @@ const MQTTClient = () => {
     });
 
     client.on('message', (topic, message) => {
-      if (topic === outtopic) {
+      if (topic === intopic) {
         const newMessage = message.toString();
         setMessages((prevMessages) => [...prevMessages, newMessage]);
         console.log(`Received message from ${outtopic}: ${newMessage}`);
@@ -466,7 +464,7 @@ const MQTTClient = () => {
     <div>
       <h1>MQTT Client</h1>
       <div>
-        <h2>Messages from {outtopic}</h2>
+        <h2>Messages from {intopic}</h2>
         <ul>
           {messages.map((msg, index) => (
             <li key={index}>{msg}</li>
