@@ -838,5 +838,278 @@ led 그대로 놔두고 스위치 추가해줘
 - 세 번째 버튼은 "Email로 데이터 검색하기"로, 특정 이메일을 기준으로 여러 개의 데이터를 검색합니다. 
 - 네 번째 버튼은 "데이터 삽입 또는 업데이트" 버튼은 새로운 데이터를 삽입하거나, 기존 데이터가 있을 경우 업데이트합니다.
   
-각 버튼을 클릭할 때 서버에 POST 요청을 보내고, 응답으로 받은 데이터를 화면에 표시하며, 데이터가 업데이트된 경우 자동으로 최신 데이터를 다시 가져와 반영합니다.
+각 버튼을 클릭할 때 서버에 POST 요청을 보내고, 응답으로 받은 데이터를 화면에 표시하며, 데이터가 업데이트된 경우 자동으로 최신 데이터를 다시 가져와 반영합니다.    
+
+1. 구성
+백엔드(Node.js + Express): MongoDB와 통신하는 서버를 구축합니다.
+프론트엔드(React): 백엔드 API를 통해 데이터를 주고받습니다.
+프로젝트 만들기
+```
+npx create-react-app react-mongo --template typescript
+```
+2. 백엔드 구축
+먼저, 백엔드에서 MongoDB와 통신하는 API 서버를 구성하겠습니다.
+1) Node.js 서버 설정
+db-server.js를 만듭니다.
+프로젝트 초기화: 터미널에서 Node.js 프로젝트를 초기화합니다.
+```
+mkdir backend
+cd backend
+npm init -y
+```
+필요한 패키지 설치: Express와 MongoDB 클라이언트를 설치합니다.
+```
+npm install express mongodb cors body-parser
+```
+Express 서버 설정: 백엔드에서 MongoDB와 통신하는 API를 구축합니다. mongo-client.js 파일을 생성하고 아래와 같이 작성합니다.
+[db-server.js]
+```
+const express = require('express');
+const { MongoClient } = require('mongodb');
+const cors = require('cors');
+
+const app = express();
+const port = 5000;
+const url = 'mongodb://127.0.0.1:27017';
+const dbName = 'local';
+const collectionName = 'localRecord';
+
+app.use(cors());
+app.use(express.json()); // JSON 파싱 미들웨어 추가
+
+app.post('/api/records', async (req, res) => {
+  const client = new MongoClient(url);
+  console.log("1");
+
+  try {
+    console.log('Connecting to MongoDB...');
+    await client.connect();
+    console.log('Connected to MongoDB try');
+
+    const db = client.db(dbName);
+    const collection = db.collection(collectionName);
+
+    const records = await collection.find({}).toArray();
+    console.log('Records retrieved:', records);
+
+    res.json(records);
+  } catch (err) {
+    console.error('Error connecting to MongoDB', err);
+    res.status(500).send('Error connecting to MongoDB');
+  } finally {
+    await client.close();
+    console.log('MongoDB connection closed');
+  }
+});
+
+app.post('/api/findArray', async (req, res) => {
+  const client = new MongoClient(url);
+  const { email } = req.body; // `mac` 삭제
+  console.log(`Received email: ${email}`); // 이메일 데이터 확인 로그
+
+  try {
+    console.log('Connecting to MongoDB...');
+    await client.connect();
+    console.log('Connected post findArray');
+
+    const db = client.db(dbName);
+    const collection = db.collection(collectionName);
+
+    // `email` 필드와 일치하는 모든 문서 찾기
+    const records = await collection.find({ email }).toArray();
+    console.log('Records retrieved:', records);
+
+    res.json(records);
+  } catch (err) {
+    console.error('Error connecting to MongoDB', err);
+    res.status(500).send('Error connecting to MongoDB');
+  } finally {
+    await client.close();
+    console.log('MongoDB connection closed');
+  }
+});
+
+app.post('/api/record', async (req, res) => {
+  const client = new MongoClient(url);
+  const { email, mac } = req.body;
+  console.log("2");
+
+  try {
+    console.log('Connecting to MongoDB...');
+    await client.connect();
+    console.log('Connected post record findOne');
+
+    const db = client.db(dbName);
+    const collection = db.collection(collectionName);
+
+    const record = await collection.findOne({ email, mac });
+    console.log('Record retrieved:', record);
+
+    res.json(record);
+  } catch (err) {
+    console.error('Error connecting to MongoDB', err);
+    res.status(500).send('Error connecting to MongoDB');
+  } finally {
+    await client.close();
+    console.log('MongoDB connection closed');
+  }
+});
+
+app.post('/api/upsert', async (req, res) => {
+  const client = new MongoClient(url);
+  const { email, mac, ...rest } = req.body; // email과 mac을 제외한 나머지 필드
+
+  try {
+    console.log('Connecting to MongoDB...');
+    await client.connect();
+    console.log('Connected post updateOne');
+
+    const db = client.db(dbName);
+    const collection = db.collection(collectionName);
+
+    const result = await collection.updateOne(
+      { email, mac },
+      { $set: rest },
+      { upsert: true }
+    );
+    console.log('업데이트 또는 삽입된 데이터:', result);
+
+    res.json(result);
+  } catch (err) {
+    console.error('Error connecting to MongoDB', err);
+    res.status(500).send('Error connecting to MongoDB');
+  } finally {
+    await client.close();
+    console.log('MongoDB connection closed');
+  }
+});
+
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
+```
+2) 백앤드에서 db-server.js 실행:
+서버를 실행하여 API가 정상적으로 작동하는지 확인합니다.
+```
+node db-server.js
+```
+이제 백엔드에서 MongoDB와 통신할 수 있는 API 서버가 설정되었습니다.    
+3. 프론트엔드 설정 (React)    
+React에서는 이 백엔드 API를 통해 데이터를 주고받습니다. MQTTClient가 수신한 메시지를 API 서버로 전송하여 MongoDB에 저장하도록 수정합니다.
+1) App.tsx 수정**:
+다음 코드를 추가합니다.
+[App.tsx]
+```
+import React, { useState } from 'react';
+import './App.css';
+
+function App() {
+  const [records, setRecords] = useState<any[]>([]);
+
+  async function fetchAllData() {
+    try {
+      const response = await fetch('http://localhost:5000/api/records', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({}) // POST 요청에 빈 바디 전송
+      });
+      const data = await response.json();
+      console.log('모든 데이터:', data);
+      setRecords(data);
+    } catch (error) {
+      console.error('모든 데이터를 가져오는 중 오류 발생:', error);
+    }
+  }
+
+
+  async function fetchSingleData() {
+    try {
+      const response = await fetch('http://localhost:5000/api/record', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: 'kdi6033@gmail.com', mac: 'B0:A7:32:1D:4C:B6' })
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      console.log('1개 데이터:', data);
+      setRecords([data]);
+    } catch (error) {
+      console.error('1개 데이터를 가져오는 중 오류 발생:', error);
+    }
+  }
+
+  async function fetchFindArrayData() {
+    try {
+      const response = await fetch('http://localhost:5000/api/findArray', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: 'kdi6033@gmail.com' }) // email로만 검색
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      console.log('findArray로 가져온 데이터:', data);
+      setRecords(data);
+    } catch (error) {
+      console.error('findArray로 데이터를 가져오는 중 오류 발생:', error);
+    }
+  }
+
+  async function insertOrUpdateData() {
+    try {
+      const response = await fetch('http://localhost:5000/api/upsert', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: 'kdi6033@gmail.com', mac: 'B0:A7:32:1D:4C:B6', temp: '50' })
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      console.log('업데이트 또는 삽입된 데이터:', data);
+      fetchAllData(); // 업데이트 후 모든 데이터를 다시 가져와서 화면에 표시
+    } catch (error) {
+      console.error('데이터를 삽입 또는 업데이트하는 중 오류 발생:', error);
+    }
+  }
+
+  return (
+    <div className="App">
+      <header className="App-header">
+        <div>
+          <h2>MongoDB에서 가져온 레코드</h2>
+        </div>
+      </header>
+
+      {/* main 태그로 감싸기 */}
+      <main>
+        <ul>
+          {records.map((record, index) => (
+            <li key={index}>{JSON.stringify(record)}</li>
+          ))}
+        </ul>
+        <button onClick={fetchAllData}>모든 데이터 가져오기</button>
+        <button onClick={fetchSingleData}>1개 데이터 가져오기</button>
+        <button onClick={fetchFindArrayData}>Email로 데이터 검색하기</button>
+        <button onClick={insertOrUpdateData}>데이터 삽입 또는 업데이트</button>
+      </main>
+    </div>
+  );
+}
+
+export default App;
+```
+
+
 
