@@ -423,7 +423,8 @@ npx create-react-app mqtt --template typescript
 ```
 생성된 App.tsx 에서 아래와 같이 필요한 부분만 가지고 프로그램을 시작 합니다.    
 [관련지식] 웹과 mqtt는 웹소켙으로 통신을 합니다. 보통은 1883포트로 사용하고 ai.doowon.ac.kr에서 웹소켙은 1803으로 설정 되었습니다. 그리고 프로그램을 구성하는데 필요한 서브프로그램은 /components 라는 디렉토리를 만들어 여기에 저장하는 것이 관리하기 용이 합니다.    
-[ChatGPT 25-8]
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">  [25-8]    
+
 ```
 import React from 'react';
 import './App.css';
@@ -781,7 +782,7 @@ useState와 useEffect를 적절히 사용해 효율적으로 상태 변화를 �
 
 위 프로그램은 여러개의 IoT PLC가 연결되어 있으면 데이터가 혼합되어 관측하기 어려워 선택한 기기만 볼수 있게 프로그램을 수정 합니다.    
 
-[ChatGPT]
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">    
 멕어드레스는 자신의 프로그램에 들어오는 주소로 대체하세요.
 ```
 Display 에서 "mac":"D8:13:2A:C3:73:58" 인것만 표시해줘
@@ -835,7 +836,7 @@ export default Display;
 [프로그램 다운로드 25-11](https://github.com/kdi6033/react/releases/tag/react-25-11-v1.0)    
 IoT PLC에서 mqtt로 들어오는 데이터를 4개의 Led를 만들어 연동합니다.    
 
-[ChatGPT 11]
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">   [11]    
 ```
 Display.tsx 에 이메일 입력과 맥어드레스 입력을 만들고 저장을 누르면 컴퓨터에 저장하고 프로그램 시작할 때 이값을 읽어오게 해줘
 outtopic 은 i2r/이메일/in 으로  intopic은 i2r/이메일/out 만들어줘
@@ -855,7 +856,8 @@ contexts/ConfigContext.tsx를 만들고 email, mac 을 전역 변수로 만들�
 ### 25-12 [UI 만들기] Led와 스위치를 만들어 IoT PLC와 연동한다.
 [프로그램 다운로드 25-12](https://github.com/kdi6033/react/releases/tag/react-25-12-v1.0)   
 React에서 4개의 스위치를 만들어 동작 시키면 IoT PLC 가 동작하게 프로그램 합니다.
-[ChatGPT 12-1] Led 만들어 mqtt 데이터 연결
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">   [12-1] Led 만들어 mqtt 데이터 연결
+
 ```
 {"type":3,"email":"kdi6033@gmail.com","mac":"D8:13:2A:C3:73:58","temp":28.1,"humi":48,"in":[0,0,0,0],"out":[0,0,0,0]}
 다음과 같이 메세지가 들어 옵니다. "in":[0,0,0,0] 으로 들어오는 데이터를 4개의 led를 만들어서 연결해줘
@@ -866,7 +868,7 @@ React에서 4개의 스위치를 만들어 동작 시키면 IoT PLC 가 동작�
 - CSS: 각 LED는 원형으로 표현되며, 상태에 따라 초록색(켜짐)과 빨간색(꺼짐)으로 표시됩니다.
 - useEffect: 메시지가 들어올 때마다 MAC 주소를 확인하고, 일치하면 "in" 값으로 LED 상태를 업데이트합니다.
 
-[ChatGPT 12-2] 스위치 만들어 mqtt 통신으로 데이터 보냄
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">    [12-2] 스위치 만들어 mqtt 통신으로 데이터 보냄    
 
 [IoT PLC 통신프로토콜 보기](https://github.com/kdi6033/i2r?tab=readme-ov-file#%ED%94%84%EB%A1%9C%ED%86%A0%EC%BD%9C)    
 ```
