@@ -857,7 +857,8 @@ contexts/ConfigContext.tsx를 만들고 email, mac 을 전역 변수로 만들�
 
 ### 25-12 [UI 만들기] Led와 스위치를 만들어 IoT PLC와 연동한다.
 [프로그램 다운로드 25-12](https://github.com/kdi6033/react/releases/tag/react-25-12-v1.0)   
-React에서 4개의 스위치를 만들어 동작 시키면 IoT PLC 가 동작하게 프로그램 합니다.
+React에서 4개의 스위치를 만들어 동작 시키면 IoT PLC 가 동작하게 프로그램 합니다.   
+
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">   [12-1] Led 만들어 mqtt 데이터 연결
 
 ```
