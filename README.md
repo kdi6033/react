@@ -782,11 +782,13 @@ useState와 useEffect를 적절히 사용해 효율적으로 상태 변화를 �
 
 위 프로그램은 여러개의 IoT PLC가 연결되어 있으면 데이터가 혼합되어 관측하기 어려워 선택한 기기만 볼수 있게 프로그램을 수정 합니다.    
 
-<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">     
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">      
 멕어드레스는 자신의 프로그램에 들어오는 주소로 대체하세요.    
+
 ```
 Display 에서 "mac":"D8:13:2A:C3:73:58" 인것만 표시해줘
 ```
+
 Display 컴포넌트에서 수신된 메시지 중 "mac":"D8:13:2A:C3:73:58"이 포함된 것만 필터링하여 표시하도록 수정할 수 있습니다. 이를 위해 메시지를 JSON 형식으로 변환한 후, mac 필드가 원하는 값과 일치하는지 확인하여 UI에 반영하면 됩니다.    
 Display.tsx
 ```
