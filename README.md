@@ -1,4 +1,54 @@
-# react
+# ChatGPT와 React UI로 배우는 IoT 서버 개발
+### 1. 과정 개요
+- 과정명: ChatGPT와 React UI로 배우는 IoT 서버 개발
+- 대상: React, IoT, 서버 통합에 관심 있는 개발자, 학생 및 초보자
+- 목표: ChatGPT와 React를 활용하여 IoT 시스템을 위한 서버 UI를 개발하고, MQTT와 MongoDB를 통해 클라우드 서버와 연동하는 기술을 습득
+- 
+### 2. 주요 학습 내용
+1. ChatGPT 기반 React UI 개발
+- ChatGPT를 활용한 React 프로젝트 가이드
+- 효율적인 UI 개발을 위한 ChatGPT 활용법
+- 서버 UI 컴포넌트 제작 실습
+- IoT PLC 실습 도구 연동
+
+2. IoT PLC 실습 도구 소개: 수업에서 사용할 IoT PLC 장치 및 환경 소개 (GitHub 레포지토리)
+- IoT PLC를 React UI와 연결하는 방법
+- 실제 IoT PLC 기기와의 데이터 송수신 실습
+- MQTT 통신을 통한 데이터 송수신
+
+3. MQTT 통신 프로토콜의 기본 개념
+- MQTT 브로커 구축
+- MQTT를 사용한 IoT 장비와의 실시간 데이터 통신 구현
+- React UI에서 MQTT로 실시간 데이터 표시
+- MongoDB를 활용한 데이터 저장
+
+4. MongoDB 기본 개념 및 설치 방법
+- MQTT로 수신한 데이터를 MongoDB에 저장하는 방법
+- 저장된 데이터를 React UI에 표시하는 실습
+- 클라우드 서버 구축 및 연동
+
+5. 아마존 클라우드를 사용한 서버 구성
+- React UI 프로그램과 클라우드 서버 간 데이터 통신
+- 클라우드 환경에서 IoT 데이터의 저장 및 관리    
+
+### 3. 실습 환경
+- React: UI 개발 환경 설정 및 실습
+- IoT PLC: IoT PLC 기기와 연결하여 실시간 데이터 처리 (GitHub 레포지토리)
+- MQTT: 실시간 데이터 통신을 위한 브로커 설정
+- MongoDB: 데이터베이스 설치 및 연동
+- AWS 클라우드: 서버 호스팅 및 배포 실습    
+
+### 4. 강의 목표
+- ChatGPT를 활용하여 React UI를 효율적으로 개발하는 방법을 학습
+- IoT PLC, MQTT, MongoDB를 연동하여 실시간 데이터 송수신 및 저장 기술 습득
+- 클라우드 서버와 IoT 시스템의 통합 및 관리 능력 배양
+  
+### 5. 과정 결과물
+- React로 구현된 IoT 서버 UI
+- IoT PLC 기기와의 실시간 데이터 통신을 통해 수집된 정보
+- MQTT와 MongoDB를 통해 실시간으로 연동된 IoT 장비 데이터
+- 아마존 클라우드 서버에서 동작하는 완성된 IoT 시스템
+
 react 프로그램과 이를 Data Science와 AI Science에 응용합니다.    
 [React Learn 공식 사이트](https://react.dev/learn)    
 [React Doc 공식 사이트](https://docs.github.com/ko/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#links)
