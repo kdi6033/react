@@ -27,7 +27,7 @@
 - 저장된 데이터를 React UI에 표시하는 실습
 - 클라우드 서버 구축 및 연동
 
-5. 아마존 클라우드를 사용한 서버 구성
+5. PC 및 아마존 클라우드를 사용한 서버 구성
 - React UI 프로그램과 클라우드 서버 간 데이터 통신
 - 클라우드 환경에서 IoT 데이터의 저장 및 관리    
 
@@ -41,13 +41,14 @@
 ### 4. 강의 목표
 - ChatGPT를 활용하여 React UI를 효율적으로 개발하는 방법을 학습
 - IoT PLC, MQTT, MongoDB를 연동하여 실시간 데이터 송수신 및 저장 기술 습득
+- PC  IoT 서버 시스템 구축
 - 클라우드 서버와 IoT 시스템의 통합 및 관리 능력 배양
   
 ### 5. 과정 결과물
 - React로 구현된 IoT 서버 UI
 - IoT PLC 기기와의 실시간 데이터 통신을 통해 수집된 정보
 - MQTT와 MongoDB를 통해 실시간으로 연동된 IoT 장비 데이터
-- 아마존 클라우드 서버에서 동작하는 완성된 IoT 시스템
+- PC 및 아마존 클라우드 서버에서 동작하는 완성된 IoT 시스템
 
 react 프로그램과 이를 Data Science와 AI Science에 응용합니다.    
 [React Learn 공식 사이트](https://react.dev/learn)    
