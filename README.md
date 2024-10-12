@@ -837,7 +837,8 @@ export default Display;
 ### 25-11 [정보 저장과 읽기] 이메일 맥어드레스 입력창 만들고 정보 저장하고 읽기
 <a href="https://youtu.be/ebBb9uQH0dk">
     <img src="https://github.com/user-attachments/assets/56e51862-d8d2-478c-8f9b-a0ff939f2559" alt="Updating the screen" width="400">
-</a> 
+</a>     
+
 [프로그램 다운로드 25-11](https://github.com/kdi6033/react/releases/tag/react-25-11-v1.0)    
 IoT PLC에서 mqtt로 들어오는 데이터를 4개의 Led를 만들어 연동합니다.    
 
