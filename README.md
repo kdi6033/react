@@ -1221,7 +1221,7 @@ MachineOverview에서 email과 mac 값을 입력할 수 있는 변수로 처리�
 
 DB와 관현된 프로그램을 별도의 tsx로 만들어 App.tsx에서 분리하고 다른 tsx에서도 이를 활용 할 수 있게 합니다.    
 
-<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">   [15-3] DB 독립 tsx로 만듬
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="80">   [15-3] DB 독립 tsx로 만듬
 ```
 async function fetchAllData() {
     try {
