@@ -838,9 +838,6 @@ export default Display;
 <a href="https://youtu.be/ebBb9uQH0dk">
     <img src="https://github.com/user-attachments/assets/56e51862-d8d2-478c-8f9b-a0ff939f2559" alt="Updating the screen" width="400">
 </a> 
-
-![25-11  React   정보 저장과 읽기](https://github.com/user-attachments/assets/56e51862-d8d2-478c-8f9b-a0ff939f2559)
-
 [프로그램 다운로드 25-11](https://github.com/kdi6033/react/releases/tag/react-25-11-v1.0)    
 IoT PLC에서 mqtt로 들어오는 데이터를 4개의 Led를 만들어 연동합니다.    
 
@@ -862,6 +859,9 @@ contexts/ConfigContext.tsx를 만들고 email, mac 을 전역 변수로 만들�
 - 프로그램이 시작될 때 로컬 스토리지에서 저장된 값을 불러옵니다.
 
 ### 25-12 [UI 만들기] Led와 스위치를 만들어 IoT PLC와 연동한다.
+<a href="https://youtu.be/SWQ7683I-hw">
+    <img src="https://github.com/user-attachments/assets/4a6411aa-f9b6-4397-8843-3c0e8c4b7357" alt="Updating the screen" width="400">
+</a> 
 [프로그램 다운로드 25-12](https://github.com/kdi6033/react/releases/tag/react-25-12-v1.0)   
 React에서 4개의 스위치를 만들어 동작 시키면 IoT PLC 가 동작하게 프로그램 합니다.   
 
