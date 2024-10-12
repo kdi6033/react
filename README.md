@@ -1242,5 +1242,16 @@ async function fetchAllData() {
 App.tsx 에 DB와 견련된 프로그램을 별도의 tsx로 만들어 App.tsx를 단순하게 만들어줘
 ```
 
+```
+src/
+├── App.tsx
+├── components/
+│   ├── DataHandler.tsx
+│   ├── MachineOverview.tsx
+│   └── MQTTClient.tsx
+└── App.css
+
+```
+
 
 
