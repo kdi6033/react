@@ -1199,7 +1199,8 @@ mqtt와 mongodb를 합쳐서 서버의 기초프로그램은 완성을 하였습
 - App.tsx는 전체 프로그램을 한눈에 볼수 있게 간단하게 하기 위해 서브 프로그램만 보이게 하며, 여기에 구성한 프로그램은 MachineOverview.tsx 로 구성하고 DB 데티터를 다루기 위해 DataHandler.tsx를 만들어 프로그램을 이전 했습니다.ㅇ
 - 데이터베이스 검색을 위해 사용한 email, mac 등의 변수로 전달 하게 수정 하였습니다. 그래야 다양한 DB를 검색 할 수 있습니다.
 
-디스플레이에 관련된 것을 App에서 분리 합니다.
+디스플레이에 관련된 것을 App에서 분리 합니다.    
+
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">   [15-1] App에서 디스플레이 분리
 ```
 결과를 App.tsx 에 위치하니 프로그램이 복잡해요
@@ -1207,7 +1208,8 @@ App.tsx의 모든 내용을 components 에 MachineOverview.tsx 를 만들어 여
 mqtt 로 들어오는 정보는 MachineOverview.tsx 에 전달하기도 하지만 db와 하드에 데이터를 저장하기도 하니 App.tsx에서 데이터를 받아 MachineOverview.tsx와 하위 클래스에 hook으로 전달해 줘요
 한글로 설명하고 수정된 모든 프로그램 보여줘
 ```
-DB에 사용하는 데이터를 변수화 하여 범용적으로 만듭니다.
+DB에 사용하는 데이터를 변수화 하여 범용적으로 만듭니다.    
+
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">   [15-2] DB데이터 변수화
 ```
 body: JSON.stringify({ email: 'kdi6033@gmail.com' }) // email로만 검색
@@ -1217,7 +1219,8 @@ body: JSON.stringify({ email, mac: 'B0:A7:32:1D:4C:B6' })
 MachineOverview에서 email과 mac 값을 입력할 수 있는 변수로 처리해줘
 ```
 
-DB와 관현된 프로그램을 별도의 tsx로 만들어 App.tsx에서 분리하고 다른 tsx에서도 이를 활용 할 수 있게 합니다.
+DB와 관현된 프로그램을 별도의 tsx로 만들어 App.tsx에서 분리하고 다른 tsx에서도 이를 활용 할 수 있게 합니다.    
+
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">   [15-3] DB 독립 tsx로 만듬
 ```
 async function fetchAllData() {
