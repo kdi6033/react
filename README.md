@@ -1184,8 +1184,6 @@ export default App;
 <a href="https://youtu.be/TT5mNjH4skc">
     <img src="https://github.com/user-attachments/assets/6e2aba35-24c3-48ab-8027-ca3333af5845" alt="Updating the screen" width="400">
 </a>     
-![25-14  React  MongoDB-MQTT](https://github.com/user-attachments/assets/6e2aba35-24c3-48ab-8027-ca3333af5845)
-
 
 [프로그램![Uploading 25-14 [React] MongoDB-MQTT.jpg…]()
  다운로드 25-14](https://github.com/kdi6033/react/releases/tag/react-25-14-mqtt-mongodb-v1.0)  
