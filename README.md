@@ -896,6 +896,10 @@ led 그대로 놔두고 스위치 추가해줘
 - UI: 각 스위치는 체크박스로 구현되었으며, 스위치가 켜지면 해당 번호에 맞는 데이터를 MQTT로 전송하게 됩니다.
 
 ### 25-13 MongoDB 연결과 사용법
+<a href="https://youtu.be/sDjbWRu5gB0">
+    <img src="https://github.com/user-attachments/assets/a740712d-5b3c-4dad-9235-4dfd464e1e43" alt="Updating the screen" width="400">
+</a>      
+
 [프로그램 다운로드 25-13](https://github.com/kdi6033/react/releases/tag/react-25-13-mongo-v1.0)     
 이 React 프로그램은 MongoDB와의 연동을 통해 데이터를 조회하고 업데이트하는 기능을 제공합니다. 사용자는 네 가지 버튼을 통해 다양한 작업을 수행할 수 있습니다.    
 - 첫 번째 버튼은 "모든 데이터 가져오기"로, MongoDB에 저장된 모든 데이터를 조회하여 화면에 표시합니다. 
