@@ -1273,5 +1273,39 @@ db의 데이터 구조는 다음과 같습니다.
 여기서 type=2 이면 Page-02, type=3 이면 Page-03, type=4 이면 Page-04 로 연결됩니다.
 프로그램을 위해 데이터 구조와 처리를 어떻게 햐야 하는지 설명해줘 
 ```
+이와같이 chatgpt에 프로젝트의 기본 개면을 입력합니다. 응답은 생략 하겠습니다.    
+location 과 wrapper 의 개념을 설명하겠습니다.
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="80">   [16-2]  location 과 wrapper 의 개념   
+# location
+- location은 웹 애플리케이션에서 사용자의 현재 페이지 URL이나 경로에 대한 정보를 제공하는 객체입니다.
+- React에서는 react-router-dom 라이브러리의 useLocation 훅을 통해 URL 경로 정보를 가져올 수 있습니다. 이 훅은 현재 경로, 검색 문자열(query string), 해시(hash) 등을 제공하며, 페이지 이동 시 해당 정보가 변경되면 자동으로 업데이트됩니다.
+- location 객체를 통해 각 페이지의 URL을 이용해 상태를 관리하거나 특정 정보를 넘길 수 있습니다.
+- 예를 들어, 특정 MAC 주소를 포함한 URL을 사용해 해당 MAC 주소에 해당하는 장비의 상세 정보를 표시할 수 있습니다. 사용자는 이 URL을 통해 원하는 장비를 조회하고, location을 이용해 실시간으로 데이터를 받아 화면에 표시할 수 있습니다.
+```
+import { useLocation } from 'react-router-dom';
 
+function MyComponent() {
+  const location = useLocation();
+  console.log(location.pathname);  // 현재 경로
+  console.log(location.search);    // 검색 문자열
+}
+```
+
+# wrapper
+- wrapper는 흔히 여러 컴포넌트를 감싸거나 특정 기능을 추가하기 위해 사용되는 컴포넌트입니다.    
+- wrapper를 사용하면 공통 스타일이나 기능을 자식 컴포넌트들에 일괄적으로 적용할 수 있어 효율적입니다. 
+- Page03Wrapper와 같은 컴포넌트를 통해 특정 페이지(Page-03)의 고유 상태 관리와 데이터 업데이트 기능을 구현하고 있습니다. 
+예를 들어, Page03Wrapper가 location을 사용해 MAC 주소를 받아 처리하도록 하고, 새로운 MQTT 메시지가 도착하면 해당 MAC 주소의 상태를 업데이트하도록 구현할 수 있습니다.
+- 이를 통해, 공통된 로직과 스타일을 손쉽게 관리할 수 있습니다.
+```
+function Page03Wrapper({ children }) {
+  return (
+    <div className="wrapper">
+      {/* 공통 스타일과 로직이 적용됨 */}
+      {children}
+    </div>
+  );
+}
+```
+location과 wrapper를 활용하여 MAC 주소를 페이지에 전달하고, 컴포넌트 상태를 일관되게 관리함으로써 사용자 인터페이스를 효율적으로 구성할 수 있습니다.
 
