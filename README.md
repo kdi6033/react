@@ -415,7 +415,7 @@ export default App;
     <img src="https://github.com/user-attachments/assets/63189d1d-ee99-4720-b30d-5bdf89376905" alt="Updating the screen" width="400">
 </a>
 
-[프로그램 다운로드 25-8](https://github.com/kdi6033/react/releases/tag/react-mqtt-v1.0)   
+[프로그램 다운로드 25-8](https://github.com/kdi6033/react/releases/tag/react-mqtt-v1.3)   
 
 리엑트 프로그램을 새로 만들어 시작합니다.
 ```
