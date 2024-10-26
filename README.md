@@ -1253,6 +1253,9 @@ src/
 └── App.css
 
 ```
+### 25-16 IoT PLC를 위한 상업용 프로그램 시작
+지금까지는 IoT PLC 를 제어어하기 위한 React의 기본 개면을 설명했습니다. 프로그램의 구성 부터 설계 하겠습니다.     
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="80">   [16-1] 프로그램 구성    
 
 
 
