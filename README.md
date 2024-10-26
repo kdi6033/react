@@ -1256,6 +1256,22 @@ src/
 ### 25-16 IoT PLC를 위한 상업용 프로그램 시작
 지금까지는 IoT PLC 를 제어어하기 위한 React의 기본 개면을 설명했습니다. 프로그램의 구성 부터 설계 하겠습니다.     
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="80">   [16-1] 프로그램 구성    
-
+```
+사용자가 이메일 id로 접속하면 mac address로 구분되는 IoT PLC를 page 02 03 04 로 구분해서 입력과 출력을 제어하는 ui를 구성해서 보여줘
+서버는 mongodb와 연동하고 사용자는 users 이름의 collection 으로, plc는 localRecord로 관리 합니다.
+이메일 하나에 plc는 여러 개가 존재 합니다.
+이메일로 로그인 하면 여러 개의 전체 plc 가 보이고 plc를 선택하면 출력 입력을 제어하는 상세 페이지가 보입니다.
+plc는 서버와 mqtt 으로 통신을 받기도 하지만 실시간으로 현장에서 변화된 입력 상태와 온도 습도 등을 보내면 실시간으로 ui에 표시해야 합니다.
+운전 중에 새로운 plc가 들어오면 ui와 db 가 업데이트 되어야 합니다.
+상세 페이지에서는 해당하는 mac 데이터가 들어오면 ui를 업데이트 합니다.
+이메일에 따라 전체 plc를 보여주는 것은 MachineOverview.tsx 구성하고
+상세페이지에서 plc는 세가지 종류가 있는데 Page-02, Page-03, Pag-04로 구분하고 싶어요 
+전체 프로그램은 location 과 wrapper를 사용해서 구성 합니다.
+db의 데이터 구조는 다음과 같습니다.
+{"mac":"D8:13:2A:C5:C3:7C","email":"kdi6033@gmail.com","humi":45,"in":[0,0,0,0],"name":["D8:13:2A:C5:C3:7C-1",
+  "Led0-1","Led1","Led2","Led3","Switch0-1","Switch1","Switch2","Switch3"],"out":[0,0,0,0],"temp": 23.7,"type": 3}
+여기서 type=2 이면 Page-02, type=3 이면 Page-03, type=4 이면 Page-04 로 연결됩니다.
+프로그램을 위해 데이터 구조와 처리를 어떻게 햐야 하는지 설명해줘 
+```
 
 
