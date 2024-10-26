@@ -1194,6 +1194,7 @@ export default App;
 npm install mqtt
 ```
 ### 25-15 단순화한 기초 서버 프로그램
+[프로그램 다운로드 25-15](https://github.com/kdi6033/react/releases/tag/react-25-15-mongo-mqtt-v1.0)  
 mqtt와 mongodb를 합쳐서 서버의 기초프로그램은 완성을 하였습니다. 지금부터는 서버 프로그램을 확장하기 위해서는 프로그램을 심플하고 분석하기 좋게 구조를 변경 시키겠습니다.
 
 - App.tsx는 전체 프로그램을 한눈에 볼수 있게 간단하게 하기 위해 서브 프로그램만 보이게 하며, 여기에 구성한 프로그램은 MachineOverview.tsx 로 구성하고 DB 데티터를 다루기 위해 DataHandler.tsx를 만들어 프로그램을 이전 했습니다.ㅇ
