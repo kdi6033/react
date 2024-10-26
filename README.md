@@ -55,7 +55,7 @@ react 프로그램과 이를 Data Science와 AI Science에 응용합니다.
 [React Doc 공식 사이트](https://docs.github.com/ko/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#links)
 
 # react 시작하기    
-1. Node.js 설치    
+##1. Node.js 설치    
 React는 Node.js 환경에서 동작하므로 먼저 Node.js를 설치해야 합니다.    
 [Node.js 공식 사이트](https://nodejs.org/en)에서 설치합니다.
 설치 후, 터미널이나 명령 프롬프트에 다음 명령어를 입력해 설치가 잘 되었는지 확인합니다:
@@ -63,7 +63,7 @@ React는 Node.js 환경에서 동작하므로 먼저 Node.js를 설치해야 합
 node -v
 npm -v
 ```
-2. React 프로젝트 생성    
+##2. React 프로젝트 생성    
 React 프로젝트를 시작하기 위해 Facebook에서 제공하는 create-react-app 도구를 사용할 수 있습니다.    
 터미널이나 명령 프롬프트에서 원하는 디렉토리로 이동합니다.    
 다음 명령어로 새 React 프로젝트를 생성합니다:
@@ -84,8 +84,8 @@ code my-app
 ```
 npm start
 ```
-## 25-2
-### [프로젝트] 버튼, 설명문, 스타일, 데이터, 그림 만들기
+# React 프로젝트트
+## [프로젝트 25-2] 버튼, 설명문, 스타일, 데이터, 그림 만들기
 이 React 프로그램은 세 가지 컴포넌트로 구성된 간단한 웹 애플리케이션입니다. App 컴포넌트는 메인 컴포넌트로, MyButton, AboutPage, Profile 컴포넌트를 렌더링합니다. 
 - MyButton은 단순히 "I'm a button" 텍스트가 있는 버튼을 표시합니다.
 - AboutPage는 제목과 함께 간단한 소개 텍스트를 렌더링하고,
