@@ -1,5 +1,5 @@
 # ChatGPT와 React UI로 배우는 IoT 서버 개발
-### 1. 과정 개요
+## 1. 과정 개요
 - 과정명: ChatGPT와 React UI로 배우는 IoT 서버 개발
 - 대상: React, IoT, 서버 통합에 관심 있는 개발자, 학생 및 초보자
 - 목표: ChatGPT와 React를 활용하여 IoT 시스템을 위한 서버 UI를 개발하고, MQTT와 MongoDB를 통해 클라우드 서버와 연동하는 기술을 습득
