@@ -4,7 +4,7 @@
 - 대상: React, IoT, 서버 통합에 관심 있는 개발자, 학생 및 초보자
 - 목표: ChatGPT와 React를 활용하여 IoT 시스템을 위한 서버 UI를 개발하고, MQTT와 MongoDB를 통해 클라우드 서버와 연동하는 기술을 습득
 - 
-### 2. 주요 학습 내용
+## 2. 주요 학습 내용
 1. ChatGPT 기반 React UI 개발
 - ChatGPT를 활용한 React 프로젝트 가이드
 - 효율적인 UI 개발을 위한 ChatGPT 활용법
