@@ -31,20 +31,20 @@
 - React UI 프로그램과 클라우드 서버 간 데이터 통신
 - 클라우드 환경에서 IoT 데이터의 저장 및 관리    
 
-### 3. 실습 환경
+## 3. 실습 환경
 - React: UI 개발 환경 설정 및 실습
 - IoT PLC: IoT PLC 기기와 연결하여 실시간 데이터 처리 (GitHub 레포지토리)
 - MQTT: 실시간 데이터 통신을 위한 브로커 설정
 - MongoDB: 데이터베이스 설치 및 연동
 - AWS 클라우드: 서버 호스팅 및 배포 실습    
 
-### 4. 강의 목표
+## 4. 강의 목표
 - ChatGPT를 활용하여 React UI를 효율적으로 개발하는 방법을 학습
 - IoT PLC, MQTT, MongoDB를 연동하여 실시간 데이터 송수신 및 저장 기술 습득
 - PC  IoT 서버 시스템 구축
 - 클라우드 서버와 IoT 시스템의 통합 및 관리 능력 배양
   
-### 5. 과정 결과물
+## 5. 과정 결과물
 - React로 구현된 IoT 서버 UI
 - IoT PLC 기기와의 실시간 데이터 통신을 통해 수집된 정보
 - MQTT와 MongoDB를 통해 실시간으로 연동된 IoT 장비 데이터
@@ -55,7 +55,7 @@ react 프로그램과 이를 Data Science와 AI Science에 응용합니다.
 [React Doc 공식 사이트](https://docs.github.com/ko/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#links)
 
 # react 시작하기    
-### 1. Node.js 설치    
+## 1. Node.js 설치    
 React는 Node.js 환경에서 동작하므로 먼저 Node.js를 설치해야 합니다.    
 [Node.js 공식 사이트](https://nodejs.org/en)에서 설치합니다.
 설치 후, 터미널이나 명령 프롬프트에 다음 명령어를 입력해 설치가 잘 되었는지 확인합니다:
@@ -63,7 +63,7 @@ React는 Node.js 환경에서 동작하므로 먼저 Node.js를 설치해야 합
 node -v
 npm -v
 ```
-### 2. React 프로젝트 생성    
+## 2. React 프로젝트 생성    
 React 프로젝트를 시작하기 위해 Facebook에서 제공하는 create-react-app 도구를 사용할 수 있습니다.    
 터미널이나 명령 프롬프트에서 원하는 디렉토리로 이동합니다.    
 다음 명령어로 새 React 프로젝트를 생성합니다:
@@ -84,7 +84,7 @@ code my-app
 ```
 npm start
 ```
-### 25-2
+## 25-2
 ### [프로젝트] 버튼, 설명문, 스타일, 데이터, 그림 만들기
 이 React 프로그램은 세 가지 컴포넌트로 구성된 간단한 웹 애플리케이션입니다. App 컴포넌트는 메인 컴포넌트로, MyButton, AboutPage, Profile 컴포넌트를 렌더링합니다. 
 - MyButton은 단순히 "I'm a button" 텍스트가 있는 버튼을 표시합니다.
@@ -178,7 +178,7 @@ Profile.css
   }
 ```
 
-### 25-3
+## 25-3
 ### [프로젝트] Conditional rendering
 [프로그램 다운로드 25-3](https://github.com/kdi6033/react/releases/tag/react-rendering-lists-v1.0)    
 이 프로그램은 useState를 사용해 로그인 여부를 상태로 관리하며, 로그인 상태에 따라 다른 UI를 보여주는 조건부 렌더링을 구현했습니다. 사용자가 로그인 버튼을 클릭하면 isLoggedIn 상태가 true로 변경되어 로그인 화면이 나타나고, 로그아웃 버튼을 클릭하면 false로 변경되어 로그아웃 화면이 나타납니다.    
@@ -230,7 +230,7 @@ function App() {
 export default App;
 ```
 
-### 25-4
+## 25-4
 ### [프로젝트] Rendering lists
 이 React 프로그램은 두 개의 컴포넌트, App과 ShoppingList로 구성됩니다. App 컴포넌트는 화면에 "Shopping List" 제목과 ShoppingList 컴포넌트를 표시합니다. ShoppingList 컴포넌트는 products 배열을 사용하여 리스트를 만들고, 각 항목의 isFruit 값에 따라 색상을 다르게 표시합니다. 과일이면 magenta, 아니면 darkgreen 색상으로 렌더링됩니다.   
 유튜브 보기    
@@ -288,7 +288,7 @@ export default function ShoppingList() {
 }
 ```
 
-### 25-5
+## 25-5
 ### [프로젝트] Responding to events 
 이 React 프로그램은 간단한 버튼을 생성합니다. App 컴포넌트 안에 있는 버튼을 클릭하면 handleClick 함수가 호출되어 "You clicked me!"라는 알림(alert)이 화면에 나타납니다. 이 프로그램의 핵심은 버튼에 onClick 이벤트를 설정해 클릭 시 특정 동작(여기서는 알림)을 수행하게 만든 것입니다.    
 프로그램이 간단해서 소스파일은 않올립니다.
@@ -314,7 +314,7 @@ function App() {
 export default App;
 ```
 
-### 25-6
+## 25-6
 ### [프로젝트] Updating the screen
 이 프로그램은 React로 작성된 간단한 애플리케이션으로, 두 개의 버튼이 각각 독립적으로 클릭 횟수를 카운트합니다. useState Hook을 사용해 각 버튼의 상태를 관리하며, 버튼을 클릭할 때마다 해당 버튼의 카운터가 1씩 증가합니다. 각 버튼은 독립적으로 동작해 서로의 카운터에 영향을 주지 않습니다.    
 
@@ -357,7 +357,7 @@ function MyButton() {
 
 export default App;
 ```
-### 25-7
+## 25-7
 ### [프로젝트] Using Hooks
 이 React 프로그램은 상태 관리 훅 useState를 사용하여 두 개의 버튼에서 공유되는 카운터를 구현합니다. App 컴포넌트는 count 상태를 관리하며, MyButton 컴포넌트는 버튼을 클릭할 때마다 count 값을 1씩 증가시킵니다. 두 버튼은 동일한 count 값을 공유하여 동시에 업데이트됩니다. TypeScript를 사용해 props와 상태의 타입을 명시했습니다. 
 
@@ -405,7 +405,7 @@ function MyButton({ count, onClick }: MyButtonProps) { // props에 타입 지정
 
 export default App;
 ```
-### 25-8 MQTT
+## 25-8 MQTT
 이 프로그램은 MQTT 브로커에 연결하고, 주기적으로 메시지를 전송하며, 지정된 토픽에서 수신한 메시지를 화면에 출력하는 기능을 수행합니다.
 - 브로커에 연결: MQTT 클라이언트가 브로커(ai.doowon.ac.kr:1803)에 연결됩니다.
 - 토픽 구독: outtopic을 구독하고, 5초마다 intopic에 '김동일' 메시지를 전송합니다.
@@ -534,7 +534,7 @@ export default MQTTClient;
 <img src="https://github.com/user-attachments/assets/c7c7dde4-4a2a-44a8-838b-d63f9a6b3b63" alt="nodered 25-8" width="400">   
 [node red 25-8 소스파일](https://github.com/kdi6033/react/blob/main/file/nodere-25-8.json)   
 
-### 25-9 MQTT i2r-03 IoT PLC 연결
+## 25-9 MQTT i2r-03 IoT PLC 연결
 <a href="https://youtu.be/NTLkgPB4hpE">
     <img src="https://github.com/user-attachments/assets/10b281ca-17da-4c78-b42e-9e6b298c21f5" alt="Updating the screen" width="400">
 </a>    
@@ -637,7 +637,7 @@ const MQTTClient = () => {
 
 export default MQTTClient;
 ```
-### 25-10 MQTT Hook i2r-03 IoT PLC 연결
+## 25-10 MQTT Hook i2r-03 IoT PLC 연결
 <a href="https://youtu.be/ymZNHD4hQZE">
     <img src="https://github.com/user-attachments/assets/6fda3a19-e210-40a2-a23d-e5abb8f74e62" alt="Updating the screen" width="400">
 </a>    
@@ -834,7 +834,7 @@ export default Display;
 - UI 표시: macMessage에 값이 있으면 해당 메시지를 화면에 표시하고, 값이 없으면 "No matching message"를 표시합니다.
 이 방식으로 원하는 MAC 주소를 포함한 메시지만 필터링하여 UI에 표시할 수 있습니다.
 
-### 25-11 [정보 저장과 읽기] 이메일 맥어드레스 입력창 만들고 정보 저장하고 읽기
+## 25-11 [정보 저장과 읽기] 이메일 맥어드레스 입력창 만들고 정보 저장하고 읽기
 <a href="https://youtu.be/ebBb9uQH0dk">
     <img src="https://github.com/user-attachments/assets/56e51862-d8d2-478c-8f9b-a0ff939f2559" alt="Updating the screen" width="400">
 </a>     
@@ -859,7 +859,7 @@ contexts/ConfigContext.tsx를 만들고 email, mac 을 전역 변수로 만들�
 - Display.tsx에서는 사용자가 입력한 이메일과 MAC 주소를 저장하고, 수신한 메시지의 MAC 주소와 비교하여 메시지를 필터링합니다.
 - 프로그램이 시작될 때 로컬 스토리지에서 저장된 값을 불러옵니다.
 
-### 25-12 [UI 만들기] Led와 스위치를 만들어 IoT PLC와 연동한다.
+## 25-12 [UI 만들기] Led와 스위치를 만들어 IoT PLC와 연동한다.
 <a href="https://youtu.be/SWQ7683I-hw">
     <img src="https://github.com/user-attachments/assets/4a6411aa-f9b6-4397-8843-3c0e8c4b7357" alt="Updating the screen" width="400">
 </a>     
@@ -896,7 +896,7 @@ led 그대로 놔두고 스위치 추가해줘
 - LED 상태 유지: ledStates 배열을 통해 수신한 in 값에 따라 LED 상태가 계속 유지됩니다.
 - UI: 각 스위치는 체크박스로 구현되었으며, 스위치가 켜지면 해당 번호에 맞는 데이터를 MQTT로 전송하게 됩니다.
 
-### 25-13 MongoDB 연결과 사용법
+## 25-13 MongoDB 연결과 사용법
 <a href="https://youtu.be/sDjbWRu5gB0">
     <img src="https://github.com/user-attachments/assets/a740712d-5b3c-4dad-9235-4dfd464e1e43" alt="Updating the screen" width="400">
 </a>      
@@ -1180,7 +1180,7 @@ function App() {
 
 export default App;
 ```
-### 25-14 MongoDB, MQTT 서버 프로그램
+## 25-14 MongoDB, MQTT 서버 프로그램
 <a href="https://youtu.be/TT5mNjH4skc">
     <img src="https://github.com/user-attachments/assets/6e2aba35-24c3-48ab-8027-ca3333af5845" alt="Updating the screen" width="400">
 </a>     
@@ -1193,7 +1193,7 @@ export default App;
 ```
 npm install mqtt
 ```
-### 25-15 단순화한 기초 서버 프로그램
+## 25-15 단순화한 기초 서버 프로그램
 [프로그램 다운로드 25-15](https://github.com/kdi6033/react/releases/tag/react-25-15-mongo-mqtt-v1.0)  
 mqtt와 mongodb를 합쳐서 서버의 기초프로그램은 완성을 하였습니다. 지금부터는 서버 프로그램을 확장하기 위해서는 프로그램을 심플하고 분석하기 좋게 구조를 변경 시키겠습니다.
 
@@ -1253,7 +1253,7 @@ src/
 └── App.css
 
 ```
-### 25-16 IoT PLC를 위한 상업용 프로그램 시작
+# IoT PLC를 위한 상업용 프로그램 시작
 지금까지는 IoT PLC 를 제어어하기 위한 React의 기본 개면을 설명했습니다. 프로그램의 구성 부터 설계 하겠습니다.     
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="80">   [16-1] 프로그램 구성    
 ```
