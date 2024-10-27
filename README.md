@@ -1363,7 +1363,7 @@ db의 데이터 구조는 다음과 같습니다.
 여기서 type=2 이면 Page-02, type=3 이면 Page-03, type=4 이면 Page-04 로 연결됩니다.
 프로그램을 위해 데이터 구조와 처리를 어떻게 햐야 하는지 설명해줘 
 ```
-이와같이 chatgpt에 프로젝트의 기본 개면을 입력합니다. 응답은 생략 하겠습니다.    
+이와같이 chatgpt에 프로젝트의 기본 개념을 입력합니다. 응답은 생략 하겠습니다.    
 location 과 wrapper 의 개념을 설명하겠습니다.    
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="80">   [16-2]  location 과 wrapper 의 개념   
 
