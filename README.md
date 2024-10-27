@@ -1249,7 +1249,7 @@ src/
 
 ```
 # React로 완성하는 실전 IoT PLC UI
-## 1. 적합한 
+## 1. IoT PLC 설계
 실전 프록그램을 만들기 위해 필요한 정보와 개념을 설명 합니다.
 ### 1.1 사용자 접속
 여러명의 사용자가 접속을 하면 email을 기반으로 사용자에게 적합한 ui를 제공해야 합니다.
@@ -1310,7 +1310,7 @@ User: 자신의 PLC에만 접근 가능
 클라이언트는 로그인 이후 JWT 토큰을 사용하여 PLC 제어 및 데이터 조회
 이 설계에 따라 사용자는 각기 다른 PLC를 동시에 제어할 수 있고, 실시간으로 UI가 업데이트되며, 안전한 로그인을 유지할 수 있습니다.
 
-### 1.1 ChatGPT에 IoT PLC 기본정보 입력
+### 1.2 ChatGPT에 IoT PLC 기본정보 입력
 지금까지는 IoT PLC 를 제어어하기 위한 React의 기본 개면을 설명했습니다. 프로그램의 구성 부터 설계 하겠습니다.     
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="80"> IoT PLC 정보 입력   
 ```
@@ -1333,7 +1333,7 @@ db의 데이터 구조는 다음과 같습니다.
 이와같이 chatgpt에 프로젝트의 기본 개면을 입력합니다. 응답은 생략 하겠습니다.    
 location 과 wrapper 의 개념을 설명하겠습니다.
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="80">   [16-2]  location 과 wrapper 의 개념   
-### 1.2 location
+### 1.3 location
 - location은 웹 애플리케이션에서 사용자의 현재 페이지 URL이나 경로에 대한 정보를 제공하는 객체입니다.
 - React에서는 react-router-dom 라이브러리의 useLocation 훅을 통해 URL 경로 정보를 가져올 수 있습니다. 이 훅은 현재 경로, 검색 문자열(query string), 해시(hash) 등을 제공하며, 페이지 이동 시 해당 정보가 변경되면 자동으로 업데이트됩니다.
 - location 객체를 통해 각 페이지의 URL을 이용해 상태를 관리하거나 특정 정보를 넘길 수 있습니다.
@@ -1348,7 +1348,7 @@ function MyComponent() {
 }
 ```
 
-### 1.3 wrapper
+### 1.4 wrapper
 - wrapper는 흔히 여러 컴포넌트를 감싸거나 특정 기능을 추가하기 위해 사용되는 컴포넌트입니다.    
 - wrapper를 사용하면 공통 스타일이나 기능을 자식 컴포넌트들에 일괄적으로 적용할 수 있어 효율적입니다. 
 - Page03Wrapper와 같은 컴포넌트를 통해 특정 페이지(Page-03)의 고유 상태 관리와 데이터 업데이트 기능을 구현하고 있습니다. 
