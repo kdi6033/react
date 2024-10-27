@@ -1396,7 +1396,7 @@ npx create-react-app iotplc --template typescript
 
 
 location 과 wrapper 의 개념을 설명하겠습니다.    
-<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="80"> header 분리
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="80"> header 분리와 로그인
 ```
 App.tsx 의 header를 components/header.tsx 로 분리해줘
 header 왼쪽에 햄버거 버튼을 만들고 "로그인", "회원가입" 버튼을 만들어 줘
@@ -1404,12 +1404,9 @@ header 왼쪽에 햄버거 버튼을 만들고 "로그인", "회원가입" 버�
 회원가입을 누르면 email 입력란을 만들고 pw 입력창은 확인까지 2개를 만들어줘 
 입력창을 작성하고 "회원가입"을 누르면 db-server.js의 '/api/checkUser'로 검색해서 같은 이름이 있으면 경고를 알려주고
 없으면 '/api/upsert'를 이용해 정보를 추가해줘
-```
-로그인 진행과
-```
 로그인을 누르면 id와 pw 를 검색하여 로그인을 완성해줘
  '/api/checkUser'를 이용해 id 가 존재하는지 검토하고 없으면 경고해줘, 성공한 후에는 pw 를 '/api/checkPassword'로똑같은 과정으로 진행해줘
 ```
-다음은 header 에서 진행되는 프로그램 입니다.
+
 
 
