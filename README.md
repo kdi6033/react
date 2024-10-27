@@ -1398,5 +1398,7 @@ npx create-react-app iotplc --template typescript
 location 과 wrapper 의 개념을 설명하겠습니다.    
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="80"> header 분리
 ```
+App.tsx 의 header를 components/header.tsx 로 분리해줘
+header 왼쪽에 햄버거 버튼을 만들고 "로그인", "회원가입" 버튼을 만들어 줘
 ```
 
