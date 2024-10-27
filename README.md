@@ -1369,16 +1369,16 @@ db의 데이터 구조는 다음과 같습니다.
 ```
 npx create-react-app iotplc --template typescript
 ```
-서버를 구성하기 위해서는 mqtt 와 db(mongoDB)를 연결해야 합니다. 
-mqtt 연결 프로그램은 크가가 작아 크라이언트 상에서 구동하게 설계하며, 
-db는 보안의 이유로 서버에서 api로 서버에서 구동하도록 설계 합니다.
-frontend 디렉토리를 만들어 앞에서 생성된 모든 프로그램을 여기로 옮기며,
-backend 디렉토리를 만들어 db 프로그램을 여기에 구성 합니다.
-frontend/src/compnents 디렉토리를 만들어 App에서 header를 분리하여 여기에 구성 합니다.
+- 서버를 구성하기 위해서는 mqtt 와 db(mongoDB)를 연결해야 합니다. 
+- mqtt 연결 프로그램은 크가가 작아 크라이언트 상에서 구동하게 설계하며, 
+- db는 보안의 이유로 서버에서 api로 서버에서 구동하도록 설계 합니다.
+- frontend 디렉토리를 만들어 앞에서 생성된 모든 프로그램을 여기로 옮기며,
+- backend 디렉토리를 만들어 db 프로그램을 여기에 구성 합니다.
+- frontend/src/compnents 디렉토리를 만들어 App에서 header를 분리하여 여기에 구성 합니다.
 ```
 │  
-└─iotplc
-    ├─backend
+└─iotpl
+    ├─backend- 
     │      db-server.js
     │      생략
     └─frontend
@@ -1396,5 +1396,7 @@ frontend/src/compnents 디렉토리를 만들어 App에서 header를 분리하�
 
 
 location 과 wrapper 의 개념을 설명하겠습니다.    
-<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="80">   [16-2]  location 과 wrapper 의 개념   
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="80"> header 분리
+```
+```
 
