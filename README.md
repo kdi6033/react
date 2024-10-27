@@ -1374,7 +1374,25 @@ mqtt 연결 프로그램은 크가가 작아 크라이언트 상에서 구동하
 db는 보안의 이유로 서버에서 api로 서버에서 구동하도록 설계 합니다.
 frontend 디렉토리를 만들어 앞에서 생성된 모든 프로그램을 여기로 옮기며,
 backend 디렉토리를 만들어 db 프로그램을 여기에 구성 합니다.
-frontend/src/compnents 디렉토리를 만들어 mqtt 접속 프로그램을 여기에 구성 합니다.
+frontend/src/compnents 디렉토리를 만들어 App에서 header를 분리하여 여기에 구성 합니다.
+```
+│  
+└─iotplc
+    ├─backend
+    │      db-server.js
+    │      생략
+    └─frontend
+        │  생략
+        ├─public
+        │      생략
+        └─src
+            │  App.css
+            │  App.tsx
+            │  생략
+            └─components
+                    Header.css
+                    Header.tsx
+```
 
 
 location 과 wrapper 의 개념을 설명하겠습니다.    
