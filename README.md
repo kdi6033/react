@@ -178,7 +178,7 @@ Profile.css
   }
 ```
 
-## [프로젝트 25-3] Conditional rendering
+## 2. Conditional rendering
 [프로그램 다운로드 25-3](https://github.com/kdi6033/react/releases/tag/react-rendering-lists-v1.0)    
 이 프로그램은 useState를 사용해 로그인 여부를 상태로 관리하며, 로그인 상태에 따라 다른 UI를 보여주는 조건부 렌더링을 구현했습니다. 사용자가 로그인 버튼을 클릭하면 isLoggedIn 상태가 true로 변경되어 로그인 화면이 나타나고, 로그아웃 버튼을 클릭하면 false로 변경되어 로그아웃 화면이 나타납니다.    
 <a href="https://youtu.be/VZIVyQeKRKg">
@@ -229,7 +229,7 @@ function App() {
 export default App;
 ```
 
-## [프로젝트 25-4] Rendering lists
+## 3. Rendering lists
 이 React 프로그램은 두 개의 컴포넌트, App과 ShoppingList로 구성됩니다. App 컴포넌트는 화면에 "Shopping List" 제목과 ShoppingList 컴포넌트를 표시합니다. ShoppingList 컴포넌트는 products 배열을 사용하여 리스트를 만들고, 각 항목의 isFruit 값에 따라 색상을 다르게 표시합니다. 과일이면 magenta, 아니면 darkgreen 색상으로 렌더링됩니다.   
 유튜브 보기    
 <a href="https://youtu.be/wKed2Ycv1Fc">
@@ -286,7 +286,7 @@ export default function ShoppingList() {
 }
 ```
 
-## [프로젝트 25-5] Responding to events 
+## 4. Responding to events 
 이 React 프로그램은 간단한 버튼을 생성합니다. App 컴포넌트 안에 있는 버튼을 클릭하면 handleClick 함수가 호출되어 "You clicked me!"라는 알림(alert)이 화면에 나타납니다. 이 프로그램의 핵심은 버튼에 onClick 이벤트를 설정해 클릭 시 특정 동작(여기서는 알림)을 수행하게 만든 것입니다.    
 프로그램이 간단해서 소스파일은 않올립니다.
 App.tsx   
@@ -311,7 +311,7 @@ function App() {
 export default App;
 ```
 
-## [프로젝트 25-6] Updating the screen
+## 5. Updating the screen
 이 프로그램은 React로 작성된 간단한 애플리케이션으로, 두 개의 버튼이 각각 독립적으로 클릭 횟수를 카운트합니다. useState Hook을 사용해 각 버튼의 상태를 관리하며, 버튼을 클릭할 때마다 해당 버튼의 카운터가 1씩 증가합니다. 각 버튼은 독립적으로 동작해 서로의 카운터에 영향을 주지 않습니다.    
 
 <a href="https://youtu.be/IHZnE8cBzhs">
@@ -353,7 +353,7 @@ function MyButton() {
 
 export default App;
 ```
-## [프로젝트 25-7] Using Hooks
+## 6. Using Hooks
 이 React 프로그램은 상태 관리 훅 useState를 사용하여 두 개의 버튼에서 공유되는 카운터를 구현합니다. App 컴포넌트는 count 상태를 관리하며, MyButton 컴포넌트는 버튼을 클릭할 때마다 count 값을 1씩 증가시킵니다. 두 버튼은 동일한 count 값을 공유하여 동시에 업데이트됩니다. TypeScript를 사용해 props와 상태의 타입을 명시했습니다. 
 
 <a href="https://youtu.be/rGYzcYTOtps">
@@ -400,7 +400,7 @@ function MyButton({ count, onClick }: MyButtonProps) { // props에 타입 지정
 
 export default App;
 ```
-## [프로젝트 25-8} MQTT
+## 7. MQTT
 이 프로그램은 MQTT 브로커에 연결하고, 주기적으로 메시지를 전송하며, 지정된 토픽에서 수신한 메시지를 화면에 출력하는 기능을 수행합니다.
 - 브로커에 연결: MQTT 클라이언트가 브로커(ai.doowon.ac.kr:1803)에 연결됩니다.
 - 토픽 구독: outtopic을 구독하고, 5초마다 intopic에 '김동일' 메시지를 전송합니다.
@@ -529,7 +529,7 @@ export default MQTTClient;
 <img src="https://github.com/user-attachments/assets/c7c7dde4-4a2a-44a8-838b-d63f9a6b3b63" alt="nodered 25-8" width="400">   
 [node red 25-8 소스파일](https://github.com/kdi6033/react/blob/main/file/nodere-25-8.json)   
 
-## [프로젝트 25-9] MQTT i2r-03 IoT PLC 연결
+## 8. MQTT i2r-03 IoT PLC 연결
 <a href="https://youtu.be/NTLkgPB4hpE">
     <img src="https://github.com/user-attachments/assets/10b281ca-17da-4c78-b42e-9e6b298c21f5" alt="Updating the screen" width="400">
 </a>    
@@ -632,7 +632,7 @@ const MQTTClient = () => {
 
 export default MQTTClient;
 ```
-## [프로젝트 25-10] MQTT Hook i2r-03 IoT PLC 연결
+## 9. MQTT Hook i2r-03 IoT PLC 연결
 <a href="https://youtu.be/ymZNHD4hQZE">
     <img src="https://github.com/user-attachments/assets/6fda3a19-e210-40a2-a23d-e5abb8f74e62" alt="Updating the screen" width="400">
 </a>    
@@ -829,7 +829,7 @@ export default Display;
 - UI 표시: macMessage에 값이 있으면 해당 메시지를 화면에 표시하고, 값이 없으면 "No matching message"를 표시합니다.
 이 방식으로 원하는 MAC 주소를 포함한 메시지만 필터링하여 UI에 표시할 수 있습니다.
 
-## [프로젝트 25-11] 정보 저장과 읽기 - 이메일 맥어드레스 입력창 만들고 정보 저장하고 읽기
+## 10. 정보 저장과 읽기 - 이메일 맥어드레스 입력창 만들고 정보 저장하고 읽기
 <a href="https://youtu.be/ebBb9uQH0dk">
     <img src="https://github.com/user-attachments/assets/56e51862-d8d2-478c-8f9b-a0ff939f2559" alt="Updating the screen" width="400">
 </a>     
@@ -854,7 +854,7 @@ contexts/ConfigContext.tsx를 만들고 email, mac 을 전역 변수로 만들�
 - Display.tsx에서는 사용자가 입력한 이메일과 MAC 주소를 저장하고, 수신한 메시지의 MAC 주소와 비교하여 메시지를 필터링합니다.
 - 프로그램이 시작될 때 로컬 스토리지에서 저장된 값을 불러옵니다.
 
-## [프로젝트 25-12] UI 만들기 - Led와 스위치를 만들어 IoT PLC와 연동한다.
+## 11. UI 만들기 - Led와 스위치를 만들어 IoT PLC와 연동한다.
 <a href="https://youtu.be/SWQ7683I-hw">
     <img src="https://github.com/user-attachments/assets/4a6411aa-f9b6-4397-8843-3c0e8c4b7357" alt="Updating the screen" width="400">
 </a>     
@@ -891,7 +891,7 @@ led 그대로 놔두고 스위치 추가해줘
 - LED 상태 유지: ledStates 배열을 통해 수신한 in 값에 따라 LED 상태가 계속 유지됩니다.
 - UI: 각 스위치는 체크박스로 구현되었으며, 스위치가 켜지면 해당 번호에 맞는 데이터를 MQTT로 전송하게 됩니다.
 
-## [프로젝트 25-13] MongoDB 연결과 사용법
+## 12. MongoDB 연결과 사용법
 <a href="https://youtu.be/sDjbWRu5gB0">
     <img src="https://github.com/user-attachments/assets/a740712d-5b3c-4dad-9235-4dfd464e1e43" alt="Updating the screen" width="400">
 </a>      
@@ -1175,7 +1175,7 @@ function App() {
 
 export default App;
 ```
-## [프로젝트 25-14] MongoDB, MQTT 서버 프로그램
+## 13. MongoDB, MQTT 서버 프로그램
 <a href="https://youtu.be/TT5mNjH4skc">
     <img src="https://github.com/user-attachments/assets/6e2aba35-24c3-48ab-8027-ca3333af5845" alt="Updating the screen" width="400">
 </a>     
