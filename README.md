@@ -1249,7 +1249,7 @@ src/
 
 ```
 # React로 완성하는 실전 IoT PLC UI
-## 1. IoT PLC UI 설계
+## 1. IoT PLC UI 구조 설계
 실전 프록그램을 만들기 위해 필요한 정보와 개념을 설명 합니다.
 ### 1.1 사용자 접속
 여러명의 사용자가 접속을 하면 email을 기반으로 사용자에게 적합한 ui를 제공해야 합니다.
@@ -1364,7 +1364,9 @@ db의 데이터 구조는 다음과 같습니다.
 프로그램을 위해 데이터 구조와 처리를 어떻게 햐야 하는지 설명해줘 
 ```
 이와같이 chatgpt에 프로젝트의 기본 개념을 입력합니다. 응답은 생략 하겠습니다.    
-## 2. React iotplc 시작하기
+
+
+## 2. React iotplc 프로젝트 시작하기
 "iotplc" 이름으로 React를 typescripot로 시작 합니다.
 ```
 npx create-react-app iotplc --template typescript
