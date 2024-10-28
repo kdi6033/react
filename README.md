@@ -1370,6 +1370,7 @@ db의 데이터 구조는 다음과 같습니다.
 "iotplc" 이름으로 React를 typescripot로 시작 합니다.
 ```
 npx create-react-app iotplc --template typescript
+npm init -y
 ```
 - 서버를 구성하기 위해서는 mqtt 와 db(mongoDB)를 연결해야 합니다. 
 - mqtt 연결 프로그램은 크가가 작아 크라이언트 상에서 구동하게 설계하며, 
