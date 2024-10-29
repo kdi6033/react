@@ -1370,7 +1370,6 @@ db의 데이터 구조는 다음과 같습니다.
 "iotplc" 이름으로 React를 typescripot로 시작 합니다.
 ```
 npx create-react-app iotplc --template typescript
-npm init -y
 ```
 - 서버를 구성하기 위해서는 mqtt 와 db(mongoDB)를 연결해야 합니다. 
 - mqtt 연결 프로그램은 크가가 작아 크라이언트 상에서 구동하게 설계하며, 
@@ -1396,7 +1395,13 @@ npm init -y
                     Header.css
                     Header.tsx
 ```
-mongoDB 설치와 운용은 "React 기초과정 12"를 참조하세요.
+mongoDB 설치와 운용은 "React 기초과정 12"를 참조하세요. 이 프로그램에 로그인 프로그램에 필요한 사항을 추가 했습니다.
+backend 디렉토리로 가서 db-server.js를 위치하고 필요한 npm을 설치 합니다.
+```
+npm init -y
+npm install nodemailer
+npm install bcrypt
+```
 
 location 과 wrapper 의 개념을 설명하겠습니다.    
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="80"> header 분리와 로그인
