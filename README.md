@@ -1397,6 +1397,11 @@ npx create-react-app iotplc --template typescript
 ```
 mongoDB 설치와 운용은 "React 기초과정 12"를 참조하세요. 이 프로그램에 로그인 프로그램에 필요한 사항을 추가 했습니다.
 backend 디렉토리로 가서 db-server.js를 위치하고 필요한 npm을 설치 합니다.
+bcrypt : 로그인에서 비밀번호를 hash 처리함
+nodemailer : 임시 비밀번호를 메이로 보낼 때 필욤함 
+body-parser : Express 애플리케이션에서 클라이언트로부터 전달된 HTTP 요청의 본문(body)을 처리하기 위해 사용되는 미들웨어입니다. 이 미들웨어는 JSON, URL 인코딩된 데이터 등을 파싱하여 req.body 객체에 데이터를 추가해 줍니다. body-parser는 Express 4.x부터 독립된 모듈로 제공되며, 다양한 형식의 요청 데이터를 처리할 수 있습니다.    
+CORS(Cross-Origin Resource Sharing) : 웹 애플리케이션이 다른 출처(origin)의 리소스에 접근할 수 있도록 하는 보안 기능입니다. 웹 브라우저는 기본적으로 다른 출처의 요청을 차단하는 보안 정책(Same-Origin Policy)을 적용하는데, CORS를 통해 특정 출처에서만 리소스를 허용하도록 설정할 수 있습니다.    
+Express : Node.js 환경에서 동작하는 웹 애플리케이션 프레임워크로, 간단하면서도 유연한 서버 구축을 가능하게 합니다. Express를 사용하면 API 서버, 웹사이트, 마이크로서비스 등 다양한 유형의 서버 애플리케이션을 빠르게 개발할 수 있습니다.
 ```
 npm init -y
 npm install express mongodb cors body-parser nodemailer bcrypt
