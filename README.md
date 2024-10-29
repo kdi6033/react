@@ -1396,7 +1396,7 @@ npm init -y
                     Header.css
                     Header.tsx
 ```
-mongoDB 설치와 운용은 다음을 참조하세요.
+mongoDB 설치와 운용은 "React 기초과정 12"를 참조하세요.
 
 location 과 wrapper 의 개념을 설명하겠습니다.    
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="80"> header 분리와 로그인
