@@ -1366,7 +1366,7 @@ db의 데이터 구조는 다음과 같습니다.
 이와같이 chatgpt에 프로젝트의 기본 개념을 입력합니다. 응답은 생략 하겠습니다.    
 
 
-## 2. React iotplc 프로젝트 시작과 로그인 만들기
+## 2. React iotplc 프로젝트 시작
 "iotplc" 이름으로 React를 typescripot로 시작 합니다.
 ```
 npx create-react-app iotplc --template typescript
@@ -1396,7 +1396,7 @@ npm init -y
                     Header.css
                     Header.tsx
 ```
-
+mongoDB 설치와 운용은 다음을 참조하세요.
 
 location 과 wrapper 의 개념을 설명하겠습니다.    
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="80"> header 분리와 로그인
