@@ -1415,6 +1415,11 @@ const checkUserResponse = await fetch('http://localhost:5000/api/checkUser', {
 - Express : Node.js 환경에서 동작하는 웹 애플리케이션 프레임워크로, 간단하면서도 유연한 서버 구축을 가능하게 합니다. Express를 사용하면 API 서버, 웹사이트, 마이크로서비스 등 다양한 유형의 서버 애플리케이션을 빠르게 개발할 수 있습니다. ex) app.get('/', (req, res)    
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="80"> header 분리와 로그인
 ```
+App.tsx 의 header를 components/header.tsx 로 분리하고 location과 wrapper를 사용해줘
+```
+
+
+```
 App.tsx 의 header를 components/header.tsx 로 분리해줘
 header 왼쪽에 햄버거 버튼을 만들고 "로그인", "회원가입" 버튼을 만들어 줘
 로그인을 누르면 id로 email, pw 입력창을 만들어 로그인하게 해줘
