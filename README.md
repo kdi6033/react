@@ -1417,7 +1417,45 @@ const checkUserResponse = await fetch('http://localhost:5000/api/checkUser', {
 ```
 App.tsx 의 header를 components/header.tsx 로 분리하고 location과 wrapper를 사용해줘
 ```
+Router는 App 컴포넌트를 감싸는 최상위 컴포넌트에 위치하게 하며, App.tsx에서 useLocation을 사용하도록 합니.
+```
+```
+// index.tsx
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import { BrowserRouter } from 'react-router-dom';
 
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+);
+```
+```
+// App.tsx
+import React from 'react';
+import './App.css';
+import Header from './components/Header';
+import { useLocation } from 'react-router-dom';
+
+function App() {
+  const location = useLocation();
+
+  return (
+    <div className="App">
+      <Header />
+      <main>
+        현재 경로: {location.pathname}
+        <div>IoT PLC</div>
+      </main>
+    </div>
+  );
+}
+
+export default App;
 
 ```
 App.tsx 의 header를 components/header.tsx 로 분리해줘
