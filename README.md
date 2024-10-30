@@ -1395,9 +1395,11 @@ npx create-react-app iotplc --template typescript
                     Header.css
                     Header.tsx
 ```
-- 서버로 동작하기 위해서는 mongoDB와 MQTT를 설치하며 이는 기초과정에서 설명한 내용을 참조하세요.
-- mongoDB 설치와 운용은 "React 기초과정 12"를 참조하세요. 
-backend 디렉토리로 가서 db-server.js를 위치하고 필요한 npm을 설치 합니다.
+- 서버로 동작하기 위해서는 mongoDB와 MQTT를 설치하며 이는 기초과정에서 설명한 내용을 참조하세요. 이는 앞에 기술한 "React 기초과정 7과 12"를 참조하세요. 
+- backend 디렉토리로 가서 db-server.js를 위치하고 필요한 npm을 설치 합니다.
+- components/MQTTClient.tsx 를 복사해서 넣습니다.
+
+#### npm 설치 프로그램 설명
 bcrypt : 로그인에서 비밀번호를 hash 처리함
 nodemailer : 임시 비밀번호를 메일로 보낼 때 필욤함 
 body-parser : Express 애플리케이션에서 클라이언트로부터 전달된 HTTP 요청의 본문(body)을 처리하기 위해 사용되는 미들웨어입니다. 이 미들웨어는 JSON, URL 인코딩된 데이터 등을 파싱하여 req.body 객체에 데이터를 추가해 줍니다. body-parser는 Express 4.x부터 독립된 모듈로 제공되며, 다양한 형식의 요청 데이터를 처리할 수 있습니다.    
