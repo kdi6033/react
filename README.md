@@ -1379,7 +1379,8 @@ npm install express mongodb cors body-parser nodemailer bcrypt
 - mqtt 연결 프로그램은 크가가 작아 크라이언트 상에서 구동하게 설계하며, 
 - db는 보안의 이유로 서버에서 api로 서버에서 구동하도록 설계 합니다.
 - frontend 디렉토리를 만들어 앞에서 생성된 모든 프로그램을 여기로 옮기며,
-- backend 디렉토리를 만들어 db 프로그램을 여기에 구성 합니다.
+- backend 디렉토리를 만들어 db-server.js를 위치하고 필요한 npm을 설치 합니다.
+- components/MQTTClient.tsx 를 복사해서 넣습니다.
 - frontend/src/compnents 디렉토리를 만들어 App에서 header를 분리하여 여기에 구성 합니다.
 ```
 │  
@@ -1399,10 +1400,6 @@ npm install express mongodb cors body-parser nodemailer bcrypt
                     Header.css
                     Header.tsx
 ```
-- 서버로 동작하기 위해서는 mongoDB와 MQTT를 설치하며 이는 기초과정에서 설명한 내용을 참조하세요. 이는 앞에 기술한 "React 기초과정 7과 12"를 참조하세요. 
-- backend 디렉토리로 가서 db-server.js를 위치하고 필요한 npm을 설치 합니다.
-- components/MQTTClient.tsx 를 복사해서 넣습니다.
-
 ### npm 설치 프로그램 설명
 - bcrypt : 로그인에서 비밀번호를 hash 처리함
 - nodemailer : 임시 비밀번호를 메일로 보낼 때 필욤함 
@@ -1419,7 +1416,6 @@ const checkUserResponse = await fetch('http://localhost:5000/api/checkUser', {
 ```
 - Express : Node.js 환경에서 동작하는 웹 애플리케이션 프레임워크로, 간단하면서도 유연한 서버 구축을 가능하게 합니다. Express를 사용하면 API 서버, 웹사이트, 마이크로서비스 등 다양한 유형의 서버 애플리케이션을 빠르게 개발할 수 있습니다. ex) app.get('/', (req, res)    
 
-location 과 wrapper 의 개념을 설명하겠습니다.    
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="80"> header 분리와 로그인
 ```
 App.tsx 의 header를 components/header.tsx 로 분리해줘
