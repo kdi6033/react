@@ -1341,84 +1341,11 @@ function Page03Wrapper({ children }) {
   );
 }
 ```
-location과 wrapper를 활용하여 MAC 주소를 페이지에 전달하고, 컴포넌트 상태를 일관되게 관리함으로써 사용자 인터페이스를 효율적으로 구성할 수 있습니다.
-
-### 1.4 ChatGPT에 IoT PLC 기본정보 입력
-지금까지는 IoT PLC 를 제어어하기 위한 React의 기본 개면을 설명했습니다. 프로그램의 구성 부터 설계 하겠습니다.      
-<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="80"> IoT PLC 정보 입력   
+location과 wrapper를 활용하여 MAC 주소를 페이지에 전달하고, 컴포넌트 상태를줘
 ```
-사용자가 이메일 id로 접속하면 mac address로 구분되는 IoT PLC를 page 02 03 04 로 구분해서 입력과 출력을 제어하는 ui를 구성해서 보여줘
-서버는 mongodb와 연동하고 사용자는 users 이름의 collection 으로, plc는 localRecord로 관리 합니다.
-이메일 하나에 plc는 여러 개가 존재 합니다.
-이메일로 로그인 하면 여러 개의 전체 plc 가 보이고 plc를 선택하면 출력 입력을 제어하는 상세 페이지가 보입니다.
-plc는 서버와 mqtt 으로 통신을 받기도 하지만 실시간으로 현장에서 변화된 입력 상태와 온도 습도 등을 보내면 실시간으로 ui에 표시해야 합니다.
-운전 중에 새로운 plc가 들어오면 ui와 db 가 업데이트 되어야 합니다.
-상세 페이지에서는 해당하는 mac 데이터가 들어오면 ui를 업데이트 합니다.
-이메일에 따라 전체 plc를 보여주는 것은 MachineOverview.tsx 구성하고
-상세페이지에서 plc는 세가지 종류가 있는데 Page-02, Page-03, Pag-04로 구분하고 싶어요 
-전체 프로그램은 location 과 wrapper를 사용해서 구성 합니다.
-db의 데이터 구조는 다음과 같습니다.
-{"mac":"D8:13:2A:C5:C3:7C","email":"kdi6033@gmail.com","humi":45,"in":[0,0,0,0],"name":["D8:13:2A:C5:C3:7C-1",
-  "Led0-1","Led1","Led2","Led3","Switch0-1","Switch1","Switch2","Switch3"],"out":[0,0,0,0],"temp": 23.7,"type": 3}
-여기서 type=2 이면 Page-02, type=3 이면 Page-03, type=4 이면 Page-04 로 연결됩니다.
-프로그램을 위해 데이터 구조와 처리를 어떻게 햐야 하는지 설명해줘 
-```
-이와같이 chatgpt에 프로젝트의 기본 개념을 입력합니다. 응답은 생략 하겠습니다.    
 
 
-## 2. React iotplc 프로젝트 시작
-"iotplc" 이름으로 React를 typescripot로 시작 합니다.
 ```
-npx create-react-app iotplc --template typescript
-// backend frontend 디렉토리 만들어 db-server.js를 copy 한다.
-cd backend
-npm init -y
-npm install express mongodb cors body-parser nodemailer bcrypt
-```
-- 서버를 구성하기 위해서는 mqtt 와 db(mongoDB)를 연결해야 합니다. 
-- mqtt 연결 프로그램은 크가가 작아 크라이언트 상에서 구동하게 설계하며, 
-- db는 보안의 이유로 서버에서 api로 서버에서 구동하도록 설계 합니다.
-- frontend 디렉토리를 만들어 앞에서 생성된 모든 프로그램을 여기로 옮기며,
-- backend 디렉토리를 만들어 db-server.js를 위치하고 필요한 npm을 설치 합니다.
-- components/MQTTClient.tsx 를 복사해서 넣습니다.
-- frontend/src/compnents 디렉토리를 만들어 App에서 header를 분리하여 여기에 구성 합니다.
-```
-│  
-└─iotpl
-    ├─backend- 
-    │      db-server.js
-    │      생략
-    └─frontend
-        │  생략
-        ├─public
-        │      생략
-        └─src
-            │  App.css
-            │  App.tsx
-            │  생략
-            └─components
-                    Header.css
-                    Header.tsx
-```
-### npm 설치 프로그램 설명
-- bcrypt : 로그인에서 비밀번호를 hash 처리함
-- nodemailer : 임시 비밀번호를 메일로 보낼 때 필욤함 
-- body-parser : Express 애플리케이션에서 클라이언트로부터 전달된 HTTP 요청의 본문(body)을 처리하기 위해 사용되는 미들웨어입니다. 이 미들웨어는 JSON, URL 인코딩된 데이터 등을 파싱하여 req.body 객체에 데이터를 추가해 줍니다. body-parser는 Express 4.x부터 독립된 모듈로 제공되며, 다양한 형식의 요청 데이터를 처리할 수 있습니다.    
-- CORS(Cross-Origin Resource Sharing) : 웹 애플리케이션이 다른 출처(origin)의 리소스에 접근할 수 있도록 하는 보안 기능입니다. 웹 브라우저는 기본적으로 다른 출처의 요청을 차단하는 보안 정책(Same-Origin Policy)을 적용하는데, CORS를 통해 특정 출처에서만 리소스를 허용하도록 설정할 수 있습니다.
-```
-const checkUserResponse = await fetch('http://localhost:5000/api/checkUser', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email: id }),
-      });
-```
-- Express : Node.js 환경에서 동작하는 웹 애플리케이션 프레임워크로, 간단하면서도 유연한 서버 구축을 가능하게 합니다. Express를 사용하면 API 서버, 웹사이트, 마이크로서비스 등 다양한 유형의 서버 애플리케이션을 빠르게 개발할 수 있습니다. ex) app.get('/', (req, res)    
-
-<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="80"> header 분리와 로그인
-```
-App.tsx 의 header를 components/header.tsx 로 분리해줘
 header 왼쪽에 햄버거 버튼을 만들고 "로그인", "회원가입" 버튼을 만들어 줘
 로그인을 누르면 id로 email, pw 입력창을 만들어 로그인하게 해줘
 회원가입을 누르면 email 입력란을 만들고 pw 입력창은 확인까지 2개를 만들어줘 
@@ -1431,9 +1358,7 @@ header 왼쪽에 햄버거 버튼을 만들고 "로그인", "회원가입" 버�
 회원가입을 누르면 email로 4글자로 임시비밀번호를 보내는 것으로 수정해줘
 email 보낸 후에 '/api/upsertUser' 를 사용해 time 항목으로 한국현재시간, email, pw 저장해줘
 ```
-```
-npm install nodemailer
-```
+
 • Google 계정의 보안 설정에서 "2단계 인증"을 활성화하고, "앱 비밀번호"를 생성하여 Nodemailer에서 사용할 수 있습니다. 이렇게 하면 기본 비밀번호 대신 안전한 앱 비밀번호를 이용할 수 있습니다.
 Google 계정의 2단계 인증 및 앱 비밀번호 설정 방법
 Gmail에서 앱 비밀번호를 생성하는 방법을 알려드릴게요. 이 기능은 2단계 인증을 설정한 계정에서 사용할 수 있습니다.
