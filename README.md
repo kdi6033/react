@@ -1370,6 +1370,10 @@ db의 데이터 구조는 다음과 같습니다.
 "iotplc" 이름으로 React를 typescripot로 시작 합니다.
 ```
 npx create-react-app iotplc --template typescript
+// backend frontend 디렉토리 만들어 db-server.js를 copy 한다.
+cd backend
+npm init -y
+npm install express mongodb cors body-parser nodemailer bcrypt
 ```
 - 서버를 구성하기 위해서는 mqtt 와 db(mongoDB)를 연결해야 합니다. 
 - mqtt 연결 프로그램은 크가가 작아 크라이언트 상에서 구동하게 설계하며, 
@@ -1414,10 +1418,7 @@ const checkUserResponse = await fetch('http://localhost:5000/api/checkUser', {
       });
 ```
 - Express : Node.js 환경에서 동작하는 웹 애플리케이션 프레임워크로, 간단하면서도 유연한 서버 구축을 가능하게 합니다. Express를 사용하면 API 서버, 웹사이트, 마이크로서비스 등 다양한 유형의 서버 애플리케이션을 빠르게 개발할 수 있습니다. ex) app.get('/', (req, res)    
-```
-npm init -y
-npm install express mongodb cors body-parser nodemailer bcrypt
-```
+
 location 과 wrapper 의 개념을 설명하겠습니다.    
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="80"> header 분리와 로그인
 ```
