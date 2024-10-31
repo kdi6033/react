@@ -1365,6 +1365,12 @@ db의 데이터 구조는 다음과 같습니다.
 ```
 이와같이 chatgpt에 프로젝트의 기본 개념을 입력합니다. 응답은 생략 하겠습니다.    
 ## 2. React iotplc 프로젝트 시작
+![25-15  React  iotplc 프로젝트 시작](https://github.com/user-attachments/assets/02574b99-6138-4731-9556-7e1053329384)
+<a href="https://youtu.be/1jTiT87ZlnY">
+    <img src="https://github.com/user-attachments/assets/02574b99-6138-4731-9556-7e1053329384" alt="Updating the screen" width="400">
+</a>     
+
+[프로그램 다운로드 25-14](https://github.com/kdi6033/react/releases/tag/react-25-14-mqtt-mongodb-v1.0)  
 "iotplc" 이름으로 React를 typescripot로 시작 합니다.
 ```
 npx create-react-app iotplc --template typescript
