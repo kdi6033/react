@@ -1371,7 +1371,9 @@ db의 데이터 구조는 다음과 같습니다.
 <a href="https://youtu.be/1jTiT87ZlnY">
     <img src="https://github.com/user-attachments/assets/02574b99-6138-4731-9556-7e1053329384" alt="Updating the screen" width="400">
 </a>       
+
 [프로그램 다운로드 iotplc-01](https://github.com/kdi6033/react/releases/tag/iotplc-01-v1.2)     
+
 "iotplc" 이름으로 React를 typescripot로 시작 합니다.
 ```
 npx create-react-app iotplc --template typescript
