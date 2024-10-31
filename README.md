@@ -1413,12 +1413,11 @@ const checkUserResponse = await fetch('http://localhost:5000/api/checkUser', {
       });
 ```
 - Express : Node.js 환경에서 동작하는 웹 애플리케이션 프레임워크로, 간단하면서도 유연한 서버 구축을 가능하게 합니다. Express를 사용하면 API 서버, 웹사이트, 마이크로서비스 등 다양한 유형의 서버 애플리케이션을 빠르게 개발할 수 있습니다. ex) app.get('/', (req, res)    
-<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="80"> header 분리와 로그인
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="80"> header 분리와 location 사용
 ```
 App.tsx 의 header를 components/header.tsx 로 분리하고 location과 wrapper를 사용해줘
 ```
 Router는 App 컴포넌트를 감싸는 최상위 컴포넌트에 위치하게 하며, App.tsx에서 useLocation을 사용하도록 합니.
-```
 ```
 // index.tsx
 import React from 'react';
@@ -1456,9 +1455,37 @@ function App() {
 }
 
 export default App;
+```
+### iotplc 프로그램 설명
+#### 프론트엔드 (React)
+- App.tsx: React를 사용해 애플리케이션의 기본 구조를 설정하고, 현재 경로(location.pathname)를 표시합니다.
+- Header.tsx: 헤더 컴포넌트로 "IoT PLC 모니터링"이라는 제목을 보여줍니다.
+- MQTTClient.tsx: mqtt 라이브러리를 통해 브로커(mqtt://ai.doowon.ac.kr:1803)와 MQTT 통신을 수행합니다. 사용자 이메일을 기준으로 intopic과 outtopic을 구독하고 메시지를 수신하여 App.tsx에 전달합니다.
+
+##### 백엔드 (Node.js Express)
+MongoDB 연결: db-server.js에서 mongodb 클라이언트를 사용하여 local 데이터베이스와 localRecord 및 users 컬렉션에 연결합니다.
+API 라우트:
+- /api/records: MongoDB에서 모든 기록을 조회.
+- /api/findArray: 특정 이메일을 기준으로 문서 검색.
+- /api/record: 특정 MAC 주소의 기록을 단일 조회.
+- /api/upsert: MAC을 기준으로 데이터를 삽입하거나 업데이트하는 기능.
+- /api/checkUser 및 /api/checkPassword: 사용자 이메일 존재 여부와 비밀번호 검증.
+- /api/upsertUser: 특정 이메일을 기준으로 사용자를 삽입하거나 업데이트.
+-/api/signup: 신규 가입 시 임시 비밀번호를 생성하고, 이를 해시 처리하여 MongoDB에 저장하고 이메일로 전송.
+
+#### Nodemailer와 Bcrypt 통합, location, BrowserRouter
+- Nodemailer: gmail 계정을 사용해 임시 비밀번호를 전송하는 기능이 포함되어 있습니다.
+- Bcrypt: 비밀번호 보안을 위해 해시 및 비교 기능을 사용하여 안전하게 비밀번호를 관리합니다.
+- React Router의 useLocation 훅을 사용하여 현재 경로를 동적으로 표시하며, BrowserRouter를 통해 라우팅을 지원합니다. 
+
+
+
+
+
+
+
 
 ```
-App.tsx 의 header를 components/header.tsx 로 분리해줘
 header 왼쪽에 햄버거 버튼을 만들고 "로그인", "회원가입" 버튼을 만들어 줘
 로그인을 누르면 id로 email, pw 입력창을 만들어 로그인하게 해줘
 회원가입을 누르면 email 입력란을 만들고 pw 입력창은 확인까지 2개를 만들어줘 
