@@ -1519,12 +1519,11 @@ hash 처리된 pw로 비교를 진행해줘
 
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">  로그인 메뉴설정
 ```
-로그인 성공하면 새로운 햄버거 메뉴가 나오게 해줘 "설정", "로그아웃" 두개 만들어 주고 로그아웃을 누르면 
+로그인 성공하면 새로운 햄버거 메뉴가 나오게 해줘 "설정","전체보기", "로그아웃" 세개 만들어 주고 처음에는 "전체보기"를 실행하고 components/MachineOverview.tsx 만들어 디스플레이 해줘
+로그아웃을 누르면 
   const logout = () => {
     localStorage.removeItem('token');
     alert('로그아웃 되었습니다.');
   };
-실행하고 나가게 해줘
-
-
+실행하고 나가게 해줘 
 ```
