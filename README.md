@@ -1543,7 +1543,8 @@ hash 처리된 pw로 비교를 진행해줘
 - 헤더(Header): 토큰의 타입과 암호화 방식을 포함합니다.
 - 페이로드(Payload): 사용자 정보 및 기타 데이터(예: 이메일, 발급 시간 등)가 포함됩니다.
 - 서명(Signature): 토큰의 무결성을 확인하기 위한 서명입니다
- 
+
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">  토큰 발행과 관리
 ```
 로그인 성공하면 토큰을 발행하여 localstorage 와 db의 collection name=users 에 token 항목으로 저장하고 logout 하면 두곳에서 토큰 항목을 삭제해줘
 토큰에는 email과 time 항목을 포함시켜줘
