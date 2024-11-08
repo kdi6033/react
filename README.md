@@ -1584,7 +1584,7 @@ hash 처리된 pw로 비교를 진행해줘
 
 ### 4.3 SECRET_KEY 생성과 관리
 - .env 파일 생성 및 설정
-your_secret_key_value_here 는 64바이트의 랜덤한 16진수 문자열을 사용 하시몀 되겠습니다.
+your_secret_key_value_here 는 64바이트의 랜덤한 16진수 문자열을 사용 하시몀 되겠습니다.    
 ex : 8e2c94b9e620d9c3d8f7d5e2f2e2cf4fe91c7d5efe8f1d9d6f4fbc0a0c5e7d5e
 ```
 # .env 파일
