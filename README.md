@@ -1534,6 +1534,13 @@ hash 처리된 pw로 비교를 진행해줘
 ```
 
 ## 4. JWT (JSON Web Token) 토큰 발행과 관리
+
+![25-17  React  토큰 발행과 관리](https://github.com/user-attachments/assets/2faac744-bd75-4062-869a-c975733fb5b8)
+
+<a href="https://youtu.be/1jTiT87ZlnY">
+    <img src="" alt="Token" width="400">
+</a> 
+
 [프로그램 다운로드 iotplc-04](https://github.com/kdi6033/react/releases/tag/iotplc-04-v1.0)   
 토큰(Token)은 사용자의 인증 및 권한 부여를 위해 서버에서 발행하는 일종의 인증 정보입니다. 사용자가 로그인할 때 서버는 사용자 정보를 확인한 뒤, 해당 사용자가 특정 리소스에 접근할 권한이 있다는 것을 증명하는 토큰을 생성하여 발급합니다.
 
