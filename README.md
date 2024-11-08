@@ -1535,10 +1535,8 @@ hash 처리된 pw로 비교를 진행해줘
 
 ## 4. JWT (JSON Web Token) 토큰 발행과 관리
 
-![25-17  React  토큰 발행과 관리](https://github.com/user-attachments/assets/2faac744-bd75-4062-869a-c975733fb5b8)
-
-<a href="https://youtu.be/1jTiT87ZlnY">
-    <img src="" alt="Token" width="400">
+<a href="https://youtu.be/TP2E5p_Dbys">
+    <img src="https://github.com/user-attachments/assets/2faac744-bd75-4062-869a-c975733fb5b8" alt="Token" width="400">
 </a> 
 
 [프로그램 다운로드 iotplc-04](https://github.com/kdi6033/react/releases/tag/iotplc-04-v1.0)   
