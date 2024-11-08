@@ -1408,7 +1408,7 @@ npm install express mongodb cors body-parser nodemailer bcrypt
                     Header.css
                     Header.tsx
 ```
-### npm 설치 프로그램 설명
+### 2.1 npm 설치 프로그램 설명
 - bcrypt : 로그인에서 비밀번호를 hash 처리함
 - nodemailer : 임시 비밀번호를 메일로 보낼 때 필욤함 
 - body-parser : Express 애플리케이션에서 클라이언트로부터 전달된 HTTP 요청의 본문(body)을 처리하기 위해 사용되는 미들웨어입니다. 이 미들웨어는 JSON, URL 인코딩된 데이터 등을 파싱하여 req.body 객체에 데이터를 추가해 줍니다. body-parser는 Express 4.x부터 독립된 모듈로 제공되며, 다양한 형식의 요청 데이터를 처리할 수 있습니다.    
@@ -1468,13 +1468,13 @@ function App() {
 
 export default App;
 ```
-### iotplc 프로그램 설명
+### 2.2 프로그램 구성
 #### 프론트엔드 (React)
 - App.tsx: React를 사용해 애플리케이션의 기본 구조를 설정하고, 현재 경로(location.pathname)를 표시합니다.
 - Header.tsx: 헤더 컴포넌트로 "IoT PLC 모니터링"이라는 제목을 보여줍니다.
 - MQTTClient.tsx: mqtt 라이브러리를 통해 브로커(mqtt://ai.doowon.ac.kr:1803)와 MQTT 통신을 수행합니다. 사용자 이메일을 기준으로 intopic과 outtopic을 구독하고 메시지를 수신하여 App.tsx에 전달합니다.
 
-##### 백엔드 (Node.js Express)
+#### 백엔드 (Node.js Express)
 MongoDB 연결: db-server.js에서 mongodb 클라이언트를 사용하여 local 데이터베이스와 localRecord 및 users 컬렉션에 연결합니다.
 API 라우트:
 - /api/records: MongoDB에서 모든 기록을 조회.
@@ -1485,7 +1485,7 @@ API 라우트:
 - /api/upsertUser: 특정 이메일을 기준으로 사용자를 삽입하거나 업데이트.
 -/api/signup: 신규 가입 시 임시 비밀번호를 생성하고, 이를 해시 처리하여 MongoDB에 저장하고 이메일로 전송.
 
-#### Nodemailer와 Bcrypt 통합, location, BrowserRouter
+### 2.3 Nodemailer와 Bcrypt 통합, location, BrowserRouter
 - Nodemailer: gmail 계정을 사용해 임시 비밀번호를 전송하는 기능이 포함되어 있습니다.
 - Bcrypt: 비밀번호 보안을 위해 해시 및 비교 기능을 사용하여 안전하게 비밀번호를 관리합니다.
 - React Router의 useLocation 훅을 사용하여 현재 경로를 동적으로 표시하며, BrowserRouter를 통해 라우팅을 지원합니다. 
