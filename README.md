@@ -1643,7 +1643,8 @@ export const TokenProvider = ({ children }) => {
 
 ## 5. MQTT 프로그램 연결
 
-ChatGPT에 App.tsx, MQTTClient.tsx, MachineOverview.tsx 를 제시하고
+ChatGPT에 App.tsx, MQTTClient.tsx, MachineOverview.tsx 를 제시하고    
+
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100"> MQTT 구현
 ```
 로그인 하면 mqtt 자동 실행하고,
