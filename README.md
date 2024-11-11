@@ -1593,9 +1593,55 @@ DATABASE_URL=mongodb://127.0.0.1:27017
 PORT=5000
 ```
 
-## 5. Logout 시간설정
+### 4.4 Logout 시간설정
 다음과 같은 이유로 logout 시간을 설정해야 합니다.
 - 보안 위험 증가 : 로그인한 채로 자리를 비운 경우, 누군가가 해당 계정에 접근할 수 있는 위험이 있습니다.
 - 세션 만료로 인한 오류 발생 가능성 : 인증 오류가 발생하여 이전에 보던 페이지에서 더 이상 작업을 수행할 수 없고, 때로는 페이지를 새로 고침하거나 다시 로그인해야 할 수도 있습니다.
 - 서버 리소스 사용 증가 : 서버가 해당 세션을 유지하기 위해 리소스를 소모할 수 있습니다.
+
+다음은 로그아웃 프로그램을 ChatGPT 가 작성한 것입니다. 본 사이트 프로그램은 모니터링 프로그램으로 24시간 가동할 때가 있어서 일단은 자동로그아웃은 적용을 하지 않고 소개만 해드립니다. 향후 프로그램을 돌려 보다가 문제가 생기면 그 때 보완 하겠습니다.
+```
+// TokenContext.js
+export const TokenProvider = ({ children }) => {
+  const [token, setToken] = useState(null);
+  const [lastActivity, setLastActivity] = useState(Date.now());
+
+  const saveToken = (userToken) => {
+    setToken(userToken);
+    setLastActivity(Date.now());
+    const expireTime = Date.now() + 3600 * 1000; // 현재 시간에서 1시간 후
+    localStorage.setItem('userToken', JSON.stringify({ token: userToken, expireTime }));
+  };
+
+  const logout = () => {
+    setToken(null);
+    localStorage.removeItem('userToken');
+  };
+
+  // 페이지 로드 시 토큰 만료 확인
+  useEffect(() => {
+    const storedToken = JSON.parse(localStorage.getItem('userToken'));
+    if (storedToken) {
+      const { token, expireTime } = storedToken;
+      if (Date.now() > expireTime) {
+        logout();
+      } else {
+        setToken(token);
+        setLastActivity(Date.now());
+      }
+    }
+  }, []);
+
+  return (
+    <TokenContext.Provider value={{ token, saveToken, logout, setLastActivity }}>
+      {children}
+    </TokenContext.Provider>
+  );
+};
+
+```
+
+## MQTT 프로그램 연결
+
+
 
