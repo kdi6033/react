@@ -735,11 +735,7 @@ const MQTTClient: React.FC<MQTTClientProps> = ({ onMessage }) => {
     };
   }, [brokerUrl, intopic, outtopic, onMessage]);
 
-  return (
-    <div>
-      <h1>MQTT Client</h1>
-    </div>
-  );
+  return null;
 };
 
 export default MQTTClient;
