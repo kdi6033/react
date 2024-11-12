@@ -642,10 +642,9 @@ export default MQTTClient;
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">  [25-10]    
 
 ```
-이 프로그램에서 ui창을 별도의 서브 프로그램으로 만들어줘
-Display라는 별도의 컴포넌트를 만들고 
-mqtt로 들어온 메세지는 App.tsx 로 전달해 하위 모든 서브 프로그램이 바로 반영 할 수 있게 프로그램 해줘 그리고 이러한 것에 대해 니가 분석하고 추천해줘
-들어온 정보를 하드웨어에 기록도 해야 함으로 app.tsx와 같은 상위단에 기록해서 hook을 사용하려고 해
+이 프로그램에서 ui창을 components/Display 별도의 서브 프로그램으로 만들어줘
+mqtt로 들어온 메세지는 App.tsx 로 전달해 하위 모든 서브 프로그램이 바로 반영 할 수 있게 hoook 을 이용해서 전달하고
+이 데이터를 Display에 전당해서 ui를 작성해줘
 ```
 - 프로그램 구조를 개선하기 위해, UI 창을 Display라는 컴포넌트로 분리하고, MQTT 메시지를 App.tsx에서 관리해 모든 하위 컴포넌트에 상태를 전달합니다. 
 - 이를 통해 메시지 상태를 상위에서 관리하고, 각 컴포넌트에서 실시간으로 반영합니다.
