@@ -691,6 +691,61 @@ function App() {
 }
 export default App;
 ```
+MQTTClient.tsx
+```
+import React, { useEffect } from 'react';
+import mqtt from 'mqtt';
+
+interface MQTTClientProps {
+  onMessage: (message: string) => void;
+}
+
+const MQTTClient: React.FC<MQTTClientProps> = ({ onMessage }) => {
+  const brokerUrl = 'mqtt://ai.doowon.ac.kr:1803';
+  const intopic = 'i2r/kdi6033@gmail.com/out';
+  const outtopic = 'i2r/kdi6033@gmail.com/in';
+
+  useEffect(() => {
+    const client = mqtt.connect(brokerUrl);
+
+    client.on('connect', () => {
+      console.log('Connected to broker');
+      client.subscribe(intopic, (err) => {
+        if (!err) {
+          console.log(`Subscribed to ${intopic}`);
+        }
+      });
+    });
+
+    client.on('message', (topic, message) => {
+      if (topic === intopic) {
+        const newMessage = message.toString();
+        onMessage(newMessage); // 최신 메시지만 전달
+        console.log(`Received message from ${intopic}: ${newMessage}`);
+      }
+    });
+
+    client.on('error', (err) => {
+      console.error('Connection error:', err);
+      client.end();
+    });
+
+    return () => {
+      client.end();
+    };
+  }, [brokerUrl, intopic, outtopic, onMessage]);
+
+  return (
+    <div>
+      <h1>MQTT Client</h1>
+    </div>
+  );
+};
+
+export default MQTTClient;
+```
+
+[node red 25-8-1 소스파일](https://github.com/kdi6033/react/releases/tag/react-25-8-1-v1.0)   
 
 ## 9. MQTT Hook i2r-03 IoT PLC 연결
 <a href="https://youtu.be/ymZNHD4hQZE">
