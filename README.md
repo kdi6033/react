@@ -632,6 +632,66 @@ const MQTTClient = () => {
 
 export default MQTTClient;
 ```
+다음은 좀더 효율적인 방법으로 ChatGPT에 요구한 프로그램 입니다.
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100"> MQTT 프로그램 
+```
+import React from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        두원공대 메카트로닉스과 김동일 MQTT
+      </header>
+      <main>
+        메인 프로그램
+      </main>
+    </div>
+  );
+}
+
+export default App;
+mqtt 연결프로그램 만들어줘
+브로커주소:ai.doowon.ac.kr 포트:1803 intopic:i2r/kdi6033@gmail.com/out  outtopic:i2r/kdi6033@gmail.com/in
+mqtt 프로그램은 components/MQTTClient 에 만들어줘 들어온 데이터는 hook를 이용해서 App 전달하고 이것을 디스플레이 해줘 
+```
+App.tsx
+```
+// App.tsx
+import React, { useState } from 'react';
+import logo from './logo.svg';
+import './App.css';
+import MQTTClient from './components/MQTTClient';
+
+function App() {
+  const [mqttMessage, setMqttMessage] = useState<string>('');
+
+  // MQTT 데이터가 들어올 때 실행될 함수
+  const handleReceivedMessage = (message: string) => {
+    setMqttMessage(message);
+  };
+
+  return (
+    <div className="App">
+      <header className="App-header">
+        두원공대 메카트로닉스과 김동일 MQTT
+      </header>
+      <main>
+        메인 프로그램
+        <MQTTClient onMessageReceived={handleReceivedMessage} />
+        <div>
+          <h2>Received MQTT Message:</h2>
+          <p>{mqttMessage}</p>
+        </div>
+      </main>
+    </div>
+  );
+}
+export default App;
+```
+
 ## 9. MQTT Hook i2r-03 IoT PLC 연결
 <a href="https://youtu.be/ymZNHD4hQZE">
     <img src="https://github.com/user-attachments/assets/6fda3a19-e210-40a2-a23d-e5abb8f74e62" alt="Updating the screen" width="400">
