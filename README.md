@@ -534,17 +534,16 @@ export default MQTTClient;
 <a href="https://youtu.be/NTLkgPB4hpE">
     <img src="https://github.com/user-attachments/assets/10b281ca-17da-4c78-b42e-9e6b298c21f5" alt="Updating the screen" width="400">
 </a>    
+[프로그램 다운로드 25-9](https://github.com/kdi6033/react/releases/tag/react-i2r-arduino-basic-v1.0)        
 
 이제부터 i2r-03 IoT PLC 를 연결하는 과정을 설명 드리겠습니다.    
-앞에서 설명한 MQTT 프로그램에서 topic을 PLC의 토픽과 일치 시키면 통신을 진행 할수 있습니다. 브로커에서 토픽이 중볻되지 않게 자신의 이메일을 입력하여 사용하세요
+앞에서 설명한 MQTT 프로그램에서 topic을 PLC의 토픽과 일치 시키면 통신을 진행 할수 있습니다. 브로커에서 토픽이 중복되지 않게 자신의 이메일을 입력하여 사용하세요
 
 -브로커를 결정하새요 다음 예시는 ai.doowon.ac.kr 을 사용하는 것으로 하겠습니다.
 - MQTT 브로커(mqtt://ai.doowon.ac.kr:1803)에 연결한 후, 특정 토픽에서 메시지를 구독합니다.
 - 메시지가 들어오면 이를 즉시 화면에 출력합니다.
 - 클라이언트가 페이지를 벗어나면 연결이 해제됩니다.    
-[프로그램 다운로드 25-9](https://github.com/kdi6033/react/releases/tag/react-i2r-arduino-basic-v1.0)        
-[App.tsx]
-- App.js는 React 애플리케이션의 기본 구조를 정의합니다.
+- App.tsx는 React 애플리케이션의 기본 구조를 정의합니다.
 - MQTTClient라는 컴포넌트를 호출하여 MQTT 통신을 처리합니다.
 - 주요 구조는 header와 main으로 나뉘며, main 섹션에서 MQTTClient 컴포넌트를 렌더링합니다.
 ```
