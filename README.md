@@ -1297,7 +1297,7 @@ export default App;
 - 서버 프로그램은 MQTT, mongoDB 두개의 프로그램을 연결하면 완성 됩니다.    
 - MQTT 프로그램은 경량이라 react에 포함을 시키지만 mongoDB는 서버에 구축해야 합니다.     
 - react 프로그램은 사용자측에서 동작함으로 보안이 누출 되기 쉬운 구조이므로 서버에 구축하여 api로 연결해서 사용 합니다.    
-- 25-13 mongodb 프로그램에 25-8 mqtt 프로그램을 포합시키겠습니다. 그리고 mqtt를 install 합니다.
+- 25-13 mongodb 프로그램에 25-8 mqtt 프로그램을 포함시키겠습니다. 그리고 mqtt를 install 합니다.
 ```
 npm install mqtt
 ```
