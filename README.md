@@ -1301,7 +1301,7 @@ export default App;
 ```
 npm install mqtt
 ```
-## [프로젝트 25-15] 단순화한 기초 서버 프로그램
+## 14. 정리한 기초 서버 프로그램
 [프로그램 다운로드 25-15](https://github.com/kdi6033/react/releases/tag/react-25-15-mongo-mqtt-v1.0)  
 mqtt와 mongodb를 합쳐서 서버의 기초프로그램은 완성을 하였습니다. 지금부터는 서버 프로그램을 확장하기 위해서는 프로그램을 심플하고 분석하기 좋게 구조를 변경 시키겠습니다.
 
