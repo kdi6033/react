@@ -1292,7 +1292,7 @@ export default App;
 
 ## 11-1 IoT PLC 에 mongoDB 연결
 [프로그램 다운로드 25-14](https://github.com/kdi6033/react/releases/tag/react-25-14-mqtt-mongodb-v1.0)  
-앞에서 프로그램 한 11. UI 프로그램과 monogoDB를 연결해 보겠습니다.
+앞에서 프로그램 한 IoT UI 프로그램과 monogoDB를 연결해 보겠습니다.
 db-server.js 에서 mac 데이터로만 update 하게 수정 했습니다.
 ```
 app.post('/api/upsert', async (req, res) => {
