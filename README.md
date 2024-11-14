@@ -968,7 +968,7 @@ contexts/ConfigContext.tsx를 만들고 email, mac 을 전역 변수로 만들�
 - Display.tsx에서는 사용자가 입력한 이메일과 MAC 주소를 저장하고, 수신한 메시지의 MAC 주소와 비교하여 메시지를 필터링합니다.
 - 프로그램이 시작될 때 로컬 스토리지에서 저장된 값을 불러옵니다.
 
-## 11. UI 만들기 - Led와 스위치를 만들어 IoT PLC와 연동한다.
+## 11. IoT PLC UI 만들기
 <a href="https://youtu.be/SWQ7683I-hw">
     <img src="https://github.com/user-attachments/assets/4a6411aa-f9b6-4397-8843-3c0e8c4b7357" alt="Updating the screen" width="400">
 </a>     
