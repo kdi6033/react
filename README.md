@@ -1290,7 +1290,118 @@ export default App;
 ```
 
 ## 11-1 IoT PLC 에 mongoDB 연결
+[프로그램 다운로드 25-14](https://github.com/kdi6033/react/releases/tag/react-25-14-mqtt-mongodb-v1.0)  
+앞에서 프로그램 한 11. UI 프로그램과 monogoDB를 연결해 보겠습니다.
+db-server.js 에서 mac 데이터로만 update 하게 수정 했습니다.
+```
+app.post('/api/upsert', async (req, res) => {
+  const client = new MongoClient(url);
+  const { mac, ...rest } = req.body; // email과 mac을 제외한 나머지 필드
 
+  try {
+    console.log('Connecting to MongoDB...');
+    await client.connect();
+    console.log('Connected post updateOne');
+
+    const db = client.db(dbName);
+    const collection = db.collection(collectionName);
+
+    const result = await collection.updateOne(
+      { mac },
+      { $set: rest },
+      { upsert: true }
+    );
+    console.log('업데이트 또는 삽입된 데이터:', result);
+
+    res.json(result);
+  } catch (err) {
+    console.error('Error connecting to MongoDB', err);
+    res.status(500).send('Error connecting to MongoDB');
+  } finally {
+    await client.close();
+    console.log('MongoDB connection closed');
+  }
+});
+```
+11. UI 프로그램을 ChatGPT에 학습 시키고 ChatGPT에서 다음을 실행합니다.
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">  db-server.js 추가    
+```
+email 과 mac 을 만족시키는 데이터를 components/DataHandler.tsx 로 전달하고
+/api/upsert 를 이용해 데이터가 없으면 insert, 존재하면 update 해줘
+```
+다음은 결과 파일 입니다.
+App.tsx
+```
+//App.tsx
+import React, { useState } from 'react';
+import './App.css';
+import MQTTClient from './components/MQTTClient';
+import Display from './components/Display';
+import DataHandler from './components/DataHandler'; // DataHandler 추가
+import { ConfigProvider } from './contexts/ConfigContext'; // ConfigProvider 사용
+
+function App() {
+  const [mqttMessage, setMqttMessage] = useState<string | null>(null);
+
+  const handleMqttMessage = (message: string) => {
+    setMqttMessage(message);
+    console.log('하드웨어 기록: ', message);
+  };
+
+  return (
+    <ConfigProvider>
+      <div className="App">
+        <header className="App-header">MQTT 통신 프로그램</header>
+        <main>
+          <MQTTClient onMessage={handleMqttMessage} />
+          <Display message={mqttMessage} />
+          <DataHandler message={mqttMessage} /> {/* DataHandler에 메시지 전달 */}
+        </main>
+      </div>
+    </ConfigProvider>
+  );
+}
+export default App;
+```
+DataHandler.tsx
+```
+// components/DataHandler.tsx
+import React, { useEffect } from 'react';
+import axios from 'axios';
+import { useConfig } from '../contexts/ConfigContext';
+
+interface DataHandlerProps {
+  message: string | null;
+}
+
+const DataHandler: React.FC<DataHandlerProps> = ({ message }) => {
+  const { email, mac } = useConfig();
+
+  useEffect(() => {
+    const processMessage = async () => {
+      if (!message) return;
+
+      try {
+        const parsedMessage = JSON.parse(message);
+        
+        // email과 mac이 일치하는지 확인
+        if (parsedMessage.email === email && parsedMessage.mac === mac) {
+          // upsert API 호출
+          const response = await axios.post('http://localhost:5000/api/upsert', parsedMessage);
+          console.log('업데이트 또는 삽입 결과:', response.data);
+        }
+      } catch (error) {
+        console.error('메시지 처리 중 오류:', error);
+      }
+    };
+
+    processMessage();
+  }, [message, email, mac]);
+
+  return null; // UI 요소가 필요하지 않으므로 null 반환
+};
+export default DataHandler;
+```
 
 
 
