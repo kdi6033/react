@@ -942,12 +942,13 @@ export default Display;
 - UI 표시: macMessage에 값이 있으면 해당 메시지를 화면에 표시하고, 값이 없으면 "No matching message"를 표시합니다.
 이 방식으로 원하는 MAC 주소를 포함한 메시지만 필터링하여 UI에 표시할 수 있습니다.
 
-## 10. 정보 저장과 읽기 - 이메일 맥어드레스 입력창 만들고 정보 저장하고 읽기
+## 10. 정보(email,mac) 저장과 읽기
 <a href="https://youtu.be/ebBb9uQH0dk">
     <img src="https://github.com/user-attachments/assets/56e51862-d8d2-478c-8f9b-a0ff939f2559" alt="Updating the screen" width="400">
 </a>     
 
-[프로그램 다운로드 25-11](https://github.com/kdi6033/react/releases/tag/react-25-11-v1.0)    
+[프로그램 다운로드 25-11](https://github.com/kdi6033/react/releases/tag/react-25-11-v1.0)  
+이메일 맥어드레스 입력창 만들고 정보 저장하고 읽어와 이 데이터의 
 IoT PLC에서 mqtt로 들어오는 데이터를 4개의 Led를 만들어 연동합니다.    
 
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">   [11]    
