@@ -1288,6 +1288,12 @@ function App() {
 
 export default App;
 ```
+
+## 11-1 IoT PLC 에 mongoDB 연결
+
+
+
+
 ## 13. MongoDB, MQTT 서버 프로그램
 <a href="https://youtu.be/TT5mNjH4skc">
     <img src="https://github.com/user-attachments/assets/6e2aba35-24c3-48ab-8027-ca3333af5845" alt="Updating the screen" width="400">
