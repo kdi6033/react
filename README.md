@@ -1325,6 +1325,7 @@ app.post('/api/upsert', async (req, res) => {
 });
 ```
 11. UI 프로그램을 ChatGPT에 학습 시키고 ChatGPT에서 다음을 실행합니다.
+    
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">  db-server.js 추가    
 ```
 email 과 mac 을 만족시키는 데이터를 components/DataHandler.tsx 로 전달하고
