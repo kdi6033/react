@@ -1293,7 +1293,7 @@ export default App;
 ```
 
 ## 13. IoT PLC 에 mongoDB 연결
-[프로그램 다운로드 25-14](https://github.com/kdi6033/react/releases/tag/react-25-14-mqtt-mongodb-v1.0)  
+[프로그램 다운로드 25-14](https://github.com/kdi6033/react/releases/tag/react-25-14-v1.0)  
 앞에서 프로그램 한 IoT UI 프로그램에 monogoDB를 연결해 보겠습니다.
 - frontend, backend 디렉토리를 만들어 기존의 프로그램은 모두 frontend로 이동하고, db는 backend에 생성 합니다.   
 - MQTT 프로그램은 경량이라 frontend 의 UI 프로그램을 ChatGPT에 학습 시키고 ChatGPT에서 다음을 실행합니다.
