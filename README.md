@@ -1010,8 +1010,10 @@ led 그대로 놔두고 스위치 추가해줘
     <img src="https://github.com/user-attachments/assets/a740712d-5b3c-4dad-9235-4dfd464e1e43" alt="Updating the screen" width="400">
 </a>      
 
-[프로그램 다운로드 25-13](https://github.com/kdi6033/react/releases/tag/react-25-13-mongo-v1.0)     
-이 React 프로그램은 MongoDB와의 연동을 통해 데이터를 조회하고 업데이트하는 기능을 제공합니다. 사용자는 네 가지 버튼을 통해 다양한 작업을 수행할 수 있습니다.    
+[프로그램 다운로드 25-13](https://github.com/kdi6033/react/releases/tag/react-25-13-mongo-v1.0)  
+mongoDB가 어떻게 작동하는지 학습하고 가겠습니다.    
+이 React 프로그램은 MongoDB와의 연동을 통해 데이터를 조회하고 업데이트하는 기능을 제공합니다.     
+사용자는 네 가지 버튼을 통해 다양한 작업을 수행할 수 있습니다.    
 - 첫 번째 버튼은 "모든 데이터 가져오기"로, MongoDB에 저장된 모든 데이터를 조회하여 화면에 표시합니다. 
 - 두 번째 버튼인 "1개 데이터 가져오기"는 특정 이메일과 MAC 주소로 단일 레코드를 검색해 보여줍니다. 
 - 세 번째 버튼은 "Email로 데이터 검색하기"로, 특정 이메일을 기준으로 여러 개의 데이터를 검색합니다. 
@@ -1290,41 +1292,11 @@ function App() {
 export default App;
 ```
 
-## 11-1 IoT PLC 에 mongoDB 연결
+## 13. IoT PLC 에 mongoDB 연결
 [프로그램 다운로드 25-14](https://github.com/kdi6033/react/releases/tag/react-25-14-mqtt-mongodb-v1.0)  
-앞에서 프로그램 한 IoT UI 프로그램과 monogoDB를 연결해 보겠습니다.
-db-server.js 에서 mac 데이터로만 update 하게 수정 했습니다.
-```
-app.post('/api/upsert', async (req, res) => {
-  const client = new MongoClient(url);
-  const { mac, ...rest } = req.body; // email과 mac을 제외한 나머지 필드
-
-  try {
-    console.log('Connecting to MongoDB...');
-    await client.connect();
-    console.log('Connected post updateOne');
-
-    const db = client.db(dbName);
-    const collection = db.collection(collectionName);
-
-    const result = await collection.updateOne(
-      { mac },
-      { $set: rest },
-      { upsert: true }
-    );
-    console.log('업데이트 또는 삽입된 데이터:', result);
-
-    res.json(result);
-  } catch (err) {
-    console.error('Error connecting to MongoDB', err);
-    res.status(500).send('Error connecting to MongoDB');
-  } finally {
-    await client.close();
-    console.log('MongoDB connection closed');
-  }
-});
-```
-11. UI 프로그램을 ChatGPT에 학습 시키고 ChatGPT에서 다음을 실행합니다.
+앞에서 프로그램 한 IoT UI 프로그램에 monogoDB를 연결해 보겠습니다.
+- frontend, backend 디렉토리를 만들어 기존의 프로그램은 모두 frontend로 이동하고, db는 backend에 생성 합니다.   
+- MQTT 프로그램은 경량이라 frontend 의 UI 프로그램을 ChatGPT에 학습 시키고 ChatGPT에서 다음을 실행합니다.
     
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">  db-server.js 추가    
 ```
