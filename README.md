@@ -1406,6 +1406,44 @@ dayOfWeek : 일주일 중 요일설정 일=0,월=1,화=2,수=3,목=4,금=5,토=6
 0번 핀의 저장된 값을 모두 지운다.
 ```
 
+```
+"보기" 버튼을 "저장" 버튼 옆에 추가 해주고 버튼을 누르면 mqtt 로 다음 프로토r콜 보내줘
+{"order":4,"mac":"A0:B7:65:CD:4D:34","oper":"list","pI":0}
+0번 포트에 저장 리스트를 보여준다.
+그리고 day of week의 리스트는 일 월 화 수 목 금 토 로 해줘
+```
+
+```
+"보기" 버튼을 누른 후에 들어온 mqtt 메세지가 order=4 를 포함하고 있으면 "저장" 버튼 아래 같은 창 .time-settings 에 표시해줘
+```
+
+```
+Start: 22:48
+End: 22:50
+Repeat: d
+Day: 일
+이 표시를 "22:48 ~ 22:50 d 일" 한줄로 표시하고 같은줄 오른 쪽에 쓰레기통 아이콘 추가해줘
+```
+
+react-icons 설치
+```
+npm install react-icons
+```
+tsconfig.json 파일에서 node_modules 내의 타입 파일을 참조하고 있는지 확인합니다. 설정 파일에 아래 내용이 포함되어 있어야 합니다:
+```
+{
+  "compilerOptions": {
+    "typeRoots": ["node_modules/@types"]
+  }
+}
+```
+아이콘을 사용하려면 아래처럼 가져오세요:
+```
+import { FaTrashAlt } from 'react-icons/fa';
+```
+
+
+
 
 
 
