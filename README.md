@@ -1381,6 +1381,34 @@ const DataHandler: React.FC<DataHandlerProps> = ({ message }) => {
 export default DataHandler;
 ```
 
+## 14. 출력 시간 설정
+
+[보드의 프로토콜은 링크] (https://github.com/kdi6033/i2r#%ED%94%84%EB%A1%9C%ED%86%A0%EC%BD%9C)
+```
+스위치 라벨을 누르면 시간 설정 입력이 보이게 해줘 그리고 저장 버튼을 누르면 mqtt 로 메세지 보내고 "취소" 버튼을 누르면 입력창을 닫아줘
+다음은 프로토콜 입니다.
+보드의 동작시간을 일일 또는 일주일 단위로 설정한다.
+{'order':4,"oper":operation,"pI":pinIndex,"sH":시작시간,"sM":시작분,"eH":종료시간,"eM":종료분, "rM":repeatMode,"dW":dayOfWeek}
+pI:pinIndex 출력핀 번호 0번부터 시작한다.
+operation : "insert":설정을 추가한다. "delete":한개의 설정을 삭제한다. "deleteAll":모두 삭제한다.
+repeatMode : "daily"="d", "weekly"="w"
+dayOfWeek : 일주일 중 요일설정 일=0,월=1,화=2,수=3,목=4,금=5,토=6
+예제
+{"order":4,"mac":"A0:B7:65:CD:4D:34","oper":"insert","pI":0,"sH":9,"sM":55,"eH":9,"eM":57,"rM":"d","dW":0}
+오전9시55분부터 9시57분까지 매일 동작한다.
+{"order":4,"mac":"A0:B7:65:CD:4D:34","oper":"insert","pI":0,"sH":9,"sM":55,"eH":9,"eM":57,"rM":"w","dW":1}
+오전9시55분부터 9시57분까지 매주 월요일에 동작한다.
+{"order":4,"mac":"A0:B7:65:CD:4D:34","oper":"list","pI":0}
+0번 포트에 저장 리스트를 보여준다.
+{"order":4,"mac":"A0:B7:65:CD:4D:34","oper":"delete","pI":0,"slotIndex":0}
+0번핀의 0번째 리스트를 삭제한다.
+{"order":4,"mac":"A0:B7:65:CD:4D:34","oper":"deleteAll","pI":0}
+0번 핀의 저장된 값을 모두 지운다.
+```
+
+
+
+
 # React로 완성하는 실전 IoT PLC UI
 ## 1. IoT PLC UI 구조 설계
 실전 프록그램을 만들기 위해 필요한 정보와 개념을 설명 합니다.
