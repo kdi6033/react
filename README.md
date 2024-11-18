@@ -1383,7 +1383,8 @@ export default DataHandler;
 
 ## 14. 출력 시간 설정
 
-[보드의 프로토콜은 링크](https://github.com/kdi6033/i2r#%ED%94%84%EB%A1%9C%ED%86%A0%EC%BD%9C)
+[보드의 프로토콜 링크](https://github.com/kdi6033/i2r#%ED%94%84%EB%A1%9C%ED%86%A0%EC%BD%9C)
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100"> 프로토콜 인식      
 ```
 스위치 라벨을 누르면 시간 설정 입력이 보이게 해줘 그리고 저장 버튼을 누르면 mqtt 로 메세지 보내고 "취소" 버튼을 누르면 입력창을 닫아줘
 다음은 프로토콜 입니다.
@@ -1405,18 +1406,18 @@ dayOfWeek : 일주일 중 요일설정 일=0,월=1,화=2,수=3,목=4,금=5,토=6
 {"order":4,"mac":"A0:B7:65:CD:4D:34","oper":"deleteAll","pI":0}
 0번 핀의 저장된 값을 모두 지운다.
 ```
-
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">보기 버튼      
 ```
 "보기" 버튼을 "저장" 버튼 옆에 추가 해주고 버튼을 누르면 mqtt 로 다음 프로토r콜 보내줘
 {"order":4,"mac":"A0:B7:65:CD:4D:34","oper":"list","pI":0}
 0번 포트에 저장 리스트를 보여준다.
 그리고 day of week의 리스트는 일 월 화 수 목 금 토 로 해줘
 ```
-
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">리스트 작성      
 ```
 "보기" 버튼을 누른 후에 들어온 mqtt 메세지가 order=4 를 포함하고 있으면 "저장" 버튼 아래 같은 창 .time-settings 에 표시해줘
 ```
-
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">출력 보정      
 ```
 Start: 22:48
 End: 22:50
@@ -1424,7 +1425,7 @@ Repeat: d
 Day: 일
 이 표시를 "22:48 ~ 22:50 d 일" 한줄로 표시하고 같은줄 오른 쪽에 쓰레기통 아이콘 추가해줘
 ```
-
+아이콘을 표시하기 위해서는 다음을 설치해야 합니다.
 react-icons 설치
 ```
 npm install react-icons
@@ -1441,8 +1442,11 @@ tsconfig.json 파일에서 node_modules 내의 타입 파일을 참조하고 있
 ```
 import { FaTrashAlt } from 'react-icons/fa';
 ```
-
-
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">출력 보정      
+```
+프로토콜 중 d는 "매일"로 w는 "매주"로 표기 하고
+월 화 수 목 등의 요일 표시는 "매주" 일 때만 표시 해줘
+```
 
 
 
