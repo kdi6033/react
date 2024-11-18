@@ -1383,7 +1383,8 @@ export default DataHandler;
 
 ## 14. 출력 시간 설정
 
-[보드의 프로토콜 링크](https://github.com/kdi6033/i2r#%ED%94%84%EB%A1%9C%ED%86%A0%EC%BD%9C)
+[보드의 프로토콜 링크](https://github.com/kdi6033/i2r#%ED%94%84%EB%A1%9C%ED%86%A0%EC%BD%9C)     
+
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100"> 프로토콜 인식      
 ```
 스위치 라벨을 누르면 시간 설정 입력이 보이게 해줘 그리고 저장 버튼을 누르면 mqtt 로 메세지 보내고 "취소" 버튼을 누르면 입력창을 닫아줘
