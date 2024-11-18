@@ -1382,6 +1382,9 @@ export default DataHandler;
 ```
 
 ## 14. 출력 시간 설정
+<a href="https://youtu.be/m26b7TIQkx0">
+    <img src="https://github.com/user-attachments/assets/21d01497-b2ff-4787-b463-218783e32249" alt="Updating the screen" width="400">
+</a>    
 
 [프로그램 다운로드 25-15](https://github.com/kdi6033/react/releases/tag/react-25-15-vq.0)  
 
