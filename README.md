@@ -1382,7 +1382,7 @@ export default DataHandler;
 ```
 
 ## 14. 출력 시간 설정
-<a href="https://youtu.be/m26b7TIQkx0">
+<a href="https://youtu.be/E52x05yLvLo">
     <img src="https://github.com/user-attachments/assets/21d01497-b2ff-4787-b463-218783e32249" alt="Updating the screen" width="400">
 </a>    
 
