@@ -1461,7 +1461,8 @@ import { FaTrashAlt } from 'react-icons/fa';
 ## 1. IoT PLC UI 구조 설계
 실전 프록그램을 만들기 위해 필요한 정보와 개념을 설명 합니다.
 ### 1.1 사용자 접속
-여러명의 사용자가 접속을 하면 email을 기반으로 사용자에게 적합한 ui를 제공해야 합니다.
+여러명의 사용자가 접속을 하면 email을 기반으로 사용자에게 적합한 ui를 제공해야 합니다.    
+
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="80"> 로그인 설계
 ```
 다수의 사용자가 접속하는 로그인 설계 어떻게 하면 되나요
