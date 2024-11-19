@@ -1448,10 +1448,40 @@ tsconfig.json 파일에서 node_modules 내의 타입 파일을 참조하고 있
 ```
 import { FaTrashAlt } from 'react-icons/fa';
 ```
-<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">출력 보정      
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">출력 메세지 보정      
 ```
 프로토콜 중 d는 "매일"로 w는 "매주"로 표기 하고
 월 화 수 목 등의 요일 표시는 "매주" 일 때만 표시 해줘
+```
+
+## 15 입력 on/off 설정
+
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100"> Led 라벨 추가   
+```
+led에 라벨을 붙여줘
+```
+```
+      <div>
+        <h2>LED States</h2>
+        <div className="led-container">
+          {ledStates.map((state, index) => (
+            <div key={index} className="led-item">
+              <span className="led-label">LED {index + 1}</span> {/* 라벨 추가 */}
+              <div
+                className={`led ${state ? 'on' : 'off'}`}
+                title={`LED ${index + 1}`}
+              ></div>
+            </div>
+          ))}
+        </div>
+      </div>
+```
+```
+.led-label {
+  margin-top: 5px; /* LED와 라벨 사이의 간격 */
+  font-size: 14px; /* 라벨 폰트 크기 */
+  color: #333; /* 라벨 색상 */
+}
 ```
 
 
