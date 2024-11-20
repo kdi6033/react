@@ -1706,9 +1706,46 @@ function App() {
     </div>
   );
 }
-
 export default App;
 ```
+App.css
+```
+.App {
+  text-align: center;
+}
+
+.App-link {
+  color: #61dafb;
+}
+```
+Header.tsx
+```
+import React from 'react';
+import './Header.css';
+
+const Header = () => {
+  return (
+    <header className="App-header">
+      IoT PLC
+    </header>
+  );
+};
+export default Header;
+```
+Header.css
+```
+.App-header {
+    background-color: #282c34;
+    min-height: 10vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+```
+
 ### 2.2 프로그램 구성
 #### 프론트엔드 (React)
 - App.tsx: React를 사용해 애플리케이션의 기본 구조를 설정하고, 현재 경로(location.pathname)를 표시합니다.
