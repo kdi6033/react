@@ -1459,7 +1459,7 @@ import { FaTrashAlt } from 'react-icons/fa';
     <img src="https://github.com/user-attachments/assets/21d01497-b2ff-4787-b463-218783e32249" alt="Updating the screen" width="400">
 </a>    
 
-[프로그램 다운로드 25-16](https://github.com/kdi6033/react/releases/tag/react-25-15-vq.0)  
+[프로그램 다운로드 25-16](https://github.com/kdi6033/react/releases/tag/react-25-16-v1.0)  
 
 LED 라벨을 클릭하여 각 LED의 설정 창을 열고 상태를 관리할 수 있습니다.    
 - LED 라벨 클릭 : LED 라벨을 클릭하면 해당 LED의 설정 창이 열립니다.
