@@ -1456,7 +1456,7 @@ import { FaTrashAlt } from 'react-icons/fa';
 
 ## 15 입력 on/off 설정
 <a href="https://youtu.be/E52x05yLvLo">
-    <img src="https://github.com/user-attachments/assets/21d01497-b2ff-4787-b463-218783e32249" alt="Updating the screen" width="400">
+    <img src="https://github.com/user-attachments/assets/5364d8d7-7e32-4b9f-978b-fd55ef2e7932" alt="입력 onoff 설정" width="400">
 </a>    
 
 [프로그램 다운로드 25-16](https://github.com/kdi6033/react/releases/tag/react-25-16-v1.0)  
