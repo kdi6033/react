@@ -1455,6 +1455,11 @@ import { FaTrashAlt } from 'react-icons/fa';
 ```
 
 ## 15 입력 on/off 설정
+<a href="https://youtu.be/E52x05yLvLo">
+    <img src="https://github.com/user-attachments/assets/21d01497-b2ff-4787-b463-218783e32249" alt="Updating the screen" width="400">
+</a>    
+
+[프로그램 다운로드 25-16](https://github.com/kdi6033/react/releases/tag/react-25-15-vq.0)  
 
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100"> Led 라벨 추가   
 ```
