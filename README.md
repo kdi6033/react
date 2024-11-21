@@ -1496,6 +1496,17 @@ operation : "save":출력설정을 저장한다. "list":설정된 값의 리스�
 {"order":5,"oper":"save","mac":"A0:B7:65:CD:4D:34","portNo":0,"portState":[{"mac":"D4:8A:FC:B5:30:10","port":1,"value":false},{"mac":"B0:A7:32:1D:B3:B8","port":1,"value":true}]}
 맥어드레스가 "A0:B7:65:CD:4D:34" 0번 핀의 동작 저장 on 될때 맥어드레스가 "A0:B7:65:CD:4D:34" 0번 핀이 on(true) 된다. off 될때 맥어드레스가 "A0:B7:65:CD:4D:34" 0번 핀이 off(false) 된다. 
 ```
+보기 버튼을 만들어 현재 설정 되어 있는 상태를 읽어 옵니다.
+```
+보기 버튼을 만들고 다음 메세지를 보내줘
+{"order":5,"mac":"A0:B7:65:CD:4D:34","oper":"list","portNo":0}
+맥어드레스 "A0:B7:65:CD:4D:34" 기기 0번 핀의 설정 값을 요청한다.
+```
+```
+view 버튼을 누르면 다음 메세지가 들어 옵니다.
+Received message from i2r/kdi6033@gmail.com/out: {"order":6,"mac":"D8:13:2A:C5:C3:7C","portNo":0,"portState":[{"mac":"D8:13:2A:C5:C3:7C","port":0,"value":false},{"mac":"D8:13:2A:C5:C3:7C","port":0,"value":true}]}
+그런데 입력창에 이를 기록해 주세요
+```
 
 
 
