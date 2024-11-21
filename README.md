@@ -1455,7 +1455,7 @@ import { FaTrashAlt } from 'react-icons/fa';
 ```
 
 ## 15 입력 on/off 설정
-<a href="https://youtu.be/E52x05yLvLo">
+<a href="https://youtu.be/c7R9GEqEMtc">
     <img src="https://github.com/user-attachments/assets/5364d8d7-7e32-4b9f-978b-fd55ef2e7932" alt="입력 onoff 설정" width="400">
 </a>    
 
