@@ -1461,6 +1461,14 @@ import { FaTrashAlt } from 'react-icons/fa';
 
 [프로그램 다운로드 25-16](https://github.com/kdi6033/react/releases/tag/react-25-15-vq.0)  
 
+LED 라벨을 클릭하여 각 LED의 설정 창을 열고 상태를 관리할 수 있습니다.    
+- LED 라벨 클릭 : LED 라벨을 클릭하면 해당 LED의 설정 창이 열립니다.
+- 설정 창 기능 : 설정 창에서 사용자는 On/Off 상태, MAC 주소, 포트 번호를 입력해 LED 설정을 관리할 수 있습니다.
+- 상태 저장 : 설정 변경 후 "Save" 버튼을 클릭하면 MQTT 메시지를 통해 변경 사항이 실시간으로 저장됩니다.
+- LED 상태 조회 : "View" 버튼을 클릭하여 선택한 LED의 현재 설정값을 조회하고, 조회된 상태는 UI에 실시간으로 반영됩니다.
+- LED 설정 삭제 : 쓰레기통 아이콘을 클릭하면 선택한 LED 설정이 삭제됩니다. 삭제 후 설정 창은 자동으로 닫힙니다.
+- 취소 버튼 : "취소" 버튼을 통해 설정 변경 없이 창을 닫을 수 있습니다. 이때 모든 입력 필드는 초기화됩니다.
+
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100"> Led 라벨 추가   
 ```
 led에 라벨을 붙여줘
