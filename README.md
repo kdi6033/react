@@ -1507,6 +1507,10 @@ view 버튼을 누르면 다음 메세지가 들어 옵니다.
 Received message from i2r/kdi6033@gmail.com/out: {"order":6,"mac":"D8:13:2A:C5:C3:7C","portNo":0,"portState":[{"mac":"D8:13:2A:C5:C3:7C","port":0,"value":false},{"mac":"D8:13:2A:C5:C3:7C","port":0,"value":true}]}
 그런데 입력창에 이를 기록해 주세요
 ```
+취소 버튼을 만들어 창을 닫는다.
+```
+취소 버튼을 만들고 창을 닫게 해줘
+```
 
 
 
