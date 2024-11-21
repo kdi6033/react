@@ -1483,7 +1483,19 @@ led에 라벨을 붙여줘
   color: #333; /* 라벨 색상 */
 }
 ```
-
+다음과 같이 입력창을 만듭니다.
+mqtt 메세지는 i2r-03 기기의 프로토콜을 복사해서 넣어 줍니다.    
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">입력포트 설정 창 
+```
+led 라벨을 누르면 입력창을 만들고 "on 될 때" 맥어드레스 입력창, 출력포트 0~3까지 입력창, on/off 선택 입력창 등 
+3가지 입력창을 만들어줘 그리고  "off 될 때"도 똑같이 만들어줘
+저장 버튼을 만들어 mqtt로 다음 메세지 보내줘
+입력핀의 on off 동작에 따라 출력을 연결한다. 통신에 연결되어 있는 모드 기기의 출력포트를 연결 할 수 있다.
+예제
+operation : "save":출력설정을 저장한다. "list":설정된 값의 리스트를 요구한다. "delete":선택한 설정 값을 지운다.
+{"order":5,"oper":"save","mac":"A0:B7:65:CD:4D:34","portNo":0,"portState":[{"mac":"D4:8A:FC:B5:30:10","port":1,"value":false},{"mac":"B0:A7:32:1D:B3:B8","port":1,"value":true}]}
+맥어드레스가 "A0:B7:65:CD:4D:34" 0번 핀의 동작 저장 on 될때 맥어드레스가 "A0:B7:65:CD:4D:34" 0번 핀이 on(true) 된다. off 될때 맥어드레스가 "A0:B7:65:CD:4D:34" 0번 핀이 off(false) 된다. 
+```
 
 
 
