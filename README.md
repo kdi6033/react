@@ -968,6 +968,250 @@ contexts/ConfigContext.tsx를 만들고 email, mac 을 전역 변수로 만들�
 - Display.tsx에서는 사용자가 입력한 이메일과 MAC 주소를 저장하고, 수신한 메시지의 MAC 주소와 비교하여 메시지를 필터링합니다.
 - 프로그램이 시작될 때 로컬 스토리지에서 저장된 값을 불러옵니다.
 
+MQTT 연결을 중앙에서 관리하기 위해 클라이언트 연결을 한 곳에서 처리하고, 필요할 때마다 이를 다른 컴포넌트에서 재사용할 수 있도록 구현할 수 있습니다. 이를 위해 MQTTService라는 별도의 파일을 만들어 MQTT 클라이언트를 중앙 집중식으로 관리합니다.
+
+개선된 구조
+- MQTTService.ts: MQTT 클라이언트를 관리하는 파일.
+- App.tsx: 모든 하위 컴포넌트에서 MQTTService를 참조.
+- MQTTClient.tsx와 Display.tsx: 공통 MQTT 클라이언트를 사용.
+- MQTTService를 추가: 중앙에서 MQTT 클라이언트를 관리하도록 설계.
+- MQTTService.getInstance로 재사용: 모든 컴포넌트가 동일한 클라이언트를 공유.
+- 중복 연결 제거: MQTTClient와 Display가 하나의 MQTT 연결을 사용.
+
+파일 구조
+```
+└─src
+    │  App.css
+    │  App.tsx
+    ├─components
+    │      Display.css
+    │      Display.tsx
+    │      MQTTClient.tsx
+    │      MQTTService.tsx
+    └─contexts
+            ConfigContext.tsx
+```
+App.tsx
+```
+//App.tsx
+import React, { useState } from 'react';
+import './App.css';
+import MQTTClient from './components/MQTTClient';
+import Display from './components/Display';
+import { ConfigProvider } from './contexts/ConfigContext'; // ConfigProvider 사용
+
+function App() {
+  const [mqttMessage, setMqttMessage] = useState<string | null>(null);
+
+  const handleMqttMessage = (message: string) => {
+    setMqttMessage(message);
+    console.log('하드웨어 기록: ', message);
+  };
+
+  return (
+    <ConfigProvider>
+      <div className="App">
+        <header className="App-header">MQTT 통신 프로그램</header>
+        <main>
+          <MQTTClient onMessage={handleMqttMessage} />
+          <Display message={mqttMessage} />
+        </main>
+      </div>
+    </ConfigProvider>
+  );
+}
+
+export default App;
+```
+MQTTService.tsx
+```
+// components\MQTTService.tsx
+import mqtt from 'mqtt';
+
+class MQTTService {
+  private static instance: MQTTService;
+  private client: mqtt.MqttClient;
+  private brokerUrl = 'mqtt://ai.doowon.ac.kr:1803'; // 고정 브로커 URL
+
+  private constructor() {
+    this.client = mqtt.connect(this.brokerUrl);
+
+    this.client.on('connect', () => {
+      console.log('Connected to MQTT broker');
+    });
+
+    this.client.on('error', (error) => {
+      console.error('MQTT Connection Error:', error);
+    });
+  }
+
+  public static getInstance(): MQTTService {
+    if (!MQTTService.instance) {
+      MQTTService.instance = new MQTTService();
+    }
+    return MQTTService.instance;
+  }
+
+  public getClient(): mqtt.MqttClient {
+    return this.client;
+  }
+
+  public publish(topic: string, message: string): void {
+    this.client.publish(topic, message, (err) => {
+      if (err) {
+        console.error('Publish Error:', err);
+      } else {
+        console.log(`Message published to ${topic}: ${message}`);
+      }
+    });
+  }
+}
+
+export default MQTTService;
+```
+MQTTClient.tsx
+```
+// components\MQTTClient.tsx
+import React, { useEffect } from 'react';
+import { useConfig } from '../contexts/ConfigContext';
+import MQTTService from './MQTTService';
+
+interface MQTTClientProps {
+  onMessage: (message: string) => void;
+}
+
+const MQTTClient: React.FC<MQTTClientProps> = ({ onMessage }) => {
+  const { email } = useConfig();
+  const intopic = `i2r/${email}/out`;
+
+  useEffect(() => {
+    const mqttClient = MQTTService.getInstance().getClient(); // 중앙 관리 MQTT 클라이언트 가져오기
+
+    // 연결 성공 시, intopic 구독
+    mqttClient.subscribe(intopic, (err) => {
+      if (!err) {
+        console.log(`Subscribed to ${intopic}`);
+      } else {
+        console.error(`Failed to subscribe to ${intopic}:`, err);
+      }
+    });
+
+    // 메시지 수신 핸들러
+    mqttClient.on('message', (topic, message) => {
+      if (topic === intopic) {
+        const newMessage = message.toString();
+        onMessage(newMessage); // 메시지를 상위 컴포넌트로 전달
+        console.log(`Received message from ${intopic}: ${newMessage}`);
+      }
+    });
+
+    // 에러 핸들러
+    mqttClient.on('error', (err) => {
+      console.error('MQTT Client Error:', err);
+    });
+
+    return () => {
+      // 컴포넌트 언마운트 시 토픽 구독 해제
+      mqttClient.unsubscribe(intopic, () => {
+        console.log(`Unsubscribed from ${intopic}`);
+      });
+    };
+  }, [intopic, onMessage]);
+
+  return <div>MQTT 연결 중...</div>;
+};
+
+export default MQTTClient;
+```
+Display.tsx
+```
+// components\Display.tsx
+import React, { useState } from 'react';
+import { useConfig } from '../contexts/ConfigContext';
+import MQTTService from './MQTTService';
+import './Display.css';
+
+interface DisplayProps {
+  message: string | null;
+}
+
+const Display: React.FC<DisplayProps> = ({ message }) => {
+  const { email, mac, setEmail, setMac } = useConfig();
+  const [inputEmail, setInputEmail] = useState(email);
+  const [inputMac, setInputMac] = useState(mac);
+  const outtopic = `i2r/${email}/in`;
+
+  const handleSave = () => {
+    setEmail(inputEmail);
+    setMac(inputMac);
+  };
+
+  const sendMessage = () => {
+    const mqttMessage = JSON.stringify({
+      mac: inputMac,
+      order: 2,
+      value: 'Test Message',
+    });
+
+    MQTTService.getInstance().publish(outtopic, mqttMessage); // 메시지 발행
+  };
+
+  let macMessage = null;
+
+  if (message) {
+    try {
+      const parsedMessage = JSON.parse(message);
+      if (parsedMessage.mac === mac) {
+        macMessage = message;
+      }
+    } catch (error) {
+      console.error('Invalid JSON format:', error);
+    }
+  }
+
+  return (
+    <div className="display-container">
+      <div className="form-group">
+        <div className="form-row">
+          <label>Email:</label>
+          <input
+            type="text"
+            value={inputEmail}
+            onChange={(e) => setInputEmail(e.target.value)}
+            className="input-field"
+            maxLength={20}
+          />
+        </div>
+        <div className="form-row">
+          <label>MAC Address:</label>
+          <input
+            type="text"
+            value={inputMac}
+            onChange={(e) => setInputMac(e.target.value)}
+            className="input-field"
+            maxLength={20}
+          />
+        </div>
+        <button onClick={handleSave}>Save</button>
+      </div>
+
+      <div>
+        <h2>Received Message</h2>
+        {macMessage && <p>{macMessage}</p>}
+      </div>
+
+      <div>
+        <h2>Send Message</h2>
+        <button onClick={sendMessage}>Send Test Message</button>
+      </div>
+    </div>
+  );
+};
+
+export default Display;
+```
+
+
 ## 11. IoT PLC UI 만들기
 <a href="https://youtu.be/SWQ7683I-hw">
     <img src="https://github.com/user-attachments/assets/4a6411aa-f9b6-4397-8843-3c0e8c4b7357" alt="Updating the screen" width="400">
@@ -1014,15 +1258,6 @@ const client = mqtt.connect(brokerUrl);
 const client = mqtt.connect(brokerUrl);
 다시 연결하고 있습니다. 이를 중아집중식으로 효율적으로 다시 프로그램 해줘
 ```
-MQTT 연결을 중앙에서 관리하기 위해 클라이언트 연결을 한 곳에서 처리하고, 필요할 때마다 이를 다른 컴포넌트에서 재사용할 수 있도록 구현할 수 있습니다. 이를 위해 MQTTService라는 별도의 파일을 만들어 MQTT 클라이언트를 중앙 집중식으로 관리합니다.
-
-개선된 구조
-- MQTTService.ts: MQTT 클라이언트를 관리하는 파일.
-- App.tsx: 모든 하위 컴포넌트에서 MQTTService를 참조.
-- MQTTClient.tsx와 Display.tsx: 공통 MQTT 클라이언트를 사용.
-- MQTTService를 추가: 중앙에서 MQTT 클라이언트를 관리하도록 설계.
-- MQTTService.getInstance로 재사용: 모든 컴포넌트가 동일한 클라이언트를 공유.
-- 중복 연결 제거: MQTTClient와 Display가 하나의 MQTT 연결을 사용.
 
 ## 12. MongoDB 연결과 사용법
 <a href="https://youtu.be/sDjbWRu5gB0">
