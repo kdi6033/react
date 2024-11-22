@@ -1005,6 +1005,25 @@ led 그대로 놔두고 스위치 추가해줘
 - LED 상태 유지: ledStates 배열을 통해 수신한 in 값에 따라 LED 상태가 계속 유지됩니다.
 - UI: 각 스위치는 체크박스로 구현되었으며, 스위치가 켜지면 해당 번호에 맞는 데이터를 MQTT로 전송하게 됩니다.
 
+실전 프로그램에서 여러 사용자가 동시 접속을 할 때는 mqtt 접속을 효율적으로 하기 위해서는 중앙집중식으로 mqtt를 설계하여 크라언트는 한번만 접속하고 생성된 인스턴스를 공유하는 방식이어야 합니다.
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100"> mqtt 효율적 설계
+```
+이 프로그램에서 MQTTClient 에서
+const client = mqtt.connect(brokerUrl);
+한번 연결을 했는데 Display.tsx 에서 다시
+const client = mqtt.connect(brokerUrl);
+다시 연결하고 있습니다. 이를 중아집중식으로 효율적으로 다시 프로그램 해줘
+```
+MQTT 연결을 중앙에서 관리하기 위해 클라이언트 연결을 한 곳에서 처리하고, 필요할 때마다 이를 다른 컴포넌트에서 재사용할 수 있도록 구현할 수 있습니다. 이를 위해 MQTTService라는 별도의 파일을 만들어 MQTT 클라이언트를 중앙 집중식으로 관리합니다.
+
+개선된 구조
+- MQTTService.ts: MQTT 클라이언트를 관리하는 파일.
+- App.tsx: 모든 하위 컴포넌트에서 MQTTService를 참조.
+- MQTTClient.tsx와 Display.tsx: 공통 MQTT 클라이언트를 사용.
+- MQTTService를 추가: 중앙에서 MQTT 클라이언트를 관리하도록 설계.
+- MQTTService.getInstance로 재사용: 모든 컴포넌트가 동일한 클라이언트를 공유.
+- 중복 연결 제거: MQTTClient와 Display가 하나의 MQTT 연결을 사용.
+
 ## 12. MongoDB 연결과 사용법
 <a href="https://youtu.be/sDjbWRu5gB0">
     <img src="https://github.com/user-attachments/assets/a740712d-5b3c-4dad-9235-4dfd464e1e43" alt="Updating the screen" width="400">
