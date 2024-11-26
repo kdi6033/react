@@ -1217,7 +1217,7 @@ export default Display;
     <img src="https://github.com/user-attachments/assets/4a6411aa-f9b6-4397-8843-3c0e8c4b7357" alt="Updating the screen" width="400">
 </a>     
 
-[프로그램 다운로드 25-12](https://github.com/kdi6033/react/releases/tag/react-25-12-v1.0)   
+[프로그램 다운로드 25-12](https://github.com/kdi6033/react/releases/tag/react-25-12-v2.0)   
 프로그램 다운로드 할 때 "react-25-12-v2.0.zip" 프로그램은 단원 25-10 에서 개선된 프로그램을 제작한 것입니다. 이것을 다운로드 하세요.    
 
 React에서 4개의 스위치를 만들어 동작 시키면 IoT PLC 가 동작하게 프로그램 합니다.   
