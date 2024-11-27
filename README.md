@@ -2069,7 +2069,7 @@ API 라우트:
     <img src="https://github.com/user-attachments/assets/e083bba8-0efd-42e0-b6ac-87296baa9a49" alt="Login" width="400">
 </a>    
 
-[프로그램 다운로드 iotplc-02](https://github.com/kdi6033/react/releases/tag/iotplc-02-v1.0)     
+[프로그램 다운로드 iotplc-02](https://github.com/kdi6033/react/releases/tag/iotplc-02-v1.2)     
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">  로그인
 ```
 로그인을 누르면 id로 email, pw 입력창을 만들어 로그인하게 해줘
