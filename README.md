@@ -2215,7 +2215,10 @@ export const TokenProvider = ({ children }) => {
 
 ```
 ## 5. MQTT 프로그램 연결
-
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">  윈도우 https 설정
+```
+윈도우에서 https 설정 방법 알려줘
+```
 ### 5.1 IIS에서 HTTPS 설정
 IIS(Internet Information Services)를 사용하는 경우:
 _ IIS 설치:
