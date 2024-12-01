@@ -2216,6 +2216,22 @@ export const TokenProvider = ({ children }) => {
 ```
 ## 5. MQTT 프로그램 연결
 
+### 5.1 IIS에서 HTTPS 설정
+IIS(Internet Information Services)를 사용하는 경우:
+_ IIS 설치:
+Windows 기능 켜기/끄기에서 IIS를 활성화합니다.
+IIS 관리자를 실행합니다.
+- 인증서 설치:
+IIS 관리자에서 왼쪽 트리에서 서버 이름을 선택하고, 오른쪽 패널에서 서버 인증서를 클릭합니다.
+오른쪽 작업 창에서 인증서 가져오기를 선택하고, 인증서를 추가합니다.
+- HTTPS 바인딩 설정:
+IIS 관리자에서 사이트를 선택합니다.
+오른쪽 작업 창에서 바인딩 편집을 클릭합니다.
+추가 버튼을 클릭하고, 유형을 https로 설정합니다.
+사용할 인증서를 선택하고, 포트를 443으로 설정합니다.
+- 사이트 테스트:
+브라우저에서 https://your-domain.com으로 접속하여 HTTPS가 동작하는지 확인합니다.    
+
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">  윈도우 인증서 설치
 ```
 윈도우에서 무료 인증서 설치 설명해줘
@@ -2233,8 +2249,11 @@ Windows에서 무료 인증서(예: Let's Encrypt 인증서)를 설치하려면 
 아래 다음을 눌러 프로그램 다운로드
 <img width="541" alt="image" src="https://github.com/user-attachments/assets/fd3c12b9-6131-4aeb-be74-4dc06a70791f">
 다운로드한 프로그램을 설치 합니다.
+
 ![image](https://github.com/user-attachments/assets/ce6f9713-e769-4ca9-b59b-d91a345447d7)
+
 ![image](https://github.com/user-attachments/assets/a74ad2dc-e5a9-4842-94a6-8f73999fa2b1)
+
 아래 도메인네임에는 자신의 도메인 네임을 입력하세요
 ```
 cd "C:\Program Files\Certbot\bin"
@@ -2261,7 +2280,7 @@ openssl pkcs12 -in certificate.pfx -cacerts -nokeys -chain -out ca.crt
 Windows + R를 누르고 mmc를 입력한 후 실행합니다.
 mmc->스넵인 추가제거->인증서->컴퓨터계정->로컬컴퓨터->확인->웹호스팅-> 인증서 가져옴
 ```
-SSL 설정에 사용해야 하는 파일은 인증서와 개인 키입니다. 디렉터리에 제공된 파일과 심볼릭 링크 중 적합한 파일은 아래와 같습니다:
+SSL 설정에 사용해야 하는 파일은 인증서와 개인 키입니다. 디렉터리에 제공된 파일과 심볼릭 링크 중 적합한 파일은 아래와 같습니다:     
 
 - 개인 키 (Private Key)
 경로: privkey.pem 또는 server.key
@@ -2301,16 +2320,6 @@ openssl s_client -connect 117.16.176.76:8883 -CAfile D:\cert\ca.crt
 openssl s_client -connect 117.16.176.76:8883 -CAfile ca.crt
 openssl s_client -connect 도매안네암:8883 -CAfile ca.crt
 ```
-
-
-
-
-
-지금까지의 대화가 도움이 되었나요?
-
-
-
-
 
 
 
