@@ -2214,8 +2214,24 @@ export const TokenProvider = ({ children }) => {
 };
 
 ```
-
 ## 5. MQTT 프로그램 연결
+
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">  윈도우 인증서 설치
+```
+윈도우에서 무료 인증서 설치 설명해줘
+```
+Windows에서 무료 인증서(예: Let's Encrypt 인증서)를 설치하려면 아래 단계를 따라 진행하세요. Let's Encrypt는 무료 인증서를 제공하며, 일반적으로 Certbot 도구를 사용하여 설치 및 갱신을 자동화할 수 있습니다.    
+### 5.1 사전 준비
+- 도메인 이름: 도메인을 소유하고 있어야 합니다. (도메인이나 IP 둘중에 하나를 등록 합니다. 두개를 동시에 하려면 유료로 서비스 하는 것 사용해야 합니다.)
+- 웹 서버 설치: IIS(Internet Information Services) 또는 Apache, Nginx와 같은 웹 서버가 설치되어 있어야 합니다.
+- 80 포트 및 443 포트 열림: 도메인의 HTTP 및 HTTPS 트래픽을 허용해야 합니다.
+- 관리자 권한: Windows 관리자 권한이 필요합니다
+### 5.2 Certbot 설치
+- Certbot 공식 사이트에 접속합니다.
+
+
+
+## 6. MQTT 프로그램 연결
 
 ChatGPT에 App.tsx, MQTTClient.tsx, MachineOverview.tsx 를 제시하고    
 
