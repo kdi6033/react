@@ -2228,7 +2228,8 @@ Windows에서 무료 인증서(예: Let's Encrypt 인증서)를 설치하려면 
 - 관리자 권한: Windows 관리자 권한이 필요합니다
 ### 5.2 Certbot 설치
 - [Certbot 공식 사이트](https://certbot.eff.org/instructions)에 접속합니다.
-
+윈도우 운영체제 선택
+![image](https://github.com/user-attachments/assets/557c5038-479a-4231-a70d-a5889529e54f)
 
 
 ## 6. MQTT 프로그램 연결
