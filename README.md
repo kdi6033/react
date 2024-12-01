@@ -2235,11 +2235,26 @@ Windows에서 무료 인증서(예: Let's Encrypt 인증서)를 설치하려면 
 다운로드한 프로그램을 설치 합니다.
 ![image](https://github.com/user-attachments/assets/ce6f9713-e769-4ca9-b59b-d91a345447d7)
 ![image](https://github.com/user-attachments/assets/a74ad2dc-e5a9-4842-94a6-8f73999fa2b1)
+아래 도메인네임에는 자신의 도메인 네임을 입력하세요
 ```
 cd "C:\Program Files\Certbot\bin"
-\certbot.exe certonly --standalone -d ai.doowon.ac.kr도메인네임
+certbot.exe certonly --standalone -d 도메인네임
 ```
+성공하면 다음 파일이 C:\Certbot\live\  디렉토리에 생성 됩니다.    
+인증서: C:\Certbot\live\도메인네임\fullchain.pem    
+개인 키: C:\Certbot\live\도메인네임\privkey.pem    
 
+pfx파일을 생성하기 위해서 관리자모드로 콤멘드창을 만들거나 powershell 을 실행합니다.    
+```
+cd C:\Certbot\live\도메인네임\
+openssl pkcs12 -export -out certificate.pfx -inkey privkey.pem -in fullchain.pem
+```
+password 를 입력하거나 없음으로 진행 하면 됩니다. 그리고 다음 세개의 파일을 만듭니다.
+```
+openssl pkcs12 -in certificate.pfx -nocerts -nodes -out server.key
+openssl pkcs12 -in certificate.pfx -clcerts -nokeys -out server.crt
+openssl pkcs12 -in certificate.pfx -cacerts -nokeys -chain -out ca.crt
+```
 
 ## 6. MQTT 프로그램 연결
 
