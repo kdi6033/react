@@ -2255,6 +2255,12 @@ openssl pkcs12 -in certificate.pfx -nocerts -nodes -out server.key
 openssl pkcs12 -in certificate.pfx -clcerts -nokeys -out server.crt
 openssl pkcs12 -in certificate.pfx -cacerts -nokeys -chain -out ca.crt
 ```
+다음 순서대로 인증서를 가져 옵니다.
+```
+인터넷정보관리자->서버인증서
+Windows + R를 누르고 mmc를 입력한 후 실행합니다.
+mmc->스넵인 추가제거->인증서->컴퓨터계정->로컬컴퓨터->확인->웹호스팅-> 인증서 가져옴
+```
 
 ## 6. MQTT 프로그램 연결
 
