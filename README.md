@@ -2232,10 +2232,13 @@ Windows에서 무료 인증서(예: Let's Encrypt 인증서)를 설치하려면 
 ![image](https://github.com/user-attachments/assets/557c5038-479a-4231-a70d-a5889529e54f)
 아래 다음을 눌러 프로그램 다운로드
 <img width="541" alt="image" src="https://github.com/user-attachments/assets/fd3c12b9-6131-4aeb-be74-4dc06a70791f">
-
+다운로드한 프로그램을 설치 합니다.
 ![image](https://github.com/user-attachments/assets/ce6f9713-e769-4ca9-b59b-d91a345447d7)
 ![image](https://github.com/user-attachments/assets/a74ad2dc-e5a9-4842-94a6-8f73999fa2b1)
-
+```
+cd "C:\Program Files\Certbot\bin"
+\certbot.exe certonly --standalone -d ai.doowon.ac.kr도메인네임
+```
 
 
 ## 6. MQTT 프로그램 연결
