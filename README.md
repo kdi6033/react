@@ -2261,6 +2261,58 @@ openssl pkcs12 -in certificate.pfx -cacerts -nokeys -chain -out ca.crt
 Windows + R를 누르고 mmc를 입력한 후 실행합니다.
 mmc->스넵인 추가제거->인증서->컴퓨터계정->로컬컴퓨터->확인->웹호스팅-> 인증서 가져옴
 ```
+SSL 설정에 사용해야 하는 파일은 인증서와 개인 키입니다. 디렉터리에 제공된 파일과 심볼릭 링크 중 적합한 파일은 아래와 같습니다:
+
+- 개인 키 (Private Key)
+경로: privkey.pem 또는 server.key
+개인 키는 서버가 TLS 통신을 설정하기 위해 사용하는 파일입니다. server.key와 privkey.pem 모두 개인 키로 보이는데, 일반적으로 Let’s Encrypt와 같은 인증 기관에서 생성된 privkey.pem을 사용합니다.    
+- 인증서 (Certificate)
+경로: fullchain.pem 또는 server.crt
+인증서는 클라이언트가 서버를 신뢰할 수 있도록 서버의 신원 정보를 제공합니다. fullchain.pem은 일반적으로 루트 인증서와 체인 인증서를 포함한 전체 인증서 체인을 제공하며, 서버 인증에 권장됩니다.   
+다음은 DB 연결 파일 예제 입니다.
+```
+// SSL 인증서 파일 경로
+const sslOptions = {
+  key: fs.readFileSync('C:/Certbot/live/kdi.doowon.ac.kr/privkey.pem'), // SSL 인증서의 개인 키
+  cert: fs.readFileSync('C:/Certbot/live/kdi.doowon.ac.kr/fullchain.pem'), // SSL 인증서
+};
+```
+다음은 mqtt 설정의 예입니다.  Mosquitto의 구성 파일에 다음과 같이 SSL/TLS 설정한 예제 입니다.
+
+```
+port 8883
+cafile /path/to/ca.crt
+keyfile /path/to/server.key
+certfile /path/to/server.crt
+이 설정으로 Mosquitto 브로커는 8883 포트에서 SSL/TLS를 사용하여 클라이언트와 통신할 것입니다.
+```
+다음은 인증서가 정상 동작하는지 알아볼 수 있습니다.
+```
+인증서 정보 확인
+openssl x509 -in fullchain.pem -noout -dates
+openssl x509 -in cert.pem -noout -dates
+openssl x509 -in ca.crt -noout -text
+인증서의 유효 기간 확인
+openssl x509 -in ca.crt -noout -dates
+인증서 체인 검증
+openssl verify -CAfile ca.crt server.crt
+연결확인
+openssl s_client -connect 117.16.176.76:8883 -CAfile D:\cert\ca.crt
+openssl s_client -connect 117.16.176.76:8883 -CAfile ca.crt
+openssl s_client -connect 도매안네암:8883 -CAfile ca.crt
+```
+
+
+
+
+
+지금까지의 대화가 도움이 되었나요?
+
+
+
+
+
+
 
 ## 6. MQTT 프로그램 연결
 
