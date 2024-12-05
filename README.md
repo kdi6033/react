@@ -2277,6 +2277,23 @@ openssl pkcs12 -in certificate.pfx -nocerts -nodes -out server.key
 openssl pkcs12 -in certificate.pfx -clcerts -nokeys -out server.crt
 openssl pkcs12 -in certificate.pfx -cacerts -nokeys -chain -out ca.crt
 ```
+인증서가 올바를게 설정되었는지 다음으로 확인 합니다.
+```
+certbot certificates
+```
+새로운 인증서를 갱신 하려면 
+```
+certbot renew --cert-name 도메인네임
+```
+새로운 인증서는 "도메인네임-0001" 로 생성되어 링크되어 있는 프로그램을 모두 수정 하는 일이 번거럽고 실수가 발생함으로 새로 생성된 것을  "도메인네임" 복사 하는 일이 필요 합니다.
+
+
+
+
+
+
+
+
 
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">  윈도우 https 설정
 ```
