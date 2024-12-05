@@ -2214,31 +2214,9 @@ export const TokenProvider = ({ children }) => {
 };
 
 ```
-## 5. MQTT 프로그램 연결
-<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">  윈도우 https 설정
-```
-윈도우에서 https 설정 방법 알려줘
-```
-### 5.1 IIS에서 HTTPS 설정
-IIS(Internet Information Services)를 사용하는 경우:
-_ IIS 설치:
-Windows 기능 켜기/끄기에서 IIS를 활성화합니다.
-IIS 관리자를 실행합니다.
-- 인증서 설치:
-IIS 관리자에서 왼쪽 트리에서 서버 이름을 선택하고, 오른쪽 패널에서 서버 인증서를 클릭합니다.
-오른쪽 작업 창에서 인증서 가져오기를 선택하고, 인증서를 추가합니다.
-- HTTPS 바인딩 설정:
-IIS 관리자에서 사이트를 선택합니다.
-오른쪽 작업 창에서 바인딩 편집을 클릭합니다.
-추가 버튼을 클릭하고, 유형을 https로 설정합니다.
-사용할 인증서를 선택하고, 포트를 443으로 설정합니다.
-- 사이트 테스트:
-브라우저에서 https://your-domain.com으로 접속하여 HTTPS가 동작하는지 확인합니다.    
 
-<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">  윈도우 인증서 설치
-```
-윈도우에서 무료 인증서 설치 설명해줘
-```
+## 5. 윈도우 HTTPS 설정 및 인증서 설치
+https를 연결하려면 인증서를 준비해야 합니다. 연결은 IP, 도메인네임 두가지를 연결해면 좋습니다. 다음은 무료로 사용하는 것을 소개하지만 두가지 중 하나만 연결할 수 있어서 도메인네임으로 설치하는 것을 소개 합니다. 
 Windows에서 무료 인증서(예: Let's Encrypt 인증서)를 설치하려면 아래 단계를 따라 진행하세요. Let's Encrypt는 무료 인증서를 제공하며, 일반적으로 Certbot 도구를 사용하여 설치 및 갱신을 자동화할 수 있습니다.    
 ### 5.1 사전 준비
 - 도메인 이름: 도메인을 소유하고 있어야 합니다. (도메인이나 IP 둘중에 하나를 등록 합니다. 두개를 동시에 하려면 유료로 서비스 하는 것 사용해야 합니다.)
@@ -2277,6 +2255,34 @@ openssl pkcs12 -in certificate.pfx -nocerts -nodes -out server.key
 openssl pkcs12 -in certificate.pfx -clcerts -nokeys -out server.crt
 openssl pkcs12 -in certificate.pfx -cacerts -nokeys -chain -out ca.crt
 ```
+
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">  윈도우 https 설정
+```
+윈도우에서 https 설정 방법 알려줘
+```
+### 5.3 IIS에서 HTTPS 설정
+IIS(Internet Information Services)를 사용하는 경우:
+_ IIS 설치:
+Windows 기능 켜기/끄기에서 IIS를 활성화합니다.
+IIS 관리자를 실행합니다.
+- 인증서 설치:
+IIS 관리자에서 왼쪽 트리에서 서버 이름을 선택하고, 오른쪽 패널에서 서버 인증서를 클릭합니다.
+오른쪽 작업 창에서 인증서 가져오기를 선택하고, 인증서를 추가합니다.
+- HTTPS 바인딩 설정:
+IIS 관리자에서 사이트를 선택합니다.
+오른쪽 작업 창에서 바인딩 편집을 클릭합니다.
+추가 버튼을 클릭하고, 유형을 https로 설정합니다.
+사용할 인증서를 선택하고, 포트를 443으로 설정합니다.
+- 사이트 테스트:
+브라우저에서 https://your-domain.com으로 접속하여 HTTPS가 동작하는지 확인합니다.    
+
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">  윈도우 인증서 설치
+```
+윈도우에서 무료 인증서 설치 설명해줘
+```
+
+
+
 다음 순서대로 인증서를 가져 옵니다.
 ```
 인터넷정보관리자->서버인증서
