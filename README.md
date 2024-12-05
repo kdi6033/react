@@ -2223,7 +2223,7 @@ Windows에서 무료 인증서(예: Let's Encrypt 인증서)를 설치하려면 
 - 웹 서버 설치: IIS(Internet Information Services) 또는 Apache, Nginx와 같은 웹 서버가 설치되어 있어야 합니다.
 - 80 포트 및 443 포트 열림: 도메인의 HTTP 및 HTTPS 트래픽을 허용해야 합니다.
 - 관리자 권한: Windows 관리자 권한이 필요합니다
-### 5.2 Certbot 설치
+### 5.2 Certbot 설치와 인증서 발급
 - [Certbot 공식 사이트](https://certbot.eff.org/instructions)에 접속합니다.    
 윈도우 운영체제 선택
 ![image](https://github.com/user-attachments/assets/557c5038-479a-4231-a70d-a5889529e54f)
@@ -2258,14 +2258,6 @@ live 디렉토리:
 항상 최신 인증서 버전을 가리키는 심볼릭 링크 제공, 링크파일이어서 파일의 크기는 0KB로 표시되어 있습니다.
 서버가 이 디렉토리의 파일을 참조해 인증서를 사용.
 
-
-
-
-
-
-
-
-
 pfx파일을 생성하기 위해서 관리자모드로 콤멘드창을 만들거나 powershell 을 실행합니다.    
 ```
 cd C:\Certbot\live\도메인네임\
@@ -2281,6 +2273,9 @@ openssl pkcs12 -in certificate.pfx -cacerts -nokeys -chain -out ca.crt
 ```
 certbot certificates
 ```
+
+
+### 5.3 인증서 재발급
 새로운 인증서는 "도메인네임-0001" 로 생성되어 링크되어 있는 프로그램을 모두 수정 하는 일이 번거럽고 실수가 발생함으로 새로 생성된 것을  "도메인네임" 복사 하는 일이 필요 합니다. 그래서 저는 기존의 것을 모두 지우고 새로 발급받아 인증서 등록을 다시 합니다.
 위에서 기술된 인증서를 지웁니다. 그리고 /archive /live 두개의 디렉토리에 해당 파일과 디렉토리를 모두 지웁니다. 
 "C:\Certbot\renewal\kdi.doowon.ac.kr.conf" 다음 파일도 삭제 합니다.
@@ -2294,20 +2289,12 @@ certbot.exe certonly --standalone -d 도메인네임
 ```
 발급이 같은 이름으로 생성되었으면 앞에서 만들었던 pfx, server.key, server.crt, ca.crt 파일을 만듭니다.
 
-
-
-
-
-
-
-
-
-
+### 5.4 IIS에서 HTTPS 설정
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">  윈도우 https 설정
 ```
 윈도우에서 https 설정 방법 알려줘
 ```
-### 5.3 IIS에서 HTTPS 설정
+
 IIS(Internet Information Services)를 사용하는 경우:
 _ IIS 설치:
 Windows 기능 켜기/끄기에서 IIS를 활성화합니다.
