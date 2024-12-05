@@ -2334,7 +2334,14 @@ mmc->파일->스넵인 추가제거->인증서   선택
 생성된 인증서 확장->웹호스팅-> "인증서"를 마우스 오른쪽으로 선택
 위에서 생성된 pxf 파일 선택
 ```
-### 5.4.2 바인딩 설정
+
+### 5.4.3 HTTP 리디렉션
+<img src="https://github.com/user-attachments/assets/b24a8026-572d-4820-8965-0c4916f04e45" width="800">
+<img src="https://github.com/user-attachments/assets/d82141eb-1ae4-44c7-a8c6-22262efb1ed3" width="800">
+
+
+
+### 5.4.4 바인딩 설정
 
 
 SSL 설정에 사용해야 하는 파일은 인증서와 개인 키입니다. 디렉터리에 제공된 파일과 심볼릭 링크 중 적합한 파일은 아래와 같습니다:     
