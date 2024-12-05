@@ -2317,6 +2317,7 @@ IIS 관리자에서 사이트를 선택합니다.
 ```
 다음 순서대로 인증서를 가져 옵니다. 두가지 방법을 소개합니다.
 IIS(인터넷 정보 서비스)관리자->서버 인증서 (추천방법)
+<img src="https://github.com/user-attachments/assets/e523944d-b1fc-4f2c-a23b-5ec11a049b99" width="500">
 ![image](https://github.com/user-attachments/assets/e523944d-b1fc-4f2c-a23b-5ec11a049b99)
 
 
