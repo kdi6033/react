@@ -2336,6 +2336,7 @@ mmc->파일->스넵인 추가제거->인증서   선택
 ```
 
 ### 5.4.3 HTTP 리디렉션
+http로 접속을 하면 https 로 접속하게 설정 합니다.
 <img src="https://github.com/user-attachments/assets/b24a8026-572d-4820-8965-0c4916f04e45" width="800">
 <img src="https://github.com/user-attachments/assets/d82141eb-1ae4-44c7-a8c6-22262efb1ed3" width="800">
 
