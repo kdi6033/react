@@ -2343,7 +2343,8 @@ http로 접속을 하면 https 로 접속하게 설정 합니다.
 
 
 ### 5.4.4 바인딩 설정
-![image](https://github.com/user-attachments/assets/a9bb1619-1937-4ed3-af15-477094ef0beb)
+<img src="https://github.com/user-attachments/assets/101a42c8-c873-4558-9582-c58d50757bfe" width="800">
+<img src="https://github.com/user-attachments/assets/ba158d8a-4fa6-4179-8053-c4bfe8348533" width="800">
 
 
 SSL 설정에 사용해야 하는 파일은 인증서와 개인 키입니다. 디렉터리에 제공된 파일과 심볼릭 링크 중 적합한 파일은 아래와 같습니다:     
