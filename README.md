@@ -2243,6 +2243,28 @@ certbot.exe certonly --standalone -d 도메인네임
 성공하면 다음 파일이 C:\Certbot\live\  디렉토리에 생성 됩니다.    
 인증서: C:\Certbot\live\도메인네임\fullchain.pem    
 개인 키: C:\Certbot\live\도메인네임\privkey.pem    
+보충설명: 
+
+archive 디렉토리:
+모든 인증서 버전을 보관.
+백업 및 복원 목적으로 사용.
+certX.pem (도메인 인증서)
+chainX.pem (중간 인증서 체인)
+fullchainX.pem (인증서와 체인 합본)
+privkeyX.pem (개인 키)
+여기서 X는 인증서 갱신 횟수를 의미합니다.
+
+live 디렉토리:
+항상 최신 인증서 버전을 가리키는 심볼릭 링크 제공, 링크파일이어서 파일의 크기는 0KB로 표시되어 있습니다.
+서버가 이 디렉토리의 파일을 참조해 인증서를 사용.
+
+
+
+
+
+
+
+
 
 pfx파일을 생성하기 위해서 관리자모드로 콤멘드창을 만들거나 powershell 을 실행합니다.    
 ```
