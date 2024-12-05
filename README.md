@@ -2283,14 +2283,16 @@ certbot certificates
 ```
 새로운 인증서는 "도메인네임-0001" 로 생성되어 링크되어 있는 프로그램을 모두 수정 하는 일이 번거럽고 실수가 발생함으로 새로 생성된 것을  "도메인네임" 복사 하는 일이 필요 합니다. 그래서 저는 기존의 것을 모두 지우고 새로 발급받아 인증서 등록을 다시 합니다.
 위에서 기술된 인증서를 지웁니다. 그리고 /archive /live 두개의 디렉토리에 해당 파일과 디렉토리를 모두 지웁니다. 
+"C:\Certbot\renewal\kdi.doowon.ac.kr.conf" 다음 파일도 삭제 합니다.
 ``` 
 certbot delete --cert-name 도메인네임
 certbot delete --cert-name 도메인네임-0001
 ```
-새로운 인증서를 갱신 하려면 
+새로운 인증서를 만듭니다.
 ```
-certbot renew --cert-name 도메인네임
+certbot.exe certonly --standalone -d 도메인네임
 ```
+발급이 같은 이름으로 생성되었으면 앞에서 만들었던 pfx, server.key, server.crt, ca.crt 파일을 만듭니다.
 
 
 
