@@ -2282,8 +2282,8 @@ openssl pkcs12 -in certificate.pfx -cacerts -nokeys -chain -out ca.crt
 certbot certificates
 ```
 새로운 인증서는 "도메인네임-0001" 로 생성되어 링크되어 있는 프로그램을 모두 수정 하는 일이 번거럽고 실수가 발생함으로 새로 생성된 것을  "도메인네임" 복사 하는 일이 필요 합니다. 그래서 저는 기존의 것을 모두 지우고 새로 발급받아 인증서 등록을 다시 합니다.
-위에서 기술된 인증서를 지웁니다.
-```
+위에서 기술된 인증서를 지웁니다. 그리고 /archive /live 두개의 디렉토리에 해당 파일과 디렉토리를 모두 지웁니다. 
+``` 
 certbot delete --cert-name 도메인네임
 certbot delete --cert-name 도메인네임-0001
 ```
