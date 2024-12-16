@@ -2340,15 +2340,13 @@ http로 접속을 하면 https 로 접속하게 설정 합니다.
 <img src="https://github.com/user-attachments/assets/b24a8026-572d-4820-8965-0c4916f04e45" width="800">
 <img src="https://github.com/user-attachments/assets/d82141eb-1ae4-44c7-a8c6-22262efb1ed3" width="800">
 
-
-
 ### 5.4.4 바인딩 설정
 <img src="https://github.com/user-attachments/assets/101a42c8-c873-4558-9582-c58d50757bfe" width="800">
 <img src="https://github.com/user-attachments/assets/ba158d8a-4fa6-4179-8053-c4bfe8348533" width="800">
 설정을 마치면 인터넷 정보 서비스를 새로 시작 합니다.
 <img src="https://github.com/user-attachments/assets/35fc8376-7c18-4ee6-add4-0d8aed4117cf" width="500">
 
-### 5.4.5 DB 바인딩 설정 예제
+### 5.5 MongoDB와 React로 데이터 연결하기 - GET
 SSL 설정에 사용해야 하는 파일은 인증서와 개인 키입니다. 디렉터리에 제공된 파일과 심볼릭 링크 중 적합한 파일은 아래와 같습니다:     
 - 개인 키 (Private Key)
 경로: privkey.pem 또는 server.key
