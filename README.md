@@ -2342,6 +2342,7 @@ http로 접속을 하면 https 로 접속하게 설정 합니다.
 <img src="https://github.com/user-attachments/assets/35fc8376-7c18-4ee6-add4-0d8aed4117cf" width="500">
 
 ### 5.5 MongoDB와 React로 데이터 연결하기 - GET
+[프로그램 다운로드 25-5-5](https://github.com/kdi6033/react/releases/tag/react-button-avatar-v1.0)   
 SSL 설정에 사용해야 하는 파일은 인증서와 개인 키입니다. 디렉터리에 제공된 파일과 심볼릭 링크 중 적합한 파일은 아래와 같습니다:     
 - 개인 키 (Private Key)
 경로: privkey.pem 또는 server.key
@@ -2357,94 +2358,22 @@ const sslOptions = {
   cert: fs.readFileSync('C:/Certbot/live/kdi.doowon.ac.kr/fullchain.pem'), // SSL 인증서
 };
 ```
+1. GET 요청
+GET 요청은 클라이언트(React 애플리케이션)가 서버로 데이터를 요청하는 방식입니다. 이 프로그램에서는 fetch 메서드를 사용해 MongoDB 데이터를 가져오기 위해 HTTP GET 요청을 보냅니다.
 ```
-import React, { useState, useEffect } from 'react';
-import './App.css';
-
-function App() {
-  const [records, setRecords] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-
-  async function fetchAllData() {
-    setLoading(true);
-    try {
-      const response = await fetch('https://kdi.doowon.ac.kr:1804/api/records'); // URL 확인 필요
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      const data = await response.json();
-      console.log('모든 데이터:', data);
-      setRecords(data);
-    } catch (error) {
-      console.error('모든 데이터를 가져오는 중 오류 발생:', error);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  return (
-    <div className="App">
-      <main>
-        <button onClick={fetchAllData}>모든 데이터 새로 가져오기</button>
-      </main>
-    </div>
-  );
-}
-export default App;
+const response = await fetch('https://kdi.doowon.ac.kr:1804/api/records');
 ```
+위 코드는 서버의 /api/records 엔드포인트로 요청을 보내며, 서버는 이를 수신해 데이터를 처리합니다. GET 요청은 주로 데이터를 읽어오는 데 사용되며, 데이터의 변경이나 추가는 발생하지 않습니다.     
+2. 서버 응답
+서버는 GET 요청을 처리한 후 MongoDB에서 데이터를 조회하고 JSON 형식으로 응답합니다.
+예를 들어, Node.js 서버는 다음과 같은 방식으로 응답할 수 있습니다:
 ```
-//db-server.js
-const express = require('express');
-const { MongoClient } = require('mongodb');
-const cors = require('cors');
-const https = require('https');
-const fs = require('fs');
-
-const app = express();
-const port = 1804;
-const url = 'mongodb://127.0.0.1:27017';
-const dbName = 'local';
-const collectionName = 'localRecord';
-
-// SSL 인증서 파일 경로
-const sslOptions = {
-  key: fs.readFileSync('C:/Certbot/live/kdi.doowon.ac.kr/privkey.pem'), // SSL 인증서의 개인 키
-  cert: fs.readFileSync('C:/Certbot/live/kdi.doowon.ac.kr/fullchain.pem'), // SSL 인증서
-};
-
-app.use(cors());
-app.use(express.json()); // JSON 파싱 미들웨어 추가
-
-// GET 요청 처리
 app.get('/api/records', async (req, res) => {
-  const client = new MongoClient(url);
-
-  try {
-    console.log('Connecting to MongoDB...');
-    await client.connect();
-    console.log('Connected to MongoDB try');
-
-    const db = client.db(dbName);
-    const collection = db.collection(collectionName);
-
-    const records = await collection.find({}).toArray(); // 모든 레코드 조회
-    console.log('Records retrieved:', records);
-
-    res.json(records); // 조회된 데이터를 클라이언트로 응답
-  } catch (err) {
-    console.error('Error connecting to MongoDB', err);
-    res.status(500).send('Error connecting to MongoDB');
-  } finally {
-    await client.close();
-    console.log('MongoDB connection closed');
-  }
-});
-
-// HTTPS 서버 시작
-https.createServer(sslOptions, app).listen(port, '0.0.0.0', () => {
-  console.log(`HTTPS Server running at https://kdi.doowon.ac.kr:${port}`);
-  //console.log(`Server is accessible from local IP: ${require('os').networkInterfaces().eth0[0].address}:${port}`);
+  const records = await mongoCollection.find({}).toArray();
+  res.json(records);
 });
 ```
-
+클라이언트는 이 응답 데이터를 response.json()으로 파싱해 React 상태로 저장하고 UI에 표시합니다. GET 요청과 JSON 응답을 통해 클라이언트는 서버 데이터를 효율적으로 가져올 수 있습니다.
 
 ### 5.6 MQTT 바인딩 설정 예제
 다음은 mqtt 설정의 예입니다.  Mosquitto의 구성 파일에 다음과 같이 SSL/TLS 설정한 예제 입니다.
