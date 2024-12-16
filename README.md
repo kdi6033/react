@@ -2376,7 +2376,31 @@ app.get('/api/records', async (req, res) => {
 클라이언트는 이 응답 데이터를 response.json()으로 파싱해 React 상태로 저장하고 UI에 표시합니다. GET 요청과 JSON 응답을 통해 클라이언트는 서버 데이터를 효율적으로 가져올 수 있습니다.
 
 ### 5.6 MongoDB와 React로 데이터 연결하기 - POST
-
+[프로그램 다운로드 25-5-6](https://github.com/kdi6033/react/releases/tag/iotplc-5-6-v1.0)   
+1. POST 요청
+React 애플리케이션에서 데이터를 가져오기 위해 fetch 메서드를 사용해 POST 요청을 보냅니다.
+```
+const response = await fetch('https://kdi.doowon.ac.kr:1804/api/records', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({}),
+});
+```
+- method: 'POST': 서버에 데이터를 전송하기 위한 요청 방식.
+- headers: 요청 헤더에 Content-Type을 JSON으로 지정해 데이터 형식을 알립니다.
+- body: 요청 데이터. 여기서는 빈 객체를 보내지만, 필요한 경우 필터링 조건 등을 추가할 수 있습니다.
+2. POST 요청에 대한 서버 응답
+서버는 클라이언트의 POST 요청을 처리하고 MongoDB 데이터를 조회한 뒤 JSON 형식으로 응답합니다.
+```
+app.post('/api/records', async (req, res) => {
+  const records = await collection.find({}).toArray(); // 모든 데이터 조회
+  res.json(records); // JSON 형식으로 응답
+});
+```
+- 클라이언트 요청을 받고 collection.find({})를 통해 MongoDB에서 모든 데이터를 조회합니다.
+- 조회된 데이터를 res.json(records)로 응답하여 React 애플리케이션에서 사용할 수 있도록 전달합니다.
 
 ### 5.7 MQTT 바인딩 설정 예제
 다음은 mqtt 설정의 예입니다.  Mosquitto의 구성 파일에 다음과 같이 SSL/TLS 설정한 예제 입니다.
