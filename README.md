@@ -2310,7 +2310,7 @@ IIS 관리자에서 사이트를 선택합니다.
 - 사이트 테스트:
 브라우저에서 https://your-domain.com으로 접속하여 HTTPS가 동작하는지 확인합니다.    
 
-### 5.4.1 윈도우 인증서 설치
+#### 5.4.1 윈도우 인증서 설치
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">  윈도우 인증서 설치
 ```
 윈도우에서 무료 인증서 설치 설명해줘
@@ -2321,11 +2321,6 @@ IIS(인터넷 정보 서비스)관리자->서버 인증서 (추천방법)
 <img src="https://github.com/user-attachments/assets/e7168ed6-5aa6-4238-a4e9-a00d7a5bd159" width="800">
 <img src="https://github.com/user-attachments/assets/cce446bb-d76d-400b-8b66-1cb86acf81c2" width="800">
 
-
-
-
-
-
 다음 방법으로 해도 됩니다.
 ```
 Windows + R를 누르고 mmc를 입력한 후 실행합니다.
@@ -2335,12 +2330,12 @@ mmc->파일->스넵인 추가제거->인증서   선택
 위에서 생성된 pxf 파일 선택
 ```
 
-#### 5.4.3 HTTP 리디렉션
+#### 5.4.2 HTTP 리디렉션
 http로 접속을 하면 https 로 접속하게 설정 합니다.
 <img src="https://github.com/user-attachments/assets/b24a8026-572d-4820-8965-0c4916f04e45" width="800">
 <img src="https://github.com/user-attachments/assets/d82141eb-1ae4-44c7-a8c6-22262efb1ed3" width="800">
 
-### 5.4.4 바인딩 설정
+#### 5.4.3 바인딩 설정
 <img src="https://github.com/user-attachments/assets/101a42c8-c873-4558-9582-c58d50757bfe" width="800">
 <img src="https://github.com/user-attachments/assets/ba158d8a-4fa6-4179-8053-c4bfe8348533" width="800">
 설정을 마치면 인터넷 정보 서비스를 새로 시작 합니다.
