@@ -2342,7 +2342,7 @@ http로 접속을 하면 https 로 접속하게 설정 합니다.
 <img src="https://github.com/user-attachments/assets/35fc8376-7c18-4ee6-add4-0d8aed4117cf" width="500">
 
 ### 5.5 MongoDB와 React로 데이터 연결하기 - GET
-[프로그램 다운로드 25-5-5](https://github.com/kdi6033/react/releases/tag/react-button-avatar-v1.0)   
+[프로그램 다운로드 25-5-5](https://github.com/kdi6033/react/releases/tag/react-iotplc-5-5-v1.0)   
 SSL 설정에 사용해야 하는 파일은 인증서와 개인 키입니다. 디렉터리에 제공된 파일과 심볼릭 링크 중 적합한 파일은 아래와 같습니다:     
 - 개인 키 (Private Key)
 경로: privkey.pem 또는 server.key
@@ -2375,7 +2375,10 @@ app.get('/api/records', async (req, res) => {
 ```
 클라이언트는 이 응답 데이터를 response.json()으로 파싱해 React 상태로 저장하고 UI에 표시합니다. GET 요청과 JSON 응답을 통해 클라이언트는 서버 데이터를 효율적으로 가져올 수 있습니다.
 
-### 5.6 MQTT 바인딩 설정 예제
+### 5.6 MongoDB와 React로 데이터 연결하기 - POST
+
+
+### 5.7 MQTT 바인딩 설정 예제
 다음은 mqtt 설정의 예입니다.  Mosquitto의 구성 파일에 다음과 같이 SSL/TLS 설정한 예제 입니다.
 
 ```
