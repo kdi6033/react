@@ -2357,7 +2357,96 @@ const sslOptions = {
   cert: fs.readFileSync('C:/Certbot/live/kdi.doowon.ac.kr/fullchain.pem'), // SSL 인증서
 };
 ```
-### 5.4.6 MQTT 바인딩 설정 예제
+```
+import React, { useState, useEffect } from 'react';
+import './App.css';
+
+function App() {
+  const [records, setRecords] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  async function fetchAllData() {
+    setLoading(true);
+    try {
+      const response = await fetch('https://kdi.doowon.ac.kr:1804/api/records'); // URL 확인 필요
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      const data = await response.json();
+      console.log('모든 데이터:', data);
+      setRecords(data);
+    } catch (error) {
+      console.error('모든 데이터를 가져오는 중 오류 발생:', error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div className="App">
+      <main>
+        <button onClick={fetchAllData}>모든 데이터 새로 가져오기</button>
+      </main>
+    </div>
+  );
+}
+export default App;
+```
+```
+//db-server.js
+const express = require('express');
+const { MongoClient } = require('mongodb');
+const cors = require('cors');
+const https = require('https');
+const fs = require('fs');
+
+const app = express();
+const port = 1804;
+const url = 'mongodb://127.0.0.1:27017';
+const dbName = 'local';
+const collectionName = 'localRecord';
+
+// SSL 인증서 파일 경로
+const sslOptions = {
+  key: fs.readFileSync('C:/Certbot/live/kdi.doowon.ac.kr/privkey.pem'), // SSL 인증서의 개인 키
+  cert: fs.readFileSync('C:/Certbot/live/kdi.doowon.ac.kr/fullchain.pem'), // SSL 인증서
+};
+
+app.use(cors());
+app.use(express.json()); // JSON 파싱 미들웨어 추가
+
+// GET 요청 처리
+app.get('/api/records', async (req, res) => {
+  const client = new MongoClient(url);
+
+  try {
+    console.log('Connecting to MongoDB...');
+    await client.connect();
+    console.log('Connected to MongoDB try');
+
+    const db = client.db(dbName);
+    const collection = db.collection(collectionName);
+
+    const records = await collection.find({}).toArray(); // 모든 레코드 조회
+    console.log('Records retrieved:', records);
+
+    res.json(records); // 조회된 데이터를 클라이언트로 응답
+  } catch (err) {
+    console.error('Error connecting to MongoDB', err);
+    res.status(500).send('Error connecting to MongoDB');
+  } finally {
+    await client.close();
+    console.log('MongoDB connection closed');
+  }
+});
+
+// HTTPS 서버 시작
+https.createServer(sslOptions, app).listen(port, '0.0.0.0', () => {
+  console.log(`HTTPS Server running at https://kdi.doowon.ac.kr:${port}`);
+  //console.log(`Server is accessible from local IP: ${require('os').networkInterfaces().eth0[0].address}:${port}`);
+});
+```
+
+
+### 5.6 MQTT 바인딩 설정 예제
 다음은 mqtt 설정의 예입니다.  Mosquitto의 구성 파일에 다음과 같이 SSL/TLS 설정한 예제 입니다.
 
 ```
