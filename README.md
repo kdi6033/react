@@ -2441,8 +2441,88 @@ keyfile C:/Certbot/live/kdi.doowon.ac.kr/privkey.pem
 require_certificate false  # 클라이언트 인증서를 요구하지 않을 경우 false로 설정
 allow_anonymous true  # 익명 접속 허용 (필요에 따라 true/false로 설정)
 ```
+App.tsx
+```
+import React from 'react';
+import './App.css';
+import MQTTClient from './components/MQTTClient';
 
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <h1>MQTT 통신 프로그램</h1>
+      </header>
+      <MQTTClient />
+    </div>
+  );
+}
 
+export default App;
+```
+MQTTClient.tsx
+```
+import React, { useEffect, useState } from 'react';
+import mqtt from 'mqtt';
+
+const MQTTClient = () => {
+  const [messages, setMessages] = useState<string[]>([]); // string[] 타입으로 수정
+  const brokerUrl = 'wss://kdi.doowon.ac.kr:1803';
+  const intopic = 'i2r/kdi6033@gmail.com/out';
+  const outtopic = 'i2r/kdi6033@gmail.com/in';
+
+  useEffect(() => {
+    const client = mqtt.connect(brokerUrl);
+
+    client.on('connect', () => {
+      console.log('Connected to broker');
+      client.subscribe(intopic, (err) => {
+        if (!err) {
+          console.log(`Subscribed to ${intopic}`);
+        }
+      });
+
+      const interval = setInterval(() => {
+        client.publish(outtopic, '김동일');
+        console.log(`Message sent to ${intopic}: 김동일`);
+      }, 5000);
+
+      return () => {
+        clearInterval(interval);
+        client.end();
+      };
+    });
+
+    client.on('message', (topic, message) => {
+      if (topic === intopic) {
+        const newMessage = message.toString();
+        setMessages((prevMessages) => [...prevMessages, newMessage]);
+        console.log(`Received message from ${outtopic}: ${newMessage}`);
+      }
+    });
+
+    client.on('error', (err) => {
+      console.error('Connection error:', err);
+      client.end();
+    });
+  }, [brokerUrl, intopic, outtopic]);
+
+  return (
+    <div>
+      <h1>MQTT Client</h1>
+      <div>
+        <h2>Messages from {intopic}</h2>
+        <ul>
+          {messages.map((msg, index) => (
+            <li key={index}>{msg}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};
+export default MQTTClient;
+```
 
 
 ## 6. MQTT 프로그램 연결
