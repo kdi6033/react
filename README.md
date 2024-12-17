@@ -2401,7 +2401,7 @@ app.get('/api/records', async (req, res) => {
 클라이언트는 이 응답 데이터를 response.json()으로 파싱해 React 상태로 저장하고 UI에 표시합니다. GET 요청과 JSON 응답을 통해 클라이언트는 서버 데이터를 효율적으로 가져올 수 있습니다.
 
 ### 5.6 MongoDB와 React로 데이터 연결하기 - POST
-[프로그램 다운로드 25-5-6](https://github.com/kdi6033/react/releases/tag/iotplc-5-6-v1.0)   
+[프로그램 다운로드 5-6](https://github.com/kdi6033/react/releases/tag/iotplc-5-6-v1.0)   
 1. POST 요청
 React 애플리케이션에서 데이터를 가져오기 위해 fetch 메서드를 사용해 POST 요청을 보냅니다.
 ```
@@ -2428,10 +2428,11 @@ app.post('/api/records', async (req, res) => {
 - 조회된 데이터를 res.json(records)로 응답하여 React 애플리케이션에서 사용할 수 있도록 전달합니다.
 
 ### 5.7 WSS(WebSocket Secure)를 이용한 MQTT 통신 프로그램
+[프로그램 다운로드 5-7](https://github.com/kdi6033/react/releases/tag/react-iotplc-5-7-v1.0)   
 1. WSS란?
 WSS(WebSocket Secure)는 WebSocket을 TLS/SSL(보안 소켓 계층)을 통해 암호화한 프로토콜입니다. WebSocket은 클라이언트와 서버 간의 실시간 양방향 통신을 가능하게 하는 프로토콜이며, WSS는 이를 보안적으로 강화한 방식입니다. 즉, WSS를 사용하면 데이터가 안전하게 암호화되어 전송되므로 외부 공격으로부터 데이터를 보호할 수 있습니다.
 
-2. 프로그램 설명
+2. 프로그램 설명     
 이 프로그램은 MQTT를 기반으로 WSS 프로토콜을 사용하여 데이터를 주고받습니다. MQTT는 사물인터넷(IoT) 기기들 간의 경량 메시징 프로토콜로, 브로커를 중심으로 데이터를 발행(Publish) 하고 구독(Subscribe) 하는 구조입니다.
 학생들이 작성한 코드에서는 MQTT 브로커에 wss://kdi.doowon.ac.kr:1803 주소를 통해 연결합니다. 이 브로커와의 통신은 WSS를 통해 암호화되어 안전하게 이루어집니다.
 
