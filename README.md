@@ -2284,9 +2284,20 @@ openssl x509 -in ca.crt -noout -dates
 인증서 체인 검증
 openssl verify -CAfile ca.crt server.crt
 연결확인
-openssl s_client -connect 117.16.176.76:8883 -CAfile D:\cert\ca.crt
-openssl s_client -connect 117.16.176.76:8883 -CAfile ca.crt
-openssl s_client -connect 도매안네암:8883 -CAfile ca.crt
+openssl s_client -connect 도매안네암:포트번호 -CAfile C:\Certbot\live\kdi.doowon.ac.kr\ca.crt
+openssl x509 -in server.crt -text -noout
+openssl rsa -in server.key -check
+```
+s_client 명령과 함께 위에서 제공한 CA 파일과 server.key/server.crt를 사용해 서버로 연결할 수 있습니다. 다음과 같이 실행합니다:
+```
+openssl s_server -accept 443 -cert server.crt -key server.key -CAfile ca.crt
+```
+-cert 옵션에는 server.crt 경로를 지정합니다.
+-key 옵션에는 server.key 경로를 지정합니다.
+-CAfile에는 인증 기관의 체인 인증서 (ca.crt)를 사용합니다.
+이후 다른 클라이언트에서 s_client 명령을 통해 연결하면, 올바르게 인증되었는지 확인할 수 있습니다:
+```
+openssl s_client -connect 도메인:포트번호 -CAfile C:\Certbot\live\kdi.doowon.ac.kr\ca.crt
 ```
 
 ### 5.3 인증서 재발급
