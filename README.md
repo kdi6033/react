@@ -2273,7 +2273,21 @@ openssl pkcs12 -in certificate.pfx -cacerts -nokeys -chain -out ca.crt
 ```
 certbot certificates
 ```
-
+다음은 인증서가 정상 동작하는지 알아볼 수 있습니다.
+```
+인증서 정보 확인
+openssl x509 -in fullchain.pem -noout -dates
+openssl x509 -in cert.pem -noout -dates
+openssl x509 -in ca.crt -noout -text
+인증서의 유효 기간 확인
+openssl x509 -in ca.crt -noout -dates
+인증서 체인 검증
+openssl verify -CAfile ca.crt server.crt
+연결확인
+openssl s_client -connect 117.16.176.76:8883 -CAfile D:\cert\ca.crt
+openssl s_client -connect 117.16.176.76:8883 -CAfile ca.crt
+openssl s_client -connect 도매안네암:8883 -CAfile ca.crt
+```
 
 ### 5.3 인증서 재발급
 새로운 인증서는 "도메인네임-0001" 로 생성되어 링크되어 있는 프로그램을 모두 수정 하는 일이 번거럽고 실수가 발생함으로 새로 생성된 것을  "도메인네임" 복사 하는 일이 필요 합니다. 그래서 저는 기존의 것을 모두 지우고 새로 발급받아 인증서 등록을 다시 합니다.
@@ -2412,21 +2426,7 @@ keyfile /path/to/server.key
 certfile /path/to/server.crt
 이 설정으로 Mosquitto 브로커는 8883 포트에서 SSL/TLS를 사용하여 클라이언트와 통신할 것입니다.
 ```
-다음은 인증서가 정상 동작하는지 알아볼 수 있습니다.
-```
-인증서 정보 확인
-openssl x509 -in fullchain.pem -noout -dates
-openssl x509 -in cert.pem -noout -dates
-openssl x509 -in ca.crt -noout -text
-인증서의 유효 기간 확인
-openssl x509 -in ca.crt -noout -dates
-인증서 체인 검증
-openssl verify -CAfile ca.crt server.crt
-연결확인
-openssl s_client -connect 117.16.176.76:8883 -CAfile D:\cert\ca.crt
-openssl s_client -connect 117.16.176.76:8883 -CAfile ca.crt
-openssl s_client -connect 도매안네암:8883 -CAfile ca.crt
-```
+
 
 
 
