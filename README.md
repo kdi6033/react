@@ -2427,7 +2427,14 @@ app.post('/api/records', async (req, res) => {
 - 클라이언트 요청을 받고 collection.find({})를 통해 MongoDB에서 모든 데이터를 조회합니다.
 - 조회된 데이터를 res.json(records)로 응답하여 React 애플리케이션에서 사용할 수 있도록 전달합니다.
 
-### 5.7 MQTT 바인딩 설정 예제
+### 5.7 WSS(WebSocket Secure)를 이용한 MQTT 통신 프로그램
+1. WSS란?
+WSS(WebSocket Secure)는 WebSocket을 TLS/SSL(보안 소켓 계층)을 통해 암호화한 프로토콜입니다. WebSocket은 클라이언트와 서버 간의 실시간 양방향 통신을 가능하게 하는 프로토콜이며, WSS는 이를 보안적으로 강화한 방식입니다. 즉, WSS를 사용하면 데이터가 안전하게 암호화되어 전송되므로 외부 공격으로부터 데이터를 보호할 수 있습니다.
+
+2. 프로그램 설명
+이 프로그램은 MQTT를 기반으로 WSS 프로토콜을 사용하여 데이터를 주고받습니다. MQTT는 사물인터넷(IoT) 기기들 간의 경량 메시징 프로토콜로, 브로커를 중심으로 데이터를 발행(Publish) 하고 구독(Subscribe) 하는 구조입니다.
+학생들이 작성한 코드에서는 MQTT 브로커에 wss://kdi.doowon.ac.kr:1803 주소를 통해 연결합니다. 이 브로커와의 통신은 WSS를 통해 암호화되어 안전하게 이루어집니다.
+
 다음은 mqtt 설정의 예입니다.  Mosquitto의 구성 파일에 다음과 같이 SSL/TLS 설정한 예제 입니다.
 "C:\Program Files\mosquitto\mosquitto.conf" 파일에 다음을 설정하고 윈도우 "서비스"에서 mosquitto를 다시 시작합니다.
 이 설정으로 Mosquitto 브로커는 1803 포트에서 SSL/TLS를 사용하여 클라이언트와 통신할 것입니다.
