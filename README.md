@@ -2539,5 +2539,6 @@ ChatGPT에 App.tsx, MQTTClient.tsx, MachineOverview.tsx 를 제시하고
 
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100"> MachineOverview 
 ```
-MachineOverview 를 시작할 때 /api/findArray 를 실행하여 email에 해당하는 기기들을 버튼으로 만들어 프로그램해줘 그리고 나중에 버튼을 누르면 상세 제어페이지로 이동 하겠습니다. 
+MachineOverview 를 시작할 때 /api/findArray 를 실행하여 email에 해당하는 기기들을 버튼으로 만들어 프로그램해줘
+그리고 나중에 버튼을 누르면 상세 제어페이지로 이동 하겠습니다. 
 ```
