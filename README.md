@@ -2434,7 +2434,7 @@ WSS(WebSocket Secure)는 WebSocket을 TLS/SSL(보안 소켓 계층)을 통해 �
 
 2. 프로그램 설명     
 이 프로그램은 MQTT를 기반으로 WSS 프로토콜을 사용하여 데이터를 주고받습니다. MQTT는 사물인터넷(IoT) 기기들 간의 경량 메시징 프로토콜로, 브로커를 중심으로 데이터를 발행(Publish) 하고 구독(Subscribe) 하는 구조입니다.
-학생들이 작성한 코드에서는 MQTT 브로커에 wss://kdi.doowon.ac.kr:1803 주소를 통해 연결합니다. 이 브로커와의 통신은 WSS를 통해 암호화되어 안전하게 이루어집니다.
+이 코드에서는 MQTT 브로커에 wss://kdi.doowon.ac.kr:1803 주소를 통해 연결합니다. 이 브로커와의 통신은 WSS를 통해 암호화되어 안전하게 이루어집니다.
 
 다음은 mqtt 설정의 예입니다.  Mosquitto의 구성 파일에 다음과 같이 SSL/TLS 설정한 예제 입니다.
 "C:\Program Files\mosquitto\mosquitto.conf" 파일에 다음을 설정하고 윈도우 "서비스"에서 mosquitto를 다시 시작합니다.
