@@ -2429,13 +2429,17 @@ app.post('/api/records', async (req, res) => {
 
 ### 5.7 MQTT 바인딩 설정 예제
 다음은 mqtt 설정의 예입니다.  Mosquitto의 구성 파일에 다음과 같이 SSL/TLS 설정한 예제 입니다.
-
+"C:\Program Files\mosquitto\mosquitto.conf" 파일에 다음을 설정하고 윈도우 "서비스"에서 mosquitto를 다시 시작합니다.
+이 설정으로 Mosquitto 브로커는 1803 포트에서 SSL/TLS를 사용하여 클라이언트와 통신할 것입니다.
 ```
-port 8883
-cafile /path/to/ca.crt
-keyfile /path/to/server.key
-certfile /path/to/server.crt
-이 설정으로 Mosquitto 브로커는 8883 포트에서 SSL/TLS를 사용하여 클라이언트와 통신할 것입니다.
+# WebSocket Secure listener 설정
+listener 1803
+protocol websockets
+cafile C:/Certbot/live/kdi.doowon.ac.kr/ca.crt
+certfile C:/Certbot/live/kdi.doowon.ac.kr/fullchain.pem
+keyfile C:/Certbot/live/kdi.doowon.ac.kr/privkey.pem
+require_certificate false  # 클라이언트 인증서를 요구하지 않을 경우 false로 설정
+allow_anonymous true  # 익명 접속 허용 (필요에 따라 true/false로 설정)
 ```
 
 
