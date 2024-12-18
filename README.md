@@ -2534,7 +2534,13 @@ export default MQTTClient;
 
 
 ## 6. WSS를 이용한 MQTT mongoDB 프로그램
-[프로그램 다운로드 6-0](https://github.com/kdi6033/react/releases/tag/react-iotplc-25-6-0-v1.0)   
+<a href="https://youtu.be/Pu0yI2KpRfI">
+    <img src="https://github.com/user-attachments/assets/99c16310-d9ac-4221-8987-35221e019813" alt="Token" width="400">
+</a> 
+![25-6-0  React  WSS를 이용한 MQTT mongoDB 프로그램](https://github.com/user-attachments/assets/99c16310-d9ac-4221-8987-35221e019813)
+
+[프로그램 다![Uploading 25-6-0 [React] WSS를 이용한 MQTT mongoDB 프로그램.jpg…]()
+운로드 6-0](https://github.com/kdi6033/react/releases/tag/react-iotplc-25-6-0-v1.0)   
 ChatGPT에 App.tsx, MQTTClient.tsx, MachineOverview.tsx 를 제시하고    
 
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100"> MachineOverview 
