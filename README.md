@@ -2547,3 +2547,9 @@ ChatGPT에 App.tsx, MQTTClient.tsx, MachineOverview.tsx 를 제시하고
 MachineOverview 를 시작할 때 /api/findArray 를 실행하여 email에 해당하는 기기들을 버튼으로 만들어 프로그램해줘
 그리고 나중에 버튼을 누르면 상세 제어페이지로 이동 하겠습니다. 
 ```
+```
+{"type":3,"email":"kdi6033@gmail.com","mac":"D8:13:2A:C5:C3:7C","temp":24.2,"humi":31,"in":[0,0,0,0],"out":[0,0,0,0]}
+ 다음과 같이 메세지가 들어 옵니다. "in" 데이타를 led를 만들어 버튼에 표시해줘
+그리고 led는 버튼안에 조그맣게 원형으로 표시해줘, 버튼은 자동으로 페이지 폭에 맞게 옆으로 나열하고 
+MachineOverview.css를 별도로 작성해줘
+```
