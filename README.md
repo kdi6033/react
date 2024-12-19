@@ -2534,6 +2534,8 @@ export default MQTTClient;
 
 
 ## 6. WSS를 이용한 MQTT mongoDB 프로그램
+https 환경에서 mqtt mongoDB를 활용하여 IoT PLC 의 모니터링 프로그램을 만든다. 
+### 6.1 모든 PLC 나열 및 mqtt 메세지 전달
 <a href="https://youtu.be/Pu0yI2KpRfI">
     <img src="https://github.com/user-attachments/assets/99c16310-d9ac-4221-8987-35221e019813" alt="Token" width="400">
 </a> 
@@ -2547,6 +2549,9 @@ ChatGPT에 App.tsx, MQTTClient.tsx, MachineOverview.tsx 를 제시하고
 MachineOverview 를 시작할 때 /api/findArray 를 실행하여 email에 해당하는 기기들을 버튼으로 만들어 프로그램해줘
 그리고 나중에 버튼을 누르면 상세 제어페이지로 이동 하겠습니다. 
 ```
+### 6.2 버튼에 데이터 표시
+사옹자의 email 에 해당하는 IoT PLC 데이터를 가져와 버튼에 간략한 데이터를 표시해서 한 화면에 전체 IoT PLC 를 모니터링 할 수 있게 한다.
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100"> 버튼을 이용한 모니터링 
 ```
 {"type":3,"email":"kdi6033@gmail.com","mac":"D8:13:2A:C5:C3:7C","temp":24.2,"humi":31,"in":[0,0,0,0],"out":[0,0,0,0]}
  다음과 같이 메세지가 들어 옵니다. "in" 데이타를 led를 만들어 버튼에 표시해줘
