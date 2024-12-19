@@ -2552,4 +2552,5 @@ MachineOverview 를 시작할 때 /api/findArray 를 실행하여 email에 해�
  다음과 같이 메세지가 들어 옵니다. "in" 데이타를 led를 만들어 버튼에 표시해줘
 그리고 led는 버튼안에 조그맣게 원형으로 표시해줘, 버튼은 자동으로 페이지 폭에 맞게 옆으로 나열하고 
 MachineOverview.css를 별도로 작성해줘
+in 글짜와 led 같은 줄에 표시하고 out 글씨와 led 같은 줄에 표시해줘
 ```
