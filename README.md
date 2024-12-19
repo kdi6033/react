@@ -2556,8 +2556,8 @@ MachineOverview 를 시작할 때 /api/findArray 를 실행하여 email에 해�
 
 [프로그램 다운로드 6-2](https://github.com/kdi6033/react/releases/tag/react-iotplc-6-1-v1.0)     
 
-사옹자의 email 에 해당하는 IoT PLC 데이터를 가져와 버튼에 간략한 데이터를 표시해서 한 화면에 전체 IoT PLC 를 모니터링 할 수 있게 한다.
-<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100"> 버튼을 이용한 모니터링 
+사옹자의 email 에 해당하는 IoT PLC 데이터를 가져와 버튼에 간략한 데이터를 표시해서 한 화면에 전체 IoT PLC 를 모니터링 할 수 있게 한다.    
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100"> 버튼을 이용한 모니터링      
 ```
 {"type":3,"email":"kdi6033@gmail.com","mac":"D8:13:2A:C5:C3:7C","temp":24.2,"humi":31,"in":[0,0,0,0],"out":[0,0,0,0]}
  다음과 같이 메세지가 들어 옵니다. "in" 데이타를 led를 만들어 버튼에 표시해줘
