@@ -2554,4 +2554,6 @@ MachineOverview 를 시작할 때 /api/findArray 를 실행하여 email에 해�
 MachineOverview.css를 별도로 작성해줘
 in 글짜와 led 같은 줄에 표시하고 out 글씨와 led 같은 줄에 표시해줘
 <span className="device-name">{record.name || record.mac}</span> 옆에 type=2 이면 i2r-2,  type=3 이면 i2r-3, type=4 이면 i2r-4 을 작은 글씨로 써줘
+여기에 temp 는 "온도"로, humi "습도"로 표시해서 버튼 안에 다음줄에 같은 줄로 표시해줘
+record.temp, record.humi 값이 없으면 위 항목 전체를 표시 하지말아줘
 ```
