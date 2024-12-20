@@ -2568,3 +2568,78 @@ in 글짜와 led 같은 줄에 표시하고 out 글씨와 led 같은 줄에 표�
 여기에 temp 는 "온도"로, humi "습도"로 표시해서 버튼 안에 다음줄에 같은 줄로 표시해줘
 record.temp, record.humi 값이 없으면 위 항목 전체를 표시 하지말아줘
 ```
+
+### 6.3 MachineOverview.tsx를 활용한 상세 페이지 및 데이터 업서트 구현
+목표
+- 목표 1: 버튼 클릭 시 상세 페이지로 이동하도록 React Router를 이용해 라우팅 구현.
+- 목표 2: MQTT로 들어온 데이터를 서버에 업서트(upsert)하여 저장하고, 데이터가 없을 경우 name[] 배열을 생성하여 초기화.
+- 목표 3: 작성한 코드를 기반으로 학생들이 직접 프로젝트에 적용할 수 있도록 자세히 설명.
+#### 6.3.1 버튼 클릭으로 상세 페이지 이동
+React Router를 사용하여 버튼 클릭 시 특정 장치(MAC 주소)의 상세 페이지로 이동하도록 구현합니다.
+```
+버튼을 누르면 상세 페이지로 이동하게 프로그램 해줘
+```
+React Router의 useNavigate 훅을 사용하여 이동 구현:
+```
+import { useNavigate } from 'react-router-dom';
+
+const handleRecordClick = (mac: string) => {
+  navigate(`/device/${mac}`); // 특정 MAC 주소를 기반으로 상세 페이지로 이동
+};
+```
+버튼 클릭 이벤트와 함께 handleRecordClick 연결:
+```
+<button
+  key={record.mac}
+  onClick={() => handleRecordClick(record.mac)}
+  className="device-button"
+>
+  {record.name || record.mac}
+</button>
+```
+
+#### 6.3.2 MQTT 데이터 서버 업서트
+MQTT 메시지가 들어올 때 MongoDB에 데이터를 업서트(문서가 없으면 삽입, 있으면 업데이트)합니다. 추가적으로 데이터가 없을 경우 name[] 배열을 생성합니다.
+```
+이것을 이용해 업데이트 해줘 그리고 이전 데이터가 없을 때는 name[] 을 만들어 줘
+처음 값 중 name[0]=mac 으로 해주고 나머지는 1,2,3 번호를 넣어주고
+배열의 크기는 in 과 out 배열을 합친 것보다 하나 크게 해줘
+```
+upsert 구현 로직
+name[] 생성 로직:
+배열 크기는 in과 out 배열의 합 + 1.
+name[0]은 mac, 나머지는 "1", "2", "3", ... 순서로 설정.
+```
+const nameArrayLength = inArray.length + outArray.length + 1;
+const defaultNameArray = Array.from({ length: nameArrayLength }, (_, i) =>
+  i === 0 ? mac : i.toString()
+);
+```
+서버 요청:
+MQTT 메시지를 파싱하여 POST 요청으로 업서트 실행.
+```
+fetch('https://kdi.doowon.ac.kr:1804/api/upsert', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(parsedMessage),
+})
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then((data) => {
+    console.log('Upserted Data:', data);
+  })
+  .catch((error) => console.error('Error upserting data:', error));
+```
+#### 6.3.3 상세 페이지 이동 및 데이터 업서트 통합
+```
+MachineOverview.tsx upsert 추가해줘
+```
+결과 파일은 이 사이트에서 다운로드해서 참조 하세요.
+
+
