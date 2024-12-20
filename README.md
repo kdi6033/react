@@ -2570,6 +2570,7 @@ record.temp, record.humi 값이 없으면 위 항목 전체를 표시 하지말�
 ```
 
 ### 6.3 MachineOverview.tsx를 활용한 상세 페이지 이동 및 데이터 업서트 구현
+[프로그램 다운로드 6-3](https://github.com/kdi6033/react/releases/tag/react-iotplc-6-3-v1.0)     
 목표
 - 목표 1: 버튼 클릭 시 상세 페이지로 이동하도록 React Router를 이용해 라우팅 구현.
 - 목표 2: MQTT로 들어온 데이터를 서버에 업서트(upsert)하여 저장하고, 데이터가 없을 경우 name[] 배열을 생성하여 초기화.
