@@ -2667,7 +2667,7 @@ IoT PLC의 핀번호(0,1,2,3 4개)와 true/false를 보내면 릴레이가 동�
 맥어드레스가 "A0:B7:65:CD:4D:34"인 기기의 1번핀 릴레이를 on 시킨다.
 MQTTService.tsx 를 이용해서 mqtt 메세지 전송해줘
 ```
-주요 요구 사항
+**주요 요구 사항**
 - DeviceDetail.tsx와 DeviceDetail.css를 생성하여 mac 주소에 해당하는 mqttMessage를 화면에 표시.
 - in 데이터는 LED 표시, out 데이터는 스위치 표시로 UI 구성.
 - 스위치 동작 시 MQTTService.tsx를 이용해 MQTT 메시지를 전송.
