@@ -2569,7 +2569,7 @@ in 글짜와 led 같은 줄에 표시하고 out 글씨와 led 같은 줄에 표�
 record.temp, record.humi 값이 없으면 위 항목 전체를 표시 하지말아줘
 ```
 
-### 6.3 MachineOverview.tsx를 활용한 상세 페이지 및 데이터 업서트 구현
+### 6.3 MachineOverview.tsx를 활용한 상세 페이지 이동 및 데이터 업서트 구현
 목표
 - 목표 1: 버튼 클릭 시 상세 페이지로 이동하도록 React Router를 이용해 라우팅 구현.
 - 목표 2: MQTT로 들어온 데이터를 서버에 업서트(upsert)하여 저장하고, 데이터가 없을 경우 name[] 배열을 생성하여 초기화.
@@ -2642,4 +2642,4 @@ MachineOverview.tsx upsert 추가해줘
 ```
 결과 파일은 이 사이트에서 다운로드해서 참조 하세요.
 
-
+### 6.4 상세 페이지 구현
