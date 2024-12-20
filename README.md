@@ -2645,7 +2645,7 @@ MachineOverview.tsx upsert 추가해줘
 결과 파일은 이 사이트에서 다운로드해서 참조 하세요.
 
 ### 6.4 상세 페이지 구현
-<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">    
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100"> 프롬프트
 ```
 DeviceDetail.tsx 화면에 여기 mac 에 해당하는 mqtt 데이타 표시해줘
 mqtt 메세지는 
