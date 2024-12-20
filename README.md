@@ -2645,7 +2645,7 @@ MachineOverview.tsx upsert 추가해줘
 결과 파일은 이 사이트에서 다운로드해서 참조 하세요.
 
 ### 6.4 상세 페이지 구현
-
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">
 ```
 DeviceDetail.tsx 화면에 여기 mac 에 해당하는 mqtt 데이타 표시해줘
 mqtt 메세지는 
@@ -2653,12 +2653,12 @@ mqtt 메세지는
 와 같이 처리해줘
 데이터 들어오면 DataHandler.tsx를 이용해 바로 업데이트 하는 것으로 프로그램 해줘
 ```
-
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">
 ```
 {\"type\":3,\"email\":\"kdi6033@gmail.com\",\"mac\":\"D8:13:2A:C3:E7:68\",\"temp\":25.2,\"humi\":22,\"in\":[0,0,0,0],\"out\":[1,0,0,1]}"
 in 은 led 를 만들어 표시하고 out는 스위치를 만들어 표시 해줘 DeviceDetail.tsx DeviceDetail.css 만들어 줘
 ```
-
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">
 ```
 스위치에 따라 on off 동작하게 해줘
 프로토콜은 다음과 같습니다.
@@ -2667,3 +2667,38 @@ IoT PLC의 핀번호(0,1,2,3 4개)와 true/false를 보내면 릴레이가 동�
 맥어드레스가 "A0:B7:65:CD:4D:34"인 기기의 1번핀 릴레이를 on 시킨다.
 MQTTService.tsx 를 이용해서 mqtt 메세지 전송해줘
 ```
+주요 요구 사항
+- DeviceDetail.tsx와 DeviceDetail.css를 생성하여 mac 주소에 해당하는 mqttMessage를 화면에 표시.
+- in 데이터는 LED 표시, out 데이터는 스위치 표시로 UI 구성.
+- 스위치 동작 시 MQTTService.tsx를 이용해 MQTT 메시지를 전송.
+- 메시지 수신 시 DataHandler.tsx를 통해 데이터를 바로 업데이트.
+
+구현 파일 구성
+DeviceDetail.tsx   DeviceDetail.css   MQTTService.tsx   DataHandler.tsx
+이 파일의 소스 프로그램은 다운로드 해서 보세요.
+
+동작 설명
+MQTT 데이터 표시
+
+DeviceDetail.tsx는 mqttMessage를 prop으로 받아 mac, temp, humi, in, out 데이터를 화면에 표시합니다.
+in은 LED로, out은 스위치로 구성합니다.
+LED 상태
+
+수신된 in 데이터를 기반으로 LED 상태를 표시하며, 활성화 시 녹색 배경으로 나타납니다.
+스위치 동작
+
+스위치 버튼을 클릭하면 상태가 토글되며, 새로운 상태가 MQTT 메시지로 전송됩니다.
+메시지 예
+```
+{"mac":"A0:B7:65:CD:4D:34","order":2,"no":1,"value":true}
+```
+MQTT 메시지 업데이트
+
+새로운 MQTT 메시지가 들어오면 DataHandler.tsx를 통해 서버로 데이터를 전송해 업데이트합니다.
+라우팅 처리
+
+App.tsx에서 MachineOverview에 mqttMessage를 전달합니다:
+```
+<Route path="/overview" element={<MachineOverview mqttMessage={mqttMessage} />} />
+```
+
