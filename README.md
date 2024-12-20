@@ -2654,13 +2654,13 @@ mqtt 메세지는
 데이터 들어오면 DataHandler.tsx를 이용해 바로 업데이트 하는 것으로 프로그램 해줘
 ```
   
-<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">    
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100"> 프롬프트  
 ```
 {\"type\":3,\"email\":\"kdi6033@gmail.com\",\"mac\":\"D8:13:2A:C3:E7:68\",\"temp\":25.2,\"humi\":22,\"in\":[0,0,0,0],\"out\":[1,0,0,1]}"
 in 은 led 를 만들어 표시하고 out는 스위치를 만들어 표시 해줘 DeviceDetail.tsx DeviceDetail.css 만들어 줘
 ```
 
-<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">     
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100"> 프롬프트   
 ```
 스위치에 따라 on off 동작하게 해줘
 프로토콜은 다음과 같습니다.
