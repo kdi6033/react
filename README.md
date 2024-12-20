@@ -2677,26 +2677,23 @@ MQTTService.tsx 를 이용해서 mqtt 메세지 전송해줘
 DeviceDetail.tsx   DeviceDetail.css   MQTTService.tsx   DataHandler.tsx
 이 파일의 소스 프로그램은 다운로드 해서 보세요.
 
-동작 설명
-MQTT 데이터 표시
-
+**동작 설명**
+1. MQTT 데이터 표시
 DeviceDetail.tsx는 mqttMessage를 prop으로 받아 mac, temp, humi, in, out 데이터를 화면에 표시합니다.
 in은 LED로, out은 스위치로 구성합니다.
-LED 상태
 
+3. LED 상태
 수신된 in 데이터를 기반으로 LED 상태를 표시하며, 활성화 시 녹색 배경으로 나타납니다.
-스위치 동작
 
+3. 스위치 동작
 스위치 버튼을 클릭하면 상태가 토글되며, 새로운 상태가 MQTT 메시지로 전송됩니다.
 메시지 예
 ```
 {"mac":"A0:B7:65:CD:4D:34","order":2,"no":1,"value":true}
 ```
-MQTT 메시지 업데이트
-
+4. MQTT 메시지 업데이트
 새로운 MQTT 메시지가 들어오면 DataHandler.tsx를 통해 서버로 데이터를 전송해 업데이트합니다.
 라우팅 처리
-
 App.tsx에서 MachineOverview에 mqttMessage를 전달합니다:
 ```
 <Route path="/overview" element={<MachineOverview mqttMessage={mqttMessage} />} />
