@@ -2638,9 +2638,32 @@ fetch('https://kdi.doowon.ac.kr:1804/api/upsert', {
   .catch((error) => console.error('Error upserting data:', error));
 ```
 #### 6.3.3 상세 페이지 이동 및 데이터 업서트 통합
+다음과 같이 질문하여 데이터가 들어오면 데이터베이스에 업데이트 합니다.
 ```
 MachineOverview.tsx upsert 추가해줘
 ```
 결과 파일은 이 사이트에서 다운로드해서 참조 하세요.
 
 ### 6.4 상세 페이지 구현
+
+```
+DeviceDetail.tsx 화면에 여기 mac 에 해당하는 mqtt 데이타 표시해줘
+mqtt 메세지는 
+<Route path="/overview" element={<MachineOverview mqttMessage={mqttMessage} />} />
+와 같이 처리해줘
+데이터 들어오면 DataHandler.tsx를 이용해 바로 업데이트 하는 것으로 프로그램 해줘
+```
+
+```
+{\"type\":3,\"email\":\"kdi6033@gmail.com\",\"mac\":\"D8:13:2A:C3:E7:68\",\"temp\":25.2,\"humi\":22,\"in\":[0,0,0,0],\"out\":[1,0,0,1]}"
+in 은 led 를 만들어 표시하고 out는 스위치를 만들어 표시 해줘 DeviceDetail.tsx DeviceDetail.css 만들어 줘
+```
+
+```
+스위치에 따라 on off 동작하게 해줘
+프로토콜은 다음과 같습니다.
+IoT PLC의 핀번호(0,1,2,3 4개)와 true/false를 보내면 릴레이가 동작한다.
+{"mac":"A0:B7:65:CD:4D:34","order":2,"no":1,"value":true}
+맥어드레스가 "A0:B7:65:CD:4D:34"인 기기의 1번핀 릴레이를 on 시킨다.
+MQTTService.tsx 를 이용해서 mqtt 메세지 전송해줘
+```
