@@ -2645,23 +2645,7 @@ MachineOverview.tsx upsert 추가해줘
 결과 파일은 이 사이트에서 다운로드해서 참조 하세요.
 
 ### 6.4 상세 페이지 구현
-#### 6.4.1 입력 Led 출력 스위치 만들기  })
-  .then((data) => {
-    console.log('Upserted Data:', data);
-  })
-  .catch((error) => console.error('Error upserting data:', error));
-```
-#### 6.3.3 상세 페이지 이동 및 데이터 업서트 통합
-다음과 같이 질문하여 데이터가 들어오면 데이터베이스에 업데이트 합니다.
-```
-MachineOverview.tsx upsert 추가해줘
-```
-결과 파일은 이 사이트에서 다운로드해서 참조 하세요.
-
-
-### 6.4 상세 페이지 구현
 #### 6.4.1 입력 Led 출력 스위치 만들기
-
 - MQTT 통신을 기반으로 하며, LED와 슬라이드 스위치를 사용해 PLC 출력을 제어합니다.
 - 입력 신호는 MQTT 메시지로 전달되며, LED는 메시지의 "in" 배열 데이터를 기반으로 ON/OFF 상태를 표시합니다.
 - 메시지 형식이 {"in":[1,0,1,0]}일 경우, 첫 번째와 세 번째 LED가 켜집니다.
