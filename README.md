@@ -2645,13 +2645,14 @@ MachineOverview.tsx upsert 추가해줘
 결과 파일은 이 사이트에서 다운로드해서 참조 하세요.
 
 ### 6.4 상세 페이지 구현
+[프로그램 다운로드 6-4](https://github.com/kdi6033/react/releases/tag/react-iotplc-6-4-v1.0)     
 #### 6.4.1 입력 Led 출력 스위치 만들기
 - MQTT 통신을 기반으로 하며, LED와 슬라이드 스위치를 사용해 PLC 출력을 제어합니다.
 - 입력 신호는 MQTT 메시지로 전달되며, LED는 메시지의 "in" 배열 데이터를 기반으로 ON/OFF 상태를 표시합니다.
 - 메시지 형식이 {"in":[1,0,1,0]}일 경우, 첫 번째와 세 번째 LED가 켜집니다.
 - 스위치는 PLC 출력을 제어하기 위해 슬라이드 형태로 설계되었으며, 각 스위치 동작은 MQTT 메시지를 통해 서버로 전달됩니다.
 - 메시지 형식은 {"mac":"","order":2,"no":1,"value":true}로, "no"는 스위치 번호(0~3), "value"는 ON/OFF 상태를 나타냅니다.
-학생들은 이를 통해 IoT와 PLC 제어 원리를 학습하고, MQTT 프로토콜과 실시간 데이터 처리의 기본을 경험할 수 있습니다.
+이를 통해 IoT와 PLC 제어 원리를 학습하고, MQTT 프로토콜과 실시간 데이터 처리의 기본을 경험할 수 있습니다.
 
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100"> 프롬프트
 ```
