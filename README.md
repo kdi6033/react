@@ -2710,4 +2710,88 @@ App.tsx에서 MachineOverview에 mqttMessage를 전달합니다:
 ```
 <Route path="/overview" element={<MachineOverview mqttMessage={mqttMessage} />} />
 ```
+### 6.5 Label Name 수정과 저장
+[프로그램 다운로드 6-4](https://github.com/kdi6033/react/releases/tag/react-iotplc-6-4-v1.0)     
+<img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100"> 프롬프트
+```
+'/api/updateName' 이름으로 name[] 저장하는 프로그램 만들고 이를 진행해줘
+post로 작성해 주세요
+```
+components\DeviceDetail.tsx
+```
+import { updateRecord, updateName } from './DataHandler';
+....
+const handleSave = async () => {
+    if (device) {
+      try {
+        const response = await updateName(device.mac, editedNames);
+        console.log('Record updated successfully:', response);
+
+        setDevice({ ...device, name: editedNames });
+        setEditMode(false);
+      } catch (error) {
+        console.error('Error updating record:', error);
+      }
+    }
+  };
+....
+{editMode && (
+        <div className="edit-names">
+          {editedNames.map((name, index) => (
+            <div key={index}>
+              <label>{`Name ${index}`}</label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => handleNameChange(index, e.target.value)}
+              />
+            </div>
+          ))}
+          <button onClick={handleSave}>저장</button>
+          <button onClick={handleCancel}>취소</button>
+        </div>
+      )}
+```
+db-server.js
+```
+// Label Name 저장장
+app.post('/api/updateName', async (req, res) => {
+  const client = new MongoClient(url);
+  const { mac, name } = req.body; // MAC 주소와 이름 배열을 받아옴
+
+  if (!mac || !Array.isArray(name)) {
+    return res.status(400).send('유효하지 않은 요청입니다. MAC 주소와 name[] 배열이 필요합니다.');
+  }
+
+  try {
+    console.log('Connecting to MongoDB...');
+    await client.connect();
+    console.log('Connected to MongoDB');
+
+    const db = client.db(dbName);
+    const collection = db.collection(collectionName);
+
+    // MAC 주소를 기준으로 name[] 배열 업데이트
+    const result = await collection.updateOne(
+      { mac }, // MAC 주소로 문서 검색
+      { $set: { name } }, // name[] 배열 업데이트
+      { upsert: false } // 문서가 없을 경우 삽입하지 않음
+    );
+
+    if (result.matchedCount === 0) {
+      res.status(404).send('해당 MAC 주소를 가진 문서를 찾을 수 없습니다.');
+    } else {
+      console.log('name[] 업데이트 결과:', result);
+      res.json({ message: 'name[] 배열이 성공적으로 업데이트되었습니다.', result });
+    }
+  } catch (err) {
+    console.error('Error connecting to MongoDB', err);
+    res.status(500).send('MongoDB와의 연결 중 오류가 발생했습니다.');
+  } finally {
+    await client.close();
+    console.log('MongoDB connection closed');
+  }
+});
+```
+
 
