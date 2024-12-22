@@ -2711,7 +2711,7 @@ App.tsx에서 MachineOverview에 mqttMessage를 전달합니다:
 <Route path="/overview" element={<MachineOverview mqttMessage={mqttMessage} />} />
 ```
 ### 6.5 Label Name 수정과 저장
-[프로그램 다운로드 6-4](https://github.com/kdi6033/react/releases/tag/react-iotplc-6-4-v1.0)     
+[프로그램 다운로드 6-5](https://github.com/kdi6033/react/releases/tag/react-iotplc-6-5-v1.0)     
 IoT PLC 장치의 이름 배열을 수정하고 저장하는 과정을 포함하며, 다음과 같은 단계를 거칩니다:
 - 이름 편집 모드: 사용자가 Edit Names 버튼을 클릭하면 이름 배열을 수정할 수 있는 입력 창이 활성화됩니다.
 - 이름 수정: 사용자는 각 입력 필드에 새로운 이름을 입력하거나 기존 이름을 수정합니다. 수정된 이름은 editedNames 상태에 저장됩니다.
