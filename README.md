@@ -2712,6 +2712,14 @@ App.tsx에서 MachineOverview에 mqttMessage를 전달합니다:
 ```
 ### 6.5 Label Name 수정과 저장
 [프로그램 다운로드 6-4](https://github.com/kdi6033/react/releases/tag/react-iotplc-6-4-v1.0)     
+IoT PLC 장치의 이름 배열을 수정하고 저장하는 과정을 포함하며, 다음과 같은 단계를 거칩니다:
+- 이름 편집 모드: 사용자가 Edit Names 버튼을 클릭하면 이름 배열을 수정할 수 있는 입력 창이 활성화됩니다.
+- 이름 수정: 사용자는 각 입력 필드에 새로운 이름을 입력하거나 기존 이름을 수정합니다. 수정된 이름은 editedNames 상태에 저장됩니다.
+- 저장 버튼 클릭: 사용자가 Save 버튼을 클릭하면 handleSave 함수가 호출됩니다. 이 함수는 updateName API를 통해 서버로 수정된 이름 배열을 POST 요청으로 전송합니다.
+- 서버 데이터 업데이트: 서버는 /api/updateName 엔드포인트에서 mac 주소를 기준으로 해당 장치의 name[] 데이터를 업데이트합니다. 성공적으로 업데이트되면 클라이언트로 응답을 반환합니다.
+- UI 업데이트: 서버 응답이 성공적이면, 클라이언트에서 setDevice를 호출하여 수정된 데이터를 반영하고 편집 모드를 종료합니다.
+- 취소 버튼: 사용자가 Cancel 버튼을 누르면 수정 사항이 폐기되고, 원래의 이름 배열로 복원됩니다.
+
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100"> 프롬프트
 ```
 '/api/updateName' 이름으로 name[] 저장하는 프로그램 만들고 이를 진행해줘
