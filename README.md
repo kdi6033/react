@@ -2235,6 +2235,7 @@ Windows에서 무료 인증서(예: Let's Encrypt 인증서)를 설치하려면 
 
 ![image](https://github.com/user-attachments/assets/a74ad2dc-e5a9-4842-94a6-8f73999fa2b1)
 
+프로그램이 이제는 서비스를 하지 않는다고 합니다. 다음 사이트를 접속해서 다운로드 하세요. [Certbot 2.9.0](https://github.com/certbot/certbot/releases/tag/v2.9.0)
 아래 도메인네임에는 자신의 도메인 네임을 입력하세요
 ```
 cd "C:\Program Files\Certbot\bin"
