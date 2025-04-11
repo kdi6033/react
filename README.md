@@ -2804,7 +2804,7 @@ app.post('/api/updateName', async (req, res) => {
 });
 ```
 
-AWS 서버 구축
+# AWS 서버 구축
 
 filezilla를 이용한 서버 연결
 # EC2 서버에 FileZilla로 연결하는 방법
