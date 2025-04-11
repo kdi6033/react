@@ -2804,4 +2804,69 @@ app.post('/api/updateName', async (req, res) => {
 });
 ```
 
+AWS 서버 구축
+
+filezilla를 이용한 서버 연결
+# EC2 서버에 FileZilla로 연결하는 방법
+
+이 문서는 Windows 환경에서 **FileZilla**를 이용해 **AWS EC2 인스턴스에 접속**하는 방법을 안내합니다.  
+React 등의 웹 프로젝트에서 `build` 폴더를 EC2로 업로드할 때 사용됩니다.
+
+---
+
+## ✅ 사전 준비
+
+1. AWS EC2 인스턴스 생성 완료
+2. 퍼블릭 IP 주소 확보
+3. EC2 생성 시 받은 `.pem` 키 파일
+4. FileZilla 설치 ([https://filezilla-project.org/](https://filezilla-project.org/))
+5. **Puttygen 설치** (ppk 변환용, [https://www.putty.org/](https://www.putty.org/))
+
+---
+
+## 📁 1단계: `.pem` → `.ppk` 파일로 변환
+
+FileZilla는 `.pem` 키를 직접 사용할 수 없습니다. `Puttygen`을 사용해 `.ppk` 형식으로 변환합니다.
+
+1. `Puttygen` 실행
+2. 상단 메뉴 → `File > Load` 클릭
+3. EC2 키 파일 (`your-key.pem`) 선택
+4. 하단에서 `"Save private key"` 클릭 → 예: `ec2-key.ppk`
+5. **변환된 파일을 안전한 위치에 저장**  
+   예: `C:\Users\사용자이름\Documents\AWS\ec2-key.ppk`
+
+---
+
+## 🌐 2단계: FileZilla 사이트 관리자 설정
+
+1. **FileZilla 실행**
+2. 메뉴 상단 → `파일(File)` > `사이트 관리자(Site Manager)` 클릭
+3. 왼쪽에서 `"새 사이트(New Site)"` 클릭 → 이름 지정 (`My EC2` 등)
+
+오른쪽 설정은 아래와 같이 입력합니다:
+
+| 항목            | 값                                       |
+|-----------------|------------------------------------------|
+| 프로토콜         | SFTP - SSH File Transfer Protocol        |
+| 호스트(Host)    | EC2 퍼블릭 IP 주소 (예: 13.209.xxx.xxx)   |
+| 포트(Port)      | 22                                       |
+| 로그온 유형      | Key file                                |
+| 사용자(User)    | ubuntu                                   |
+| 키 파일         | `ec2-key.ppk` 경로 입력 (예: `C:\...\ec2-key.ppk`) |
+
+4. 설정 후 **[연결] 클릭**
+
+---
+
+## 🗂️ 3단계: 파일 업로드
+
+1. **왼쪽 창**: 내 컴퓨터의 폴더 (예: `C:\my-react-app\build`)
+2. **오른쪽 창**: 서버의 `/home/ubuntu` 디렉토리
+3. `build` 폴더를 드래그 앤 드롭하여 업로드
+
+업로드 완료 후 EC2 터미널에서 아래 명령어로 확인:
+
+```bash
+cd /home/ubuntu
+ls
 
