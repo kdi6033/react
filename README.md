@@ -2806,42 +2806,30 @@ app.post('/api/updateName', async (req, res) => {
 
 # AWS 서버 구축
 
-🚀 1단계: Nginx 설치 및 React 정적 파일 서빙
-✅ 1-1. Nginx 설치
-bash
-복사
-편집
+## 🚀 1단계: Nginx 설치 및 React 정적 파일 서빙
+### ✅ 1-1. Nginx 설치
+```
 sudo apt update
 sudo apt install nginx -y
-✅ 1-2. React build 폴더 복사
-PC에서 EC2로 build 폴더를 복사합니다.
-
-bash
-복사
-편집
-scp -i your-key.pem -r build/ ubuntu@your-ec2-ip:/home/ubuntu/build
+```
+### ✅ 1-2. React build 폴더 복사
+filezilla를 사용해서 PC에서 EC2로 build 폴더를 복사합니다.
 복사 후 EC2에서 아래 명령 실행:
-
-bash
-복사
-편집
+```
 sudo rm -rf /var/www/html/*
 sudo cp -r /home/ubuntu/build/* /var/www/html/
-✅ 1-3. Nginx 서비스 재시작
-bash
-복사
-편집
+```
+### ✅ 1-3. Nginx 서비스 재시작
+```
 sudo systemctl restart nginx
-✅ 1-4. 확인
+```
+### ✅ 1-4. 확인
 브라우저에서 http://your-ec2-ip 접속 시 React 웹 앱이 보이면 성공입니다.
 
-🚀 2단계: Node.js + Express API 서버 구성
+## 🚀 2단계: Node.js + Express API 서버 구성
 (이미 Node.js, TypeScript 설치한 상태라고 가정합니다)
-
-✅ 2-1. API 서버 예제 (/home/ubuntu/server/index.ts)
-ts
-복사
-편집
+### ✅ 2-1. API 서버 예제 (/home/ubuntu/server/index.ts)
+```
 import express from 'express';
 const app = express();
 const port = 3000;
@@ -2855,21 +2843,21 @@ app.get('/api/hello', (_, res) => {
 app.listen(port, () => {
   console.log(`API 서버 실행 중: http://localhost:${port}`);
 });
-✅ 2-2. 빌드 및 실행
-bash
-복사
-편집
+```
+### ✅ 2-2. 빌드 및 실행
+```
 cd /home/ubuntu/server
 tsc
 node dist/index.js
-🚀 3단계: Nginx 리버스 프록시 설정
-✅ 3-1. Nginx 설정 파일 수정
-bash
-복사
-편집
-sudo nano /etc/nginx/sites-available/default
-👇 아래와 같이 수정:
+```
 
+## 🚀 3단계: Nginx 리버스 프록시 설정
+### ✅ 3-1. Nginx 설정 파일 수정
+```
+sudo nano /etc/nginx/sites-available/default
+```
+👇 아래와 같이 수정:
+```
 nginx
 복사
 편집
@@ -2893,21 +2881,14 @@ server {
         proxy_cache_bypass $http_upgrade;
     }
 }
+```
 설정 저장 후 종료 (Ctrl + O, Enter, Ctrl + X)
 
-✅ 3-2. Nginx 설정 테스트 및 재시작
-bash
-복사
-편집
+### ✅ 3-2. Nginx 설정 테스트 및 재시작
+```
 sudo nginx -t
 sudo systemctl reload nginx
-🚀 4단계: 도메인 연결 + HTTPS (원하시면 이후 진행)
-Route 53 또는 Cafe24에서 도메인 연결
-
-certbot으로 무료 SSL 인증서 발급
-
-
-
+```
 
 filezilla를 이용한 서버 연결
 # EC2 서버에 FileZilla로 연결하는 방법
