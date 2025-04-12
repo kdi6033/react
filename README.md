@@ -2814,7 +2814,7 @@ sudo apt install nginx -y
 ```
 ### ✅ 1-2. React build 폴더 복사
 filezilla를 사용해서 PC에서 EC2로 build 폴더를 복사합니다.
-복사 후 EC2에서 아래 명령 실행:
+복사 후 EC2에서 아래 명령 실행: 보안의 이유로 직접 /var/www/html/ 로 복사하는 것은 추천하지 않습니다.
 ```
 sudo rm -rf /var/www/html/*
 sudo cp -r /home/ubuntu/build/* /var/www/html/
@@ -2825,6 +2825,7 @@ sudo systemctl restart nginx
 ```
 ### ✅ 1-4. 확인
 브라우저에서 http://your-ec2-ip 접속 시 React 웹 앱이 보이면 성공입니다.
+처음 공부하는 분들은 여기까지 해서 홈페이지를 접속하시고 다음 과정은 나중에 진행 하세요
 
 ## 🚀 2단계: Node.js + Express API 서버 구성
 (이미 Node.js, TypeScript 설치한 상태라고 가정합니다)
