@@ -3162,8 +3162,70 @@ WebSocket Path 로 /mqtt를 사용합니다. 이를 사용하는 장법은 다�
 | 인증서	  |  기존 HTTPS용 Let's Encrypt 인증서 사용 |
 | MQTT 브로커 |  	Mosquitto (WebSocket over SSL 지원) |
 | WebSocket Path |	/mqtt 사용 |
+| 포트 |	8081 (외부 포트도 열어야 함)  |
+
+## ✅ 1단계: 인증서 확인
+이미 HTTPS용으로 발급한 인증서(i2r.link)를 Mosquitto에서 재사용 가능합니다:
+
+| 항목 |	경로 |
+| 인증서 파일 |	/etc/letsencrypt/live/i2r.link/fullchain.pem |
+| 키 파일 |	/etc/letsencrypt/live/i2r.link/privkey.pem  |
+
+## ✅ 2단계: Mosquitto WebSocket SSL 설정 (/mqtt 경로 사용)
+/etc/mosquitto/conf.d/websocket-wss.conf 파일을 생성하거나 수정합니다:
+
+```
+sudo nano /etc/mosquitto/conf.d/websocket-wss.conf
+```
+```
+listener 8081
+protocol websockets
+
+# SSL 인증서 경로 (Let's Encrypt 인증서 재사용)
+certfile /etc/letsencrypt/live/i2r.link/fullchain.pem
+keyfile /etc/letsencrypt/live/i2r.link/privkey.pem
+
+# WebSocket path 설정
+http_dir /usr/share/mosquitto/websocket
+mount_point /mqtt
+```
+
+📝 mount_point /mqtt를 추가하면, 클라이언트는 wss://mqtt.i2r.link:8081/mqtt 로 접속해야 합니다.
+
+📁 디렉터리가 없다면 만들어주세요:
+```
+sudo mkdir -p /usr/share/mosquitto/websocket
+```
+
+## ✅ 3단계: 포트 8081 보안 그룹 허용
+AWS EC2 인스턴스의 보안 그룹에서 8081 포트를 외부에서 접근 가능하게 해야 합니다:
+
+## ✅ 4단계: Mosquitto 재시작
+```
+sudo systemctl restart mosquitto
+```
+에러 확인:
+
+```
+sudo journalctl -u mosquitto -f
+```
+
+## ✅ 5단계: 외부 클라이언트 접속 예시
+📱 JavaScript (Browser 또는 React)
+```
+import mqtt from 'mqtt';
+
+const client = mqtt.connect('wss://mqtt.i2r.link:8081/mqtt');
+
+client.on('connect', () => {
+  console.log('MQTT 연결됨');
+  client.subscribe('test/topic');
+});
+
+client.on('message', (topic, message) => {
+  console.log('수신:', topic, message.toString());
+});
+```
 
 
-
-포트	8081 (외부 포트도 열어야 함)
 
