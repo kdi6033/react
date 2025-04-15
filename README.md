@@ -3169,4 +3169,20 @@ http://i2r.link → 자동으로 HTTPS로 리디렉션됩니다.
 
 ✅ 완료되면 mqtt.i2r.link → EC2 인스턴스와 연결됩니다.
  
+## ✅ 2단계: Nginx 또는 MQTT 서버 설정 준비
+🔧 선택 1: MQTT over WebSocket (wss://)
+mqtt.i2r.link:443 으로 wss 접속
+
+Nginx에서 SSL 종료(termination) 하고, 내부 9001 포트로 WebSocket 프록시 전달
+
+🔧 선택 2: MQTT over TCP (tls://mqtt.i2r.link:8883)
+Mosquitto 또는 EMQX 서버에서 직접 TLS 인증서 사용
+
+## ✅ 3단계: Let's Encrypt 인증서 발급 (mqtt.i2r.link)
+```
+sudo certbot --nginx -d mqtt.i2r.link
+```
+
+❗ 이미 i2r.link 인증서를 받았어도, mqtt.i2r.link는 별도로 발급해야 합니다.
+
 
