@@ -3143,6 +3143,17 @@ https://i2r.link 접속 시 보안 자물쇠 🔒 아이콘이 보이면 성공�
 
 http://i2r.link → 자동으로 HTTPS로 리디렉션됩니다.
 
+# MQTT mosquitto 설치
+
+## ✅ 1단계: Mosquitto 설치
+```
+sudo apt update
+sudo apt install mosquitto mosquitto-clients -y
+sudo systemctl enable mosquitto
+```
+
+
+
 # MQTT WSS 설정
 모스키토 이용한 react 프로그램을 하면 mqtt ws 점속이 아닌 wss 프로그램 진행을 요구 합니다.
 참고로 마이크로 프로세서 아두이노 보드는 mqtt 통신으로 접속 합니다. 그러므로 웹페이지는 wss 로 보드는 mqtt 통신을 하며 통신 형태는 다르지만 topic 이 같으면 상호간에 통신이 정상적으로 이루어집니다.
@@ -3178,16 +3189,27 @@ WebSocket Path 로 /mqtt를 사용합니다. 이를 사용하는 장법은 다�
 sudo nano /etc/mosquitto/conf.d/websocket-wss.conf
 ```
 ```
-listener 8081
+# 기본 MQTT 포트
+listener 1883
+protocol mqtt
+
+# WebSocket (비암호화)
+listener 8080
 protocol websockets
 
+# WebSocket (암호화 wss)
+listener 8081
+protocol websockets
+# path 설정
+http_dir /usr/share/mosquitto/www
+websockets_path /mqtt
 # SSL 인증서 경로 (Let's Encrypt 인증서 재사용)
 certfile /etc/letsencrypt/live/i2r.link/fullchain.pem
 keyfile /etc/letsencrypt/live/i2r.link/privkey.pem
+require_certificate false
 
-# WebSocket path 설정
-http_dir /usr/share/mosquitto/websocket
-mount_point /mqtt
+# Allow anonymous clients
+allow_anonymous true
 ```
 
 📝 mount_point /mqtt를 추가하면, 클라이언트는 wss://mqtt.i2r.link:8081/mqtt 로 접속해야 합니다.
@@ -3210,7 +3232,18 @@ sudo systemctl restart mosquitto
 sudo journalctl -u mosquitto -f
 ```
 
-## ✅ 5단계: 외부 클라이언트 접속 예시
+## ✅ 5단계: 테스트 (옵션)
+```
+# 로컬 MQTT 테스트
+mosquitto_sub -h localhost -t test -v &
+mosquitto_pub -h localhost -t test -m "Hello, MQTT"
+
+# WebSocket 클라이언트 테스트 (브라우저나 웹툴 이용)
+# ws://i2r.link:8080
+# wss://i2r.link:8081
+```
+
+## ✅ 6단계: 외부 클라이언트 접속 예시
 📱 JavaScript (Browser 또는 React)
 ```
 import mqtt from 'mqtt';
