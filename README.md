@@ -3395,3 +3395,39 @@ allow_anonymous false + password_file 설정 가능
 특정 Origin만 허용하는 Nginx map 설정 가능
 
 이제 브라우저에서 인증된 WSS WebSocket으로 Mosquitto에 연결할 수 있습니다.
+
+# Nginx 설정 파일 설정
+파일 열기
+```
+sudo nano /etc/nginx/sites-available/mqtt.i2r.link
+```
+
+```
+server {
+    listen 443 ssl;
+    server_name mqtt.i2r.link;
+
+    ssl_certificate /etc/letsencrypt/live/i2r.link/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/i2r.link/privkey.pem;
+
+    # ✅ 정적 웹페이지 서비스
+    location / {
+        root /var/www/html;
+        index index.html;
+        try_files $uri /index.html;
+    }
+
+    # ✅ MQTT WebSocket 프록시
+    location /mqtt {
+        proxy_pass http://localhost:8081;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+    }
+}
+```
+```
+sudo nginx -t
+sudo systemctl reload nginx
+```
