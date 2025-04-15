@@ -3020,3 +3020,52 @@ EC2 대시보드 → 해당 인스턴스 선택
 
 🔄 결과
 이제 브라우저에 http://i2r.link를 입력하면 http://18.207.222.219의 홈페이지가 바로 열려야 합니다 
+
+## ✅ www.i2r.link 도 함께 연결하려면
+하나 더 만들어 주세요.
+
+Record name: www
+
+Type: A
+
+Value: 18.207.222.219
+
+나머지 동일
+
+## ✅ EC2 서버에서 Nginx 설정 확인 (추가 설정)
+서버에서 도메인을 인식하게 하려면 Nginx 설정에 server_name을 넣어야 합니다.
+
+```
+sudo nano /etc/nginx/sites-available/default
+```
+```
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    server_name i2r.link www.i2r.link;
+
+    root /var/www/html;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+```
+
+저장 후 테스트 및 재시작:
+```
+sudo nginx -t
+sudo systemctl restart nginx
+```
+
+✅ 확인 방법
+브라우저에서 http://i2r.link 입력 → 정상 접속되면 성공
+
+혹시 바로 안 되면 DNS 전파 지연(최대 5~10분) 기다려 보세요
+
+ping i2r.link 명령으로 18.207.222.219로 IP가 나오는지 확인
+
+
+
