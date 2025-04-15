@@ -3147,42 +3147,23 @@ http://i2r.link → 자동으로 HTTPS로 리디렉션됩니다.
 모스키토 이용한 react 프로그램을 하면 mqtt ws 점속이 아닌 wss 프로그램 진행을 요구 합니다.
 참고로 마이크로 프로세서 아두이노 보드는 mqtt 통신으로 접속 합니다. 그러므로 웹페이지는 wss 로 보드는 mqtt 통신을 하며 통신 형태는 다르지만 topic 이 같으면 상호간에 통신이 정상적으로 이루어집니다.
 
-## ✅ 전체 목표
-|항목  |	내용  |
+WebSocket Path 로 /mqtt를 사용합니다. 이를 사용하는 장법은 다음과 같습니다.
+|이유  |	설명  |
 |------|--------|
-| 도메인  |	mqtt.i2r.link  |
-|IP 연결	| 18.207.222.219 (EC2)  |
-|목적    |	MQTT over WebSocket or TCP용 도메인 설정 |
-|SSL 인증서  |	Let's Encrypt를 통해 인증서 발급 및 적용  |
+|🔐 웹 보안 정책에 유리   |	브라우저는 루트 경로(/) WebSocket 접속을 제한하는 경우도 있음 (특히 보안장비 뒤에 있을 때)  |
+| 🧩 미래에 같은 도메인에서 다른 서비스 추가 가능  |	예: /api, /mqtt, /dashboard, /file 등으로 분리 가능  |
+| 🛠 Nginx 같은 Reverse Proxy 설정이 깔끔해짐  |	/mqtt 요청만 WebSocket 브로커로 보냄  |
+|🌐 클라이언트 라이브러리 대부분이 /mqtt를 기본으로 사용  |	특히 MQTT.js, paho-mqtt, EMQX, Mosquitto 등  |
 
-## ✅ 1단계: Route 53에서 A 레코드 추가
-1. AWS 콘솔 → Route 53 → Hosted zones → i2r.link 선택
+## ✅ 목표 요약
+|  항목  |	설정  |
+|--------|--------|
+|접속 주소  |	wss://mqtt.i2r.link:8081/mqtt  |
+| 인증서	  |  기존 HTTPS용 Let's Encrypt 인증서 사용 |
+| MQTT 브로커 |  	Mosquitto (WebSocket over SSL 지원) |
+| WebSocket Path |	/mqtt 사용 |
 
-2. [Create record] 클릭
 
-|항목  |	값  |
-|------|------|
-|Record name  |	mqtt  |
-|Record type  |	A  |
-|Value  |	18.207.222.219  |
-|TTL    |	300 (기본)  |
 
-✅ 완료되면 mqtt.i2r.link → EC2 인스턴스와 연결됩니다.
- 
-## ✅ 2단계: Nginx 또는 MQTT 서버 설정 준비
-🔧 선택 1: MQTT over WebSocket (wss://)
-mqtt.i2r.link:443 으로 wss 접속
-
-Nginx에서 SSL 종료(termination) 하고, 내부 9001 포트로 WebSocket 프록시 전달
-
-🔧 선택 2: MQTT over TCP (tls://mqtt.i2r.link:8883)
-Mosquitto 또는 EMQX 서버에서 직접 TLS 인증서 사용
-
-## ✅ 3단계: Let's Encrypt 인증서 발급 (mqtt.i2r.link)
-```
-sudo certbot --nginx -d mqtt.i2r.link
-```
-
-❗ 이미 i2r.link 인증서를 받았어도, mqtt.i2r.link는 별도로 발급해야 합니다.
-
+포트	8081 (외부 포트도 열어야 함)
 
