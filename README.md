@@ -3261,5 +3261,83 @@ client.on('message', (topic, message) => {
 });
 ```
 
+# Nginx를 이용한 /mqtt → 8081 리버스 프록시 설정
+Nginx를 이용해 /mqtt → 8081으로 리버스 프록시를 설정하는 이유는 크게 4가지 실용적인 이유가 있습니다:
 
+✅ 1. 보안 통신 통합 (WSS = SSL WebSocket)
+🔐 브라우저는 wss:// 프로토콜을 사용할 때 SSL 인증서가 필요합니다.
+Nginx는 이미 i2r.link에 대해 SSL 인증서(Let’s Encrypt)를 관리하고 있기 때문에,
+
+Mosquitto 자체에서 SSL 설정을 안 해도
+Nginx가 SSL 처리를 대신 해줄 수 있습니다.
+
+즉:
+
+```
+클라이언트 → wss://mqtt.i2r.link/mqtt (포트 443, SSL)
+               ↓
+          [Nginx가 SSL 처리 + Mosquitto에 전달]
+               ↓
+         Mosquitto (ws, 포트 8081)
+```
+
+✅ 2. 포트 443만 열면 됨 (방화벽 통과 용이)
+👨‍💻 일반 네트워크나 방화벽은 1883, 8081 같은 포트를 차단하는 경우가 많습니다.
+하지만 포트 443(HTTPS)은 거의 항상 열려 있습니다.
+
+✅ 443 포트만 오픈해두면 외부에서도 걱정 없이 접근 가능!
+
+✅ 3. 경로(/mqtt)로 서비스 구분 가능
+같은 도메인(i2r.link) 아래에서
+
+/ → 메인 홈페이지
+
+/api → 백엔드
+
+/mqtt → MQTT WebSocket 통신
+
+📦 구조화된 경로는 유지보수, 확장, 보안 관리가 쉽습니다.
+
+✅ 4. Mosquitto 인증서 관리가 간단해짐
+Nginx는 이미 Let's Encrypt를 사용해서 자동 갱신 중일 가능성이 큽니다.
+
+Mosquitto에 직접 인증서 적용할 필요 없이,
+
+🔁 Nginx에서 SSL 인증서를 재사용 → Mosquitto는 그냥 WebSocket만 처리
+
+요약 그림
+```
+클라이언트 → wss://mqtt.i2r.link/mqtt
+                 ↓
+         [Nginx - 443포트, SSL 처리]
+                 ↓
+         http://localhost:8081 (Mosquitto ws)
+```
+✅ Nginx 설정 예 (복사해서 쓰세요)
+```
+server {
+    listen 443 ssl;
+    server_name mqtt.i2r.link;
+
+    ssl_certificate /etc/letsencrypt/live/i2r.link/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/i2r.link/privkey.pem;
+
+    location /mqtt {
+        proxy_pass http://localhost:8081;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+}
+```
+🚀 결론
+Nginx 리버스 프록시를 쓰면
+
+SSL 처리 간단
+
+443 포트만 사용
+
+서비스 구조 명확
+
+보안 강화 가능
 
