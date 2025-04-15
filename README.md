@@ -3030,6 +3030,9 @@ Type: A
 
 Value: 18.207.222.219
 
+HTTPS 연결 설정
+
+
 나머지 동일
 
 ## ✅ EC2 서버에서 Nginx 설정 확인 (추가 설정)
@@ -3067,5 +3070,82 @@ sudo systemctl restart nginx
 
 ping i2r.link 명령으로 18.207.222.219로 IP가 나오는지 확인
 
+# HTTPS 연결 설정
+## ✅ 사전 준비
+|  항목  |	상태  |
+|--------|--------|
+|EC2 인스턴스 |	Ubuntu 기준  |
+|도메인	      | i2r.link 가 EC2 IP (18.207.222.219)로 연결 완료  |
+|웹서버	      | Nginx 사용 중 |
+✅ 1단계: Certbot 설치 (Nginx용)
+bash
+복사
+편집
+sudo apt update
+sudo apt install certbot python3-certbot-nginx -y
+✅ 2단계: Nginx 서버 설정에 server_name 명확히 설정
+bash
+복사
+편집
+sudo nano /etc/nginx/sites-available/default
+nginx
+복사
+편집
+server {
+    listen 80;
+    server_name i2r.link www.i2r.link;
+
+    root /var/www/html;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+✔ 저장 후:
+
+bash
+복사
+편집
+sudo nginx -t
+sudo systemctl restart nginx
+✅ 3단계: HTTPS 인증서 발급 및 자동 설정
+bash
+복사
+편집
+sudo certbot --nginx -d i2r.link -d www.i2r.link
+🚀 진행 중 아래와 같은 질문에 다음처럼 대답하세요:
+
+이메일 입력 → 본인 이메일 입력
+
+약관 동의 → Yes
+
+마케팅 메일 수신 → No
+
+HTTP → HTTPS 리디렉션 → 2번 (Redirect) 선택 권장
+
+✅ 4단계: 자동 갱신 설정 확인
+Let's Encrypt 인증서는 90일짜리입니다. 자동 갱신을 위해 crontab 등록 상태 확인:
+
+bash
+복사
+편집
+sudo systemctl status certbot.timer
+보통 설치 시 자동 등록되어 있으며, 없다면 수동으로 추가해도 됩니다:
+
+bash
+복사
+편집
+sudo crontab -e
+맨 아래에 추가:
+
+bash
+복사
+편집
+0 3 * * * certbot renew --quiet
+✅ 5단계: 접속 테스트
+https://i2r.link 접속 시 보안 자물쇠 🔒 아이콘이 보이면 성공입니다.
+
+http://i2r.link → 자동으로 HTTPS로 리디렉션됩니다.
 
 
