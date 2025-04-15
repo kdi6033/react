@@ -3341,3 +3341,57 @@ SSL 처리 간단
 
 보안 강화 가능
 
+✅ Nginx 설정 파일 작성
+```
+sudo nano /etc/nginx/sites-available/mqtt.i2r.link
+```
+🔧 예시 설정 (mqtt.i2r.link 전용 또는 통합 도메인에서도 가능)
+```
+server {
+    listen 443 ssl;
+    server_name mqtt.i2r.link;
+
+    ssl_certificate /etc/letsencrypt/live/i2r.link/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/i2r.link/privkey.pem;
+
+    # MQTT WebSocket 프록시 경로
+    location /mqtt {
+        proxy_pass http://localhost:8081;  # Mosquitto WebSocket 포트
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+    }
+}
+```
+참고: i2r.link 메인 도메인과 통합할 경우 위 블록을 기존 서버 설정에 추가하면 됩니다.
+
+✅ 심볼릭 링크로 활성화
+```
+sudo ln -s /etc/nginx/sites-available/mqtt.i2r.link /etc/nginx/sites-enabled/
+```
+✅ 설정 파일 테스트
+```
+sudo nginx -t
+```
+출력에 syntax is ok, test is successful 나오면 OK
+
+✅ Nginx 재시작
+```
+sudo systemctl reload nginx
+```
+✅ 최종 접속 주소
+클라이언트에서는 아래와 같이 접속합니다:
+
+```
+const client = mqtt.connect('wss://mqtt.i2r.link/mqtt', {
+  clientId: 'mqtt-client-01',
+  protocol: 'wss',
+});
+```
+🔐 추가 보안 팁 (선택 사항)
+allow_anonymous false + password_file 설정 가능
+
+특정 Origin만 허용하는 Nginx map 설정 가능
+
+이제 브라우저에서 인증된 WSS WebSocket으로 Mosquitto에 연결할 수 있습니다.
