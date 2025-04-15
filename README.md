@@ -3088,6 +3088,7 @@ sudo apt install certbot python3-certbot-nginx -y
 ```
 sudo nano /etc/nginx/sites-available/default
 ```
+```
 server {
     listen 80;
     server_name i2r.link www.i2r.link;
