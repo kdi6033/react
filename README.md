@@ -2955,3 +2955,67 @@ FileZilla는 `.pem` 키를 직접 사용할 수 없습니다. `Puttygen`을 사�
 cd /home/ubuntu
 ls
 
+# DNS htttp https 설정
+## ✅ 1단계: Route 53에서 A 레코드 설정
+🔧 사전 준비:
+도메인: i2r.link는 AWS Route 53에 등록되어 있어야 합니다.
+
+서버: EC2 인스턴스의 퍼블릭 IP는 18.207.222.219입니다.
+
+로드밸런서 사용 안 함.
+
+📌 Route 53 설정 방법:
+AWS 콘솔 접속 → Route 53 검색
+
+좌측 메뉴에서 Hosted zones 클릭 → i2r.link 선택
+
+레코드 생성(Create Record) 클릭
+
+아래와 같이 입력:
+
+|항목              |	값                        |
+|-----------------|-----------------------------|
+|레코드 이름       |	(비워둠, 즉 루트 도메인)     |
+|레코드 유형	      | A – IPv4 주소                |
+|값(Value)	      | 18.207.222.219              |
+|TTL	            |300 (기본값 유지)              |
+✅ [Create records] 클릭하여 저장합니다.          
+
+## ✅ 2단계: EC2 서버의 Nginx 설정 확인
+React 앱이 http://18.207.222.219/에서 잘 나오는 것을 보니 이미 /var/www/html 또는 /home/ubuntu/build 경로에 정적 파일이 있고, Nginx가 설치된 상태인 것 같습니다.
+
+📂 /etc/nginx/sites-available/default 파일 예시:
+```
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    server_name i2r.link www.i2r.link;
+
+    root /var/www/html;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+```
+
+적용 명령어:
+```
+sudo nginx -t         # 설정 테스트
+sudo systemctl restart nginx
+```
+
+## ✅ 3단계: 보안 그룹에서 포트 80 허용
+EC2 인스턴스 보안 그룹에서 인바운드 규칙에 HTTP(포트 80)이 열려 있어야 외부에서 접속 가능합니다.
+EC2 대시보드 → 해당 인스턴스 선택
+하단의 보안 그룹 클릭
+인바운드 규칙 편집 → 다음 추가:
+
+|유형	|프로토콜	| 포트 범위 |	소스 |
+|-----|---------|----------|-------|
+|HTTP	| TCP     |	80      |	0.0.0.0/0 |
+
+🔄 결과
+이제 브라우저에 http://i2r.link를 입력하면 http://18.207.222.219의 홈페이지가 바로 열려야 합니다 
