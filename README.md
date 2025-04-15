@@ -3179,6 +3179,7 @@ WebSocket Path 로 /mqtt를 사용합니다. 이를 사용하는 장법은 다�
 이미 HTTPS용으로 발급한 인증서(i2r.link)를 Mosquitto에서 재사용 가능합니다:
 
 | 항목 |	경로 |
+|------|-------|
 | 인증서 파일 |	/etc/letsencrypt/live/i2r.link/fullchain.pem |
 | 키 파일 |	/etc/letsencrypt/live/i2r.link/privkey.pem  |
 
