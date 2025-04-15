@@ -3155,5 +3155,16 @@ http://i2r.link → 자동으로 HTTPS로 리디렉션됩니다.
 |목적    |	MQTT over WebSocket or TCP용 도메인 설정 |
 |SSL 인증서  |	Let's Encrypt를 통해 인증서 발급 및 적용  |
 
+## ✅ 1단계: Route 53에서 A 레코드 추가
+1. AWS 콘솔 → Route 53 → Hosted zones → i2r.link 선택
+
+2. [Create record] 클릭
+
+항목	값
+Record name	mqtt
+Record type	A
+Value	18.207.222.219
+TTL	300 (기본)
+✅ 완료되면 mqtt.i2r.link → EC2 인스턴스와 연결됩니다.
  
 
