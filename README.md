@@ -3160,11 +3160,13 @@ http://i2r.link → 자동으로 HTTPS로 리디렉션됩니다.
 
 2. [Create record] 클릭
 
-항목	값
-Record name	mqtt
-Record type	A
-Value	18.207.222.219
-TTL	300 (기본)
+|항목  |	값  |
+|------|------|
+|Record name  |	mqtt  |
+|Record type  |	A  |
+|Value  |	18.207.222.219  |
+|TTL    |	300 (기본)  |
+
 ✅ 완료되면 mqtt.i2r.link → EC2 인스턴스와 연결됩니다.
  
 
