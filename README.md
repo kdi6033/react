@@ -2365,6 +2365,9 @@ http로 접속을 하면 https 로 접속하게 설정 합니다.
 #### 5.4.3 바인딩 설정
 <img src="https://github.com/user-attachments/assets/101a42c8-c873-4558-9582-c58d50757bfe" width="800">
 <img src="https://github.com/user-attachments/assets/ba158d8a-4fa6-4179-8053-c4bfe8348533" width="800">
+![ssl](https://github.com/user-attachments/assets/c61ddba0-8b5b-48cb-93cf-dd3a3de28560)
+
+
 설정을 마치면 인터넷 정보 서비스를 새로 시작 합니다.
 <img src="https://github.com/user-attachments/assets/35fc8376-7c18-4ee6-add4-0d8aed4117cf" width="500">
 
