@@ -2823,6 +2823,11 @@ filezilla를 사용해서 PC에서 EC2로 build 폴더를 복사합니다.
 sudo rm -rf /var/www/html/*
 sudo cp -r /home/ubuntu/build/* /var/www/html/
 ```
+filezilla 를 사용하여 복사할 때 권한을 부여해 줘야 한다. ubuntu에서
+```
+sudo chown -R ubuntu:ubuntu /var/www/html
+```
+
 ### ✅ 1-3. Nginx 서비스 재시작
 ```
 sudo systemctl restart nginx
