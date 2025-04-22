@@ -2870,7 +2870,7 @@ sudo npm install -g typescript
 ```
 tsc -v      # 예: Version 5.x.x
 ```
-📦 선택: ts-node, nodemon도 함께 설치하면 편리
+📦 선택: ts-node, nodemon도 함께 설치하면 자동 재시작하여 편리
 ```
 sudo npm install -g ts-node nodemon
 ```
