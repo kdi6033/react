@@ -2836,9 +2836,52 @@ sudo systemctl restart nginx
 브라우저에서 http://your-ec2-ip 접속 시 React 웹 앱이 보이면 성공입니다.
 처음 공부하는 분들은 여기까지 해서 홈페이지를 접속하시고 다음 과정은 나중에 진행 하세요
 
-## 🚀 2단계: Node.js + Express API 서버 구성
+
+
+## 🚀 2단계: Node.js, TypeScript 설치
+
+✅ 1. Node.js 설치 (최신 LTS 버전)
+Node.js는 공식 설치 스크립트를 통해 설치하는 것이 가장 안전합니다.
+
+🔹 터미널 명령어:
+```
+# 필수 도구 설치
+sudo apt update
+sudo apt install curl -y
+
+# NodeSource 저장소 등록 (LTS 최신)
+curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+
+# Node.js 설치
+sudo apt install -y nodejs
+```
+🔸 설치 확인
+```
+node -v     # 예: v18.x.x 또는 v20.x.x
+npm -v      # 예: 9.x.x
+```
+
+✅ 2. TypeScript 전역 설치
+TypeScript는 npm으로 설치합니다.
+```
+sudo npm install -g typescript
+```
+🔸 설치 확인
+```
+tsc -v      # 예: Version 5.x.x
+```
+📦 선택: ts-node, nodemon도 함께 설치하면 편리
+```
+sudo npm install -g ts-node nodemon
+```
+ts-node: .ts 파일을 바로 실행
+nodemon: 자동 리로드 (서버 개발 시 유용)
+
+
+
+## 🚀 3단계: Node.js + Express API 서버 구성
 (이미 Node.js, TypeScript 설치한 상태라고 가정합니다)
-### ✅ 2-1. API 서버 예제 (/home/ubuntu/server/index.ts)
+### ✅ 3-1. API 서버 예제 (/home/ubuntu/server/index.ts)
 ```
 import express from 'express';
 const app = express();
@@ -2854,23 +2897,20 @@ app.listen(port, () => {
   console.log(`API 서버 실행 중: http://localhost:${port}`);
 });
 ```
-### ✅ 2-2. 빌드 및 실행
+### ✅ 3-2. 빌드 및 실행
 ```
 cd /home/ubuntu/server
 tsc
 node dist/index.js
 ```
 
-## 🚀 3단계: Nginx 리버스 프록시 설정
-### ✅ 3-1. Nginx 설정 파일 수정
+## 🚀 4단계: Nginx 리버스 프록시 설정
+### ✅ 4-1. Nginx 설정 파일 수정
 ```
 sudo nano /etc/nginx/sites-available/default
 ```
 👇 아래와 같이 수정:
 ```
-nginx
-복사
-편집
 server {
     listen 80;
     server_name your-domain.com;
@@ -2894,7 +2934,7 @@ server {
 ```
 설정 저장 후 종료 (Ctrl + O, Enter, Ctrl + X)
 
-### ✅ 3-2. Nginx 설정 테스트 및 재시작
+### ✅ 4-2. Nginx 설정 테스트 및 재시작
 ```
 sudo nginx -t
 sudo systemctl reload nginx
