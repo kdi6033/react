@@ -3010,13 +3010,13 @@ backend frontend 를 복사 합니다.
 컴퓨터가 부팅시 자동으로 실행 하도롤 설정한다.
 ``
 sudo npm install -g pm2
-sudo pm2 start db-server.js
+sudo pm2 start db-server.js --name db-server
 sudo pm2 save
 sudo pm2 startup
 ``
 프로그램 수정을 할 경우는 다음과 같이 다시 실행한다.
 ```
-pm2 restart db-server.js
+pm2 restart db-server
 ```
 pm2 실행 중인것을 보려면
 ```
