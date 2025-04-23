@@ -3004,7 +3004,14 @@ FileZilla는 `.pem` 키를 직접 사용할 수 없습니다. `Puttygen`을 사�
 cd /home/ubuntu
 ls
 ```
-backend frontend 를 복사 합니다.
+backend 와 build 디렉토리를 복사 합니다.
+보안상 ubuntu 에 복사한 후에  /var/www/html/ 에 복사 합니다.
+```
+sudo rm -rf /var/www/html/*
+sudo cp -r /home/ubuntu/frontend/build/* /var/www/html/
+```
+
+
 
 ## 🗂️ 4단계: backend db-server.js 부팅시 자동실행 설정
 컴퓨터가 부팅시 자동으로 실행 하도롤 설정한다.
