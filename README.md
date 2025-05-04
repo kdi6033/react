@@ -2838,8 +2838,6 @@ sudo systemctl restart nginx
 브라우저에서 http://your-ec2-ip 접속 시 React 웹 앱이 보이면 성공입니다.
 처음 공부하는 분들은 여기까지 해서 홈페이지를 접속하시고 다음 과정은 나중에 진행 하세요
 
-
-
 ## 🚀 2단계: Node.js, TypeScript 설치
 
 ✅ 1. Node.js 설치 (최신 LTS 버전)
@@ -3322,7 +3320,10 @@ dig mqtt.i2r.link
 ```
 sudo certbot certonly --standalone -d mqtt.i2r.link
 ```
+📌 발급된 인증서 정보:    
+인증서 위치 (fullchain): /etc/letsencrypt/live/mqtt.i2r.link/fullchain.pem    
 
+비공개 키 위치 (privkey): /etc/letsencrypt/live/mqtt.i2r.link/privkey.pem    
 
 # MQTT WSS 설정
 모스키토 이용한 react 프로그램을 하면 mqtt ws 점속이 아닌 wss 프로그램 진행을 요구 합니다.
@@ -3355,47 +3356,46 @@ mqtt 1883, ws 8080, wss 8883 포트를 사용합니다. 인증서는 mqtt.i2r.li
 
 | 항목 |	경로 |
 |------|-------|
-| 인증서 파일 |	/etc/letsencrypt/live/i2r.link/fullchain.pem |
-| 키 파일 |	/etc/letsencrypt/live/i2r.link/privkey.pem  |
+| 인증서 파일 |	/etc/letsencrypt/live/mqtt.i2r.link/fullchain.pem |
+| 키 파일 |	/etc/letsencrypt/live/mqtt.i2r.link/privkey.pem  |
 
 ## ✅ 2단계: Mosquitto WebSocket SSL 설정 (/mqtt 경로 사용)
 /etc/mosquitto/conf.d/websocket-wss.conf 파일을 생성하거나 수정합니다:
 
 ```
-sudo nano /etc/mosquitto/conf.d/websocket-wss.conf
+sudo nano /etc/mosquitto/mosquitto.conf
 ```
 ```
-# 기본 MQTT 포트
+pid_file /run/mosquitto/mosquitto.pid
+
+persistence true
+persistence_location /var/lib/mosquitto/
+
+log_dest file /var/log/mosquitto/mosquitto.log
+
+include_dir /etc/mosquitto/conf.d
+
 listener 1883
 protocol mqtt
 
-# WebSocket (비암호화)
 listener 8080
 protocol websockets
-
-# WebSocket (암호화 wss)
-listener 8081
+```
+conf.d 디렉토리 분리 사용을 살리기 위해 SSL 설정은 conf.d에 두는 게 더 안전합니다.
+```
+sudo nano /etc/mosquitto/conf.d/websocket-wss.conf
+```
+```
+listener 8883
 protocol websockets
-# path 설정
-http_dir /usr/share/mosquitto/www
-websockets_path /mqtt
-# SSL 인증서 경로 (Let's Encrypt 인증서 재사용)
-certfile /etc/letsencrypt/live/i2r.link/fullchain.pem
-keyfile /etc/letsencrypt/live/i2r.link/privkey.pem
+certfile /etc/letsencrypt/live/mqtt.i2r.link/fullchain.pem
+keyfile /etc/letsencrypt/live/mqtt.i2r.link/privkey.pem
 require_certificate false
-
-# Allow anonymous clients
-allow_anonymous true
 ```
+port와 listener는 동시에 쓰지 마세요. listener를 쓰면 해당 포트에만 바인딩합니다.    
+📝 mount_point /mqtt를 추가하면, 클라이언트는 wss://mqtt.i2r.link:8883/mqtt 로 접속해야 합니다.    
 
-📝 mount_point /mqtt를 추가하면, 클라이언트는 wss://mqtt.i2r.link:8081/mqtt 로 접속해야 합니다.
-
-📁 디렉터리가 없다면 만들어주세요:
-```
-sudo mkdir -p /usr/share/mosquitto/websocket
-```
-
-## ✅ 3단계: 포트 8081 보안 그룹 허용
+## ✅ 3단계: 포트 1883 8080 8883 보안 그룹 허용
 AWS EC2 인스턴스의 보안 그룹에서 8081 포트를 외부에서 접근 가능하게 해야 합니다:
 
 ## ✅ 4단계: Mosquitto 재시작
