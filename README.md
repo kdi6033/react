@@ -3318,6 +3318,11 @@ dig mqtt.i2r.link
 ```
 결과에 A 레코드 IP가 나오면 준비 완료입니다.    
 
+## ✅ 3단계: 인증서 설치
+```
+sudo certbot certonly --standalone -d mqtt.i2r.link
+```
+
 
 # MQTT WSS 설정
 모스키토 이용한 react 프로그램을 하면 mqtt ws 점속이 아닌 wss 프로그램 진행을 요구 합니다.
