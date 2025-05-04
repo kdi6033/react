@@ -3229,6 +3229,7 @@ http://i2r.link → 자동으로 HTTPS로 리디렉션됩니다.
 | wss    | 8883 |
 보안 인바운드에서 위에 포트를 열어 주어야 합니다.
 ## ✅ 1단계: Mosquitto MQTT 브로커 설치 
+```
 sudo apt update
 sudo apt install mosquitto mosquitto-clients -y
 ```
