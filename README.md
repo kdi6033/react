@@ -3311,11 +3311,16 @@ WebSocket Path 로 /mqtt를 사용합니다. 이를 사용하는 장법은 다�
 ## ✅ 목표 요약
 |  항목  |	설정  |
 |--------|--------|
-|접속 주소  |	wss://mqtt.i2r.link:8081/mqtt  |
+|접속 주소  |	wss://mqtt.i2r.link:8883/mqtt  |
 | 인증서	  |  기존 HTTPS용 Let's Encrypt 인증서 사용 |
 | MQTT 브로커 |  	Mosquitto (WebSocket over SSL 지원) |
 | WebSocket Path |	/mqtt 사용 |
-| 포트 |	8081 (외부 포트도 열어야 함)  |
+| 포트 |	8883 (외부 포트도 열어야 함)  |
+chatGPT 에 다음과 같이 요구 합니다.
+```
+ubuntu 에 mqtt 모스키토 서버 설치 알려줘
+mqtt 1883, ws 8080, wss 8883 포트를 사용합니다. 인증서는 mqtt.i2r.link 로 발행해줘
+```
 
 ## ✅ 1단계: 인증서 확인
 이미 HTTPS용으로 발급한 인증서(i2r.link)를 Mosquitto에서 재사용 가능합니다:
