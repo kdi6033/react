@@ -3297,26 +3297,26 @@ sudo apt install mosquitto mosquitto-clients -y
 sudo systemctl enable mosquitto
 ```
 ## ✅ 2단계: Route 53에서 mqtt.i2r.link 설정 방법:
-AWS 콘솔 접속 → Route 53 이동
-왼쪽 메뉴에서 “Hosted zones” 클릭
-i2r.link 도메인을 클릭 (이미 생성된 상태여야 합니다)
-상단 “Create record” 클릭
-다음과 같이 입력:
-Record name: mqtt
-Record type: A – IPv4 address
-Value: MQTT 서버가 설치된 EC2의 퍼블릭 IP 주소
-TTL: 기본값 (300초 등)
-Routing policy: Simple
-Evaluate target health: No (기본값 유지)
-“Create records” 클릭하여 저장
+AWS 콘솔 접속 → Route 53 이동    
+왼쪽 메뉴에서 “Hosted zones” 클릭    
+i2r.link 도메인을 클릭 (이미 생성된 상태여야 합니다)    
+상단 “Create record” 클릭    
+다음과 같이 입력:    
+Record name: mqtt    
+Record type: A – IPv4 address     
+Value: MQTT 서버가 설치된 EC2의 퍼블릭 IP 주소    
+TTL: 기본값 (300초 등)     
+Routing policy: Simple    
+Evaluate target health: No (기본값 유지)     
+“Create records” 클릭하여 저장    
 
-⏱️ 설정 후 확인
-DNS 전파는 보통 수 분 내에 완료되지만, 최대 30분까지 걸릴 수 있습니다.
-확인은 아래 명령어로:
+⏱️ 설정 후 확인     
+DNS 전파는 보통 수 분 내에 완료되지만, 최대 30분까지 걸릴 수 있습니다.    
+확인은 아래 명령어로:    
 ```
 dig mqtt.i2r.link
 ```
-결과에 A 레코드 IP가 나오면 준비 완료입니다.
+결과에 A 레코드 IP가 나오면 준비 완료입니다.    
 
 
 # MQTT WSS 설정
