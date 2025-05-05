@@ -3327,15 +3327,13 @@ sudo apt install mosquitto mosquitto-clients -y
 sudo systemctl enable mosquitto
 ```
 
-## ✅ 3단계: 인증서 설치
+## ✅ 3단계: 인증서 설치 (Let's Encrypt)
 ```
+sudo apt install certbot
+sudo apt install python3-certbot-nginx
 sudo certbot certonly --standalone -d mqtt.i2r.link
 ```
-📌 발급된 인증서 정보:    
-
-인증서 위치 (fullchain): /etc/letsencrypt/live/mqtt.i2r.link/fullchain.pem    
-
-비공개 키 위치 (privkey): /etc/letsencrypt/live/mqtt.i2r.link/privkey.pem    
+인증서 경로: /etc/letsencrypt/live/mqtt.i2r.link/
 
 ## Nginx가 8883 포트에서 WSS를 받아 Mosquitto의 8080으로 프록시
 사용자 입장에선 wss://mqtt.i2r.link:8883로 접속하고,
