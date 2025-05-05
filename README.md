@@ -3288,7 +3288,9 @@ sudo systemctl enable mosquitto
 
 # MQTT mosquitto DNS 서버 설치
 
-
+mqtt 1883, ws 8080, wss 8883 포트를 사용하는 것으로 설정합니다.
+Nginx를 설치하고 wss 접속시에는 8883 포트에서 WSS를 받아 Mosquitto의 8080으로 프록시 합니다.
+ubuntu 설치 후 다음을 진행 한다.
 ## ✅ 1단계: Route 53에서 DNS(mqtt.i2r.link) IP 설정 방법:
 AWS 콘솔 접속 → Route 53 이동    
 왼쪽 메뉴에서 “Hosted zones” 클릭    
