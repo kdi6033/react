@@ -3321,11 +3321,32 @@ dig mqtt.i2r.link
 결과에 A 레코드 IP가 나오면 준비 완료입니다.    
 
 ## ✅ 2단계: Mosquitto 설치
+- 필수 패키지 설치
 ```
 sudo apt update
-sudo apt install mosquitto mosquitto-clients -y
-sudo systemctl enable mosquitto
+sudo apt install -y build-essential cmake libssl-dev libwebsockets-dev libcurl4-openssl-dev uuid-dev
 ```
+- Mosquitto 소스 다운로드
+```
+cd ~
+git clone https://github.com/eclipse/mosquitto.git
+cd mosquitto
+```
+- 빌드 설정
+```
+mkdir build
+cd build
+cmake -DWITH_WEBSOCKETS=ON -DWITH_TLS=ON -DBUILD_MANPAGES=OFF -DCMAKE_INSTALL_PREFIX=/usr ..
+```
+🔹 -DWITH_WEBSOCKETS=ON : WebSocket 기능 활성화
+🔹 -DBUILD_MANPAGES=OFF : man 페이지 오류 방지
+
+- 컴파일 및 설치
+```
+make -j$(nproc)
+sudo make install
+```
+
 
 ## ✅ 3단계: 인증서 설치 (Let's Encrypt)
 ```
@@ -3335,7 +3356,7 @@ sudo certbot certonly --standalone -d mqtt.i2r.link
 ```
 인증서 경로: /etc/letsencrypt/live/mqtt.i2r.link/
 
-## Nginx가 8883 포트에서 WSS를 받아 Mosquitto의 8080으로 프록시
+## ✅ 4단계: Nginx가 8883 포트에서 WSS를 받아 Mosquitto의 8080으로 프록시
 사용자 입장에선 wss://mqtt.i2r.link:8883로 접속하고,
 Nginx는 그걸 ws://localhost:8080으로 넘겨줍니다.
 
@@ -3373,285 +3394,52 @@ sudo systemctl restart nginx
 
 ```
 
-
-# MQTT WSS 설정
-모스키토 이용한 react 프로그램을 하면 mqtt ws 점속이 아닌 wss 프로그램 진행을 요구 합니다.
-참고로 마이크로 프로세서 아두이노 보드는 mqtt 통신으로 접속 합니다. 그러므로 웹페이지는 wss 로 보드는 mqtt 통신을 하며 통신 형태는 다르지만 topic 이 같으면 상호간에 통신이 정상적으로 이루어집니다.
-
-WebSocket Path 로 /mqtt를 사용합니다. 이를 사용하는 장법은 다음과 같습니다.
-|이유  |	설명  |
-|------|--------|
-|🔐 웹 보안 정책에 유리   |	브라우저는 루트 경로(/) WebSocket 접속을 제한하는 경우도 있음 (특히 보안장비 뒤에 있을 때)  |
-| 🧩 미래에 같은 도메인에서 다른 서비스 추가 가능  |	예: /api, /mqtt, /dashboard, /file 등으로 분리 가능  |
-| 🛠 Nginx 같은 Reverse Proxy 설정이 깔끔해짐  |	/mqtt 요청만 WebSocket 브로커로 보냄  |
-|🌐 클라이언트 라이브러리 대부분이 /mqtt를 기본으로 사용  |	특히 MQTT.js, paho-mqtt, EMQX, Mosquitto 등  |
-
-## ✅ 목표 요약
-|  항목  |	설정  |
-|--------|--------|
-|접속 주소  |	wss://mqtt.i2r.link:8883/mqtt  |
-| 인증서	  |  기존 HTTPS용 Let's Encrypt 인증서 사용 |
-| MQTT 브로커 |  	Mosquitto (WebSocket over SSL 지원) |
-| WebSocket Path |	/mqtt 사용 |
-| 포트 |	8883 (외부 포트도 열어야 함)  |
-chatGPT 에 다음과 같이 요구 합니다.
-```
-ubuntu 에 mqtt 모스키토 서버 설치 알려줘
-mqtt 1883, ws 8080, wss 8883 포트를 사용합니다. 인증서는 mqtt.i2r.link 로 발행해줘
-```
-
-## ✅ 1단계: 인증서 확인
-이미 HTTPS용으로 발급한 인증서(i2r.link)를 Mosquitto에서 재사용 가능합니다:
-
-| 항목 |	경로 |
-|------|-------|
-| 인증서 파일 |	/etc/letsencrypt/live/mqtt.i2r.link/fullchain.pem |
-| 키 파일 |	/etc/letsencrypt/live/mqtt.i2r.link/privkey.pem  |
-
-## ✅ 2단계: Mosquitto WebSocket SSL 설정 (/mqtt 경로 사용)
-/etc/mosquitto/conf.d/websocket-wss.conf 파일을 생성하거나 수정합니다:
-
+## ✅ 5단계 mosquitto.conf 설정
 ```
 sudo nano /etc/mosquitto/mosquitto.conf
 ```
 ```
-pid_file /run/mosquitto/mosquitto.pid
+# Place your local configuration in /etc/mosquitto/conf.d/
+#
+# A full description of the configuration file is at
+# /usr/share/doc/mosquitto/examples/mosquitto.conf.example
+
+#pid_file /run/mosquitto/mosquitto.pid
 
 persistence true
 persistence_location /var/lib/mosquitto/
 
 log_dest file /var/log/mosquitto/mosquitto.log
 
+# 클라이언트 인증은 필요 없음
+require_certificate false
+
+# 익명 접속 허용 (운영 환경에서는 false 권장)
+allow_anonymous true
 include_dir /etc/mosquitto/conf.d
 
+# MQTT 기본 포트 (비암호화)
 listener 1883
 protocol mqtt
 
+# WebSocket (ws://)
 listener 8080
 protocol websockets
 ```
-conf.d 디렉토리 분리 사용을 살리기 위해 SSL 설정은 conf.d에 두는 게 더 안전합니다.
+
+## ✅ 6단계  서비스 등록
 ```
-sudo nano /etc/mosquitto/conf.d/websocket-wss.conf
-```
-```
-listener 8883
-protocol websockets
-certfile /etc/letsencrypt/live/mqtt.i2r.link/fullchain.pem
-keyfile /etc/letsencrypt/live/mqtt.i2r.link/privkey.pem
-require_certificate false
-```
-port와 listener는 동시에 쓰지 마세요. listener를 쓰면 해당 포트에만 바인딩합니다.    
-📝 mount_point /mqtt를 추가하면, 클라이언트는 wss://mqtt.i2r.link:8883/mqtt 로 접속해야 합니다.    
-
-## ✅ 3단계: 포트 1883 8080 8883 보안 그룹 허용
-AWS EC2 인스턴스의 보안 그룹에서 8081 포트를 외부에서 접근 가능하게 해야 합니다:
-
-## ✅ 4단계: Mosquitto 재시작
-```
-sudo systemctl restart mosquitto
-```
-에러 확인:
-
-```
-sudo journalctl -u mosquitto -f
-```
-
-## ✅ 5단계: 테스트 (옵션)
-```
-# 로컬 MQTT 테스트
-mosquitto_sub -h localhost -t test -v &
-mosquitto_pub -h localhost -t test -m "Hello, MQTT"
-
-# WebSocket 클라이언트 테스트 (브라우저나 웹툴 이용)
-# ws://i2r.link:8080
-# wss://i2r.link:8081
-```
-
-## ✅ 6단계: 외부 클라이언트 접속 예시
-📱 JavaScript (Browser 또는 React)
-```
-import mqtt from 'mqtt';
-
-const client = mqtt.connect('wss://mqtt.i2r.link:8081/mqtt');
-
-client.on('connect', () => {
-  console.log('MQTT 연결됨');
-  client.subscribe('test/topic');
-});
-
-client.on('message', (topic, message) => {
-  console.log('수신:', topic, message.toString());
-});
-```
-
-# Nginx를 이용한 /mqtt → 8081 리버스 프록시 설정
-Nginx를 이용해 /mqtt → 8081으로 리버스 프록시를 설정하는 이유는 크게 4가지 실용적인 이유가 있습니다:
-
-✅ 1. 보안 통신 통합 (WSS = SSL WebSocket)
-🔐 브라우저는 wss:// 프로토콜을 사용할 때 SSL 인증서가 필요합니다.
-Nginx는 이미 i2r.link에 대해 SSL 인증서(Let’s Encrypt)를 관리하고 있기 때문에,
-
-Mosquitto 자체에서 SSL 설정을 안 해도
-Nginx가 SSL 처리를 대신 해줄 수 있습니다.
-
-즉:
-
-```
-클라이언트 → wss://mqtt.i2r.link/mqtt (포트 443, SSL)
-               ↓
-          [Nginx가 SSL 처리 + Mosquitto에 전달]
-               ↓
-         Mosquitto (ws, 포트 8081)
-```
-
-✅ 2. 포트 443만 열면 됨 (방화벽 통과 용이)
-👨‍💻 일반 네트워크나 방화벽은 1883, 8081 같은 포트를 차단하는 경우가 많습니다.
-하지만 포트 443(HTTPS)은 거의 항상 열려 있습니다.
-
-✅ 443 포트만 오픈해두면 외부에서도 걱정 없이 접근 가능!
-
-✅ 3. 경로(/mqtt)로 서비스 구분 가능
-같은 도메인(i2r.link) 아래에서
-
-/ → 메인 홈페이지
-
-/api → 백엔드
-
-/mqtt → MQTT WebSocket 통신
-
-📦 구조화된 경로는 유지보수, 확장, 보안 관리가 쉽습니다.
-
-✅ 4. Mosquitto 인증서 관리가 간단해짐
-Nginx는 이미 Let's Encrypt를 사용해서 자동 갱신 중일 가능성이 큽니다.
-
-Mosquitto에 직접 인증서 적용할 필요 없이,
-
-🔁 Nginx에서 SSL 인증서를 재사용 → Mosquitto는 그냥 WebSocket만 처리
-
-요약 그림
-```
-클라이언트 → wss://mqtt.i2r.link/mqtt
-                 ↓
-         [Nginx - 443포트, SSL 처리]
-                 ↓
-         http://localhost:8081 (Mosquitto ws)
-```
-✅ Nginx 설정 예 (복사해서 쓰세요)
-```
-server {
-    listen 443 ssl;
-    server_name mqtt.i2r.link;
-
-    ssl_certificate /etc/letsencrypt/live/i2r.link/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/i2r.link/privkey.pem;
-
-    location /mqtt {
-        proxy_pass http://localhost:8081;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-    }
-}
-```
-🚀 결론
-Nginx 리버스 프록시를 쓰면
-
-SSL 처리 간단
-
-443 포트만 사용
-
-서비스 구조 명확
-
-보안 강화 가능
-
-✅ Nginx 설정 파일 작성
-```
-sudo nano /etc/nginx/sites-available/mqtt.i2r.link
-```
-🔧 예시 설정 (mqtt.i2r.link 전용 또는 통합 도메인에서도 가능)
-```
-server {
-    listen 443 ssl;
-    server_name mqtt.i2r.link;
-
-    ssl_certificate /etc/letsencrypt/live/i2r.link/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/i2r.link/privkey.pem;
-
-    # MQTT WebSocket 프록시 경로
-    location /mqtt {
-        proxy_pass http://localhost:8081;  # Mosquitto WebSocket 포트
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-        proxy_set_header Host $host;
-    }
-}
-```
-참고: i2r.link 메인 도메인과 통합할 경우 위 블록을 기존 서버 설정에 추가하면 됩니다.
-
-✅ 심볼릭 링크로 활성화
-```
-sudo ln -s /etc/nginx/sites-available/mqtt.i2r.link /etc/nginx/sites-enabled/
-```
-✅ 설정 파일 테스트
-```
-sudo nginx -t
-```
-출력에 syntax is ok, test is successful 나오면 OK
-
-✅ Nginx 재시작
-```
-sudo systemctl reload nginx
-```
-✅ 최종 접속 주소
-클라이언트에서는 아래와 같이 접속합니다:
-
-```
-const client = mqtt.connect('wss://mqtt.i2r.link/mqtt', {
-  clientId: 'mqtt-client-01',
-  protocol: 'wss',
-});
-```
-🔐 추가 보안 팁 (선택 사항)
-allow_anonymous false + password_file 설정 가능
-
-특정 Origin만 허용하는 Nginx map 설정 가능
-
-이제 브라우저에서 인증된 WSS WebSocket으로 Mosquitto에 연결할 수 있습니다.
-
-# Nginx 설정 파일 설정
-파일 열기
-```
-sudo nano /etc/nginx/sites-available/mqtt.i2r.link
-```
-
-```
-server {
-    listen 443 ssl;
-    server_name mqtt.i2r.link;
-
-    ssl_certificate /etc/letsencrypt/live/i2r.link/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/i2r.link/privkey.pem;
-
-    # ✅ 정적 웹페이지 서비스
-    location / {
-        root /var/www/html;
-        index index.html;
-        try_files $uri /index.html;
-    }
-
-    # ✅ MQTT WebSocket 프록시
-    location /mqtt {
-        proxy_pass http://localhost:8081;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-        proxy_set_header Host $host;
-    }
-}
+sudo nano /lib/systemd/system/mosquitto.service
 ```
 ```
-sudo nginx -t
-sudo systemctl reload nginx
+[Unit]
+Description=Mosquitto MQTT Broker
+After=network.target
+
+[Service]
+ExecStart=/usr/sbin/mosquitto -c /etc/mosquitto/mosquitto.conf
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
 ```
