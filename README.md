@@ -3288,6 +3288,14 @@ sudo systemctl enable mosquitto
 
 # MQTT mosquitto DNS 서버 설치
 
+✅ 지금 구성 요약
+| 구성 요소 |	설명 |
+|----|-----|
+| Mosquitto	| 1883 (MQTT), 8080 (WebSocket) 포트에서 작동 |
+| Nginx |	8883 포트에서 WSS 받아 8080으로 프록시 |
+| 사용자 접속 |	wss://mqtt.i2r.link:8883 사용 가능 |
+| 인증서	| Let's Encrypt 자동 발급 및 적용 완료 |
+
 mqtt 1883, ws 8080, wss 8883 포트를 사용하는 것으로 설정합니다.
 Nginx를 설치하고 wss 접속시에는 8883 포트에서 WSS를 받아 Mosquitto의 8080으로 프록시 합니다.
 ubuntu 설치 후 다음을 진행 한다.
