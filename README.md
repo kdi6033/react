@@ -3296,7 +3296,6 @@ sudo systemctl enable mosquitto
 | 사용자 접속 |	wss://mqtt.i2r.link:8883 사용 가능 |
 | 인증서	| Let's Encrypt 자동 발급 및 적용 완료 |
 
-mqtt 1883, ws 8080, wss 8883 포트를 사용하는 것으로 설정합니다.
 Nginx를 설치하고 wss 접속시에는 8883 포트에서 WSS를 받아 Mosquitto의 8080으로 프록시 합니다.
 ubuntu 설치 후 다음을 진행 한다.
 ## ✅ 1단계: Route 53에서 DNS(mqtt.i2r.link) IP 설정 방법:
@@ -3333,9 +3332,49 @@ sudo systemctl enable mosquitto
 sudo certbot certonly --standalone -d mqtt.i2r.link
 ```
 📌 발급된 인증서 정보:    
+
 인증서 위치 (fullchain): /etc/letsencrypt/live/mqtt.i2r.link/fullchain.pem    
 
 비공개 키 위치 (privkey): /etc/letsencrypt/live/mqtt.i2r.link/privkey.pem    
+
+## Nginx가 8883 포트에서 WSS를 받아 Mosquitto의 8080으로 프록시
+사용자 입장에선 wss://mqtt.i2r.link:8883로 접속하고,
+Nginx는 그걸 ws://localhost:8080으로 넘겨줍니다.
+
+🔧 설정 방법: Nginx가 8883 포트 리버스 프록시
+① Nginx 설치
+```
+sudo apt install nginx
+```
+② /etc/nginx/sites-available/mqtt-wss 생성
+```
+sudo nano /etc/nginx/sites-available/mqtt-wss
+```
+```
+server {
+    listen 8883 ssl;
+    server_name mqtt.i2r.link;
+
+    ssl_certificate /etc/letsencrypt/live/mqtt.i2r.link/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/mqtt.i2r.link/privkey.pem;
+
+    location / {
+        proxy_pass http://localhost:8080/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+        proxy_set_header Host $host;
+    }
+}
+```
+③  심볼릭 링크로 활성화
+```
+sudo ln -s /etc/nginx/sites-available/mqtt-wss /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl restart nginx
+
+```
+
 
 # MQTT WSS 설정
 모스키토 이용한 react 프로그램을 하면 mqtt ws 점속이 아닌 wss 프로그램 진행을 요구 합니다.
