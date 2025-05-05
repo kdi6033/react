@@ -3288,13 +3288,8 @@ sudo systemctl enable mosquitto
 
 # MQTT mosquitto DNS 서버 설치
 
-## ✅ 1단계: Mosquitto 설치
-```
-sudo apt update
-sudo apt install mosquitto mosquitto-clients -y
-sudo systemctl enable mosquitto
-```
-## ✅ 2단계: Route 53에서 mqtt.i2r.link 설정 방법:
+
+## ✅ 1단계: Route 53에서 DNS(mqtt.i2r.link) IP 설정 방법:
 AWS 콘솔 접속 → Route 53 이동    
 왼쪽 메뉴에서 “Hosted zones” 클릭    
 i2r.link 도메인을 클릭 (이미 생성된 상태여야 합니다)    
@@ -3315,6 +3310,13 @@ DNS 전파는 보통 수 분 내에 완료되지만, 최대 30분까지 걸릴 �
 dig mqtt.i2r.link
 ```
 결과에 A 레코드 IP가 나오면 준비 완료입니다.    
+
+## ✅ 2단계: Mosquitto 설치
+```
+sudo apt update
+sudo apt install mosquitto mosquitto-clients -y
+sudo systemctl enable mosquitto
+```
 
 ## ✅ 3단계: 인증서 설치
 ```
