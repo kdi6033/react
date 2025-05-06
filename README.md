@@ -3320,33 +3320,44 @@ dig mqtt.i2r.link
 ```
 결과에 A 레코드 IP가 나오면 준비 완료입니다.    
 
-## ✅ 2단계: Mosquitto 설치
-- 필수 패키지 설치
+## ✅ 2단계: Mosquitto 설치 및 설정
+- 모스키 설치
 ```
 sudo apt update
-sudo apt install -y build-essential cmake libssl-dev libwebsockets-dev libcurl4-openssl-dev uuid-dev
+sudo apt install -y mosquitto mosquitto-clients
 ```
-- Mosquitto 소스 다운로드
+/etc/mosquitto/mosquitto.conf 수정 또는 생성:
 ```
-cd ~
-git clone https://github.com/eclipse/mosquitto.git
-cd mosquitto
+sudo nano /etc/mosquitto/mosquitto.conf
 ```
-- 빌드 설정
 ```
-mkdir build
-cd build
-cmake -DWITH_WEBSOCKETS=ON -DWITH_TLS=ON -DBUILD_MANPAGES=OFF -DCMAKE_INSTALL_PREFIX=/usr ..
-```
-🔹 -DWITH_WEBSOCKETS=ON : WebSocket 기능 활성화
-🔹 -DBUILD_MANPAGES=OFF : man 페이지 오류 방지
+# Place your local configuration in /etc/mosquitto/conf.d/
+#
+# A full description of the configuration file is at
+# /usr/share/doc/mosquitto/examples/mosquitto.conf.example
 
-- 컴파일 및 설치
-```
-make -j$(nproc)
-sudo make install
-```
+#pid_file /run/mosquitto/mosquitto.pid
 
+persistence true
+persistence_location /var/lib/mosquitto/
+
+log_dest file /var/log/mosquitto/mosquitto.log
+
+# 클라이언트 인증은 필요 없음
+require_certificate false
+
+# 익명 접속 허용 (운영 환경에서는 false 권장)
+allow_anonymous true
+include_dir /etc/mosquitto/conf.d
+
+# MQTT 기본 포트 (비암호화)
+listener 1883
+protocol mqtt
+
+# WebSocket (ws://)
+listener 8080
+protocol websockets
+```
 
 ## ✅ 3단계: 인증서 설치 (Let's Encrypt)
 ```
@@ -3392,39 +3403,6 @@ sudo ln -s /etc/nginx/sites-available/mqtt-wss /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl restart nginx
 
-```
-
-## ✅ 5단계 mosquitto.conf 설정
-```
-sudo nano /etc/mosquitto/mosquitto.conf
-```
-```
-# Place your local configuration in /etc/mosquitto/conf.d/
-#
-# A full description of the configuration file is at
-# /usr/share/doc/mosquitto/examples/mosquitto.conf.example
-
-#pid_file /run/mosquitto/mosquitto.pid
-
-persistence true
-persistence_location /var/lib/mosquitto/
-
-log_dest file /var/log/mosquitto/mosquitto.log
-
-# 클라이언트 인증은 필요 없음
-require_certificate false
-
-# 익명 접속 허용 (운영 환경에서는 false 권장)
-allow_anonymous true
-include_dir /etc/mosquitto/conf.d
-
-# MQTT 기본 포트 (비암호화)
-listener 1883
-protocol mqtt
-
-# WebSocket (ws://)
-listener 8080
-protocol websockets
 ```
 
 ## ✅ 6단계  서비스 등록
