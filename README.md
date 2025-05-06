@@ -3421,3 +3421,107 @@ Restart=on-failure
 [Install]
 WantedBy=multi-user.target
 ```
+
+# 자체 서명 인증서로 https 접속 설정
+✅ 실습 목표
+자체 서명된 SSL 인증서 생성
+Nginx 웹 서버에 HTTPS 설정
+Chrome에서 HTTPS 접속 (경고 무시 포함)
+
+🧰 사전 준비
+AWS EC2 Ubuntu 24.04 인스턴스 생성 (보안 그룹: 22, 80, 443 포트 개방)
+
+IP 주소 확인 (예: 3.88.112.50)
+
+SSH 접속 (ex: ssh -i key.pem ubuntu@3.88.112.50)
+
+웹 서버 기본 설정 확인 (/var/www/html/index.html 등)
+
+🛠️ 실습 단계
+1단계: Nginx 설치
+```
+sudo apt update
+sudo apt install -y nginx
+```
+브라우저에서 http://3.88.112.50 접속 → “Welcome to Nginx” 페이지 확인
+
+2단계: 인증서용 디렉토리 생성 및 openssl.cnf 작성
+```
+sudo mkdir -p /etc/ssl/selfsigned
+sudo nano /etc/ssl/selfsigned/openssl.cnf
+```
+🔽 아래 내용 입력 (IP 주소 수정):
+```
+[ req ]
+default_bits       = 2048
+prompt             = no
+default_md         = sha256
+req_extensions     = req_ext
+distinguished_name = dn
+
+[ dn ]
+C  = KR
+ST = Seoul
+L  = Gangnam-gu
+O  = MyCompany
+CN = 3.88.112.50
+
+[ req_ext ]
+subjectAltName = @alt_names
+
+[ alt_names ]
+IP.1 = 3.88.112.50
+```
+3단계: 자체 인증서 생성
+```
+sudo openssl req -x509 -nodes -days 365 \
+  -newkey rsa:2048 \
+  -keyout /etc/ssl/selfsigned/selfsigned.key \
+  -out /etc/ssl/selfsigned/selfsigned.crt \
+  -config /etc/ssl/selfsigned/openssl.cnf \
+  -extensions req_ext
+```
+
+4단계: Nginx HTTPS 설정
+```
+sudo nano /etc/nginx/sites-available/default
+```
+
+🔽 다음 내용으로 수정:
+```
+server {
+    listen 80;
+    server_name 3.88.112.50;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name 3.88.112.50;
+
+    ssl_certificate     /etc/ssl/selfsigned/selfsigned.crt;
+    ssl_certificate_key /etc/ssl/selfsigned/selfsigned.key;
+
+    root /var/www/html;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+```
+```
+sudo nginx -t
+sudo systemctl restart nginx
+```
+
+5단계: 브라우저에서 테스트
+접속: https://3.88.112.50
+
+경고 메시지 → 고급 → 위험을 감수하고 계속
+
+🔍 추가: 인증서 확인 명령
+```
+openssl s_client -connect localhost:443 -showcerts
+```
+출력 결과 중 CN = 3.88.112.50 확인
