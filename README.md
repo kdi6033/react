@@ -3423,3 +3423,127 @@ allow_anonymous true
 sudo systemctl enable mosquitto
 ```
 
+# ip.nip.io를 이용한 HTTPS & mongoDB 서버 구축 실습
+
+nip.io는 IP 기반의 무료 DNS 서비스로, 3.88.112.50.nip.io처럼 사용하면 DNS 설정 없이도 SSL 및 도메인 기반 접속이 가능합니다. 이 문서는 AWS Ubuntu 서버에 Node.js 백엔드 서버를 HTTPS로 구성하는 전 과정을 담고 있습니다.    
+aws에서 ip는 3.88.112.50 이라 가정하여 DNS 3.88.112.50.nip.io 로 설치하겠습니다.
+서버 보안그룸 : 80, 443, 1804 (백엔드 포트), 22 (SSH) 포트를 열어 준다.
+node.js typescript 설치
+mongodb 설치
+
+## Let's Encrypt 인증서 자동 발급 + HTTPS 설정을 위한 Nginx 구성
+✅ 1. certbot 설치 (Ubuntu 기준)
+```
+sudo apt update
+sudo apt install certbot python3-certbot-nginx -y
+```
+
+✅ 2. 인증서 발급
+```
+sudo certbot --nginx -d 3.88.112.50.nip.io
+```
+nip.io는 무료로 도메인을 제공하지만 Let's Encrypt 인증서 자동 갱신(Auto Renewal) 은 기본적으로 지원되지 않습니다.
+시험 테스트 후에는 DNS 구매하여 연결하세요    
+별도 만료 없음 — DNS 레코드를 자동 생성하므로 IP가 살아 있는 한 계속 사용 가능
+만료 조건은 없으나 IP가 사라지면 접속 불가 (EC2 종료/삭제 등)
+
+✅ 3. Nginx 설정 (/etc/nginx/sites-available/default 또는 별도 conf 파일)
+```
+sudo nano /etc/nginx/sites-available/default
+```
+```
+server {
+    listen 80;
+    server_name 3.88.112.50;
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name 3.88.112.50.nip.io;
+
+    ssl_certificate     /etc/letsencrypt/live/3.88.112.50.nip.io/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/3.88.112.50.nip.io/privkey.pem;
+
+    ssl_protocols       TLSv1.2 TLSv1.3;
+    ssl_ciphers         HIGH:!aNULL:!MD5;
+
+    root /var/www/html;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+```
+
+✅ 4. Nginx 설정 테스트 및 재시작
+```
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+✅ 5. 최종 접속 주소
+https://3.88.112.50.nip.io 로 접속 시 안전하게 HTTPS 동작해야 합니다.
+
+## mongoDB 사용 설정 ( db-server.js )
+✅ 1. db-server.js 내에 인증서 설정
+db-server.js 내에 인증서를 다음과 같이 설정한다.
+```
+const sslOptions = {
+  key: fs.readFileSync('/etc/letsencrypt/live/3.88.112.50.nip.io/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/3.88.112.50.nip.io/fullchain.pem'),
+};
+```
+수정 후 서버 재시작:
+```
+sudo systemctl restart db-server.service
+```
+```
+sudo nano ~/backend/start-db-server.sh
+```
+```
+#!/bin/bash
+cd /home/ubuntu/backend
+/usr/bin/node db-server.js
+```
+
+✅ 2. db-server.service 설정 점검
+```
+sudo nano /etc/systemd/system/db-server.service
+```
+```
+[Unit]
+Description=Node.js DB Server
+After=network.target
+
+[Service]
+ExecStart=/home/ubuntu/backend/start-db-server.sh
+Restart=always
+Environment=NODE_ENV=production
+WorkingDirectory=/home/ubuntu/backend
+
+[Install]
+WantedBy=multi-user.target
+```
+
+✅ 3. 퍼미션 확인
+스크립트에 실행 권한이 있는지 확인:
+```
+sudo chmod +x /home/ubuntu/backend/start-db-server.sh
+```
+
+✅ 4. systemd 재시작
+```
+sudo systemctl daemon-reexec
+sudo systemctl daemon-reload
+sudo systemctl restart db-server.service
+sudo systemctl status db-server.service
+```
+
+✅ 5. 서비스 자동 시작 설정
+```
+stemctl enable db-server.service
+```
+이렇게 하면 서버가 재부팅될 때마다 db-server.js가 자동으로 실행됩니다.
