@@ -3218,74 +3218,6 @@ https://i2r.link 접속 시 보안 자물쇠 🔒 아이콘이 보이면 성공�
 http://i2r.link → 자동으로 HTTPS로 리디렉션됩니다.
 
 
-# MQTT mosquitto  IP 서버 ,
-모스키토 사용 포트는 다음과 같이 설정 합니다.
-|통신방식 | 포트 |
-|--------|-------|
-|mqtt    | 1883 |
-|ws      | 8080 |
-| wss    | 8883 |
-보안 인바운드에서 위에 포트를 열어 주어야 합니다.
-## ✅ 1단계: Mosquitto MQTT 브로커 설치 
-```
-sudo apt update
-sudo apt install mosquitto mosquitto-clients -y
-```
-✅ 2단계: 자체인증서 설치
-react로 mqtt 프로그램을 하면 wss 보안 프로그램을 요구 합니다. 하지
-❌ IP 주소만으로는 Let's Encrypt (또는 대부분의 공인 인증기관)에서 인증서를 발급받을 수 없습니다.
-대안으로 자체 서명 인증서(Self-Signed Certificate) 사용합니다. 경고는 나오지만 테스트용으로 개발할 수 있습니다.
-테스트용으로는 아래 명령으로 만들 수 있습니다.
-"/CN=54.174.7.125"는 자신의 IP를 입력하세요
-```
-sudo openssl req -x509 -newkey rsa:2048 -nodes \
-  -keyout /etc/mosquitto/certs/privkey.pem \
-  -out /etc/mosquitto/certs/fullchain.pem \
-  -days 365 \
-  -subj "/CN=54.174.7.125"
-```
-✅ 3단계: Mosquitto 설정용 디렉토리 만들기
-```
-sudo mkdir -p /etc/mosquitto/certs
-cd /etc/mosquitto/certs
-```
-✅ 4단계: Mosquitto 설정 수정
-```
-sudo nano /etc/mosquitto/mosquitto.conf
-```
-파일에 1883, 8080, 8883 포트 설정을 추가 합니다.
-```
-pid_file /run/mosquitto/mosquitto.pid
-
-persistence true
-persistence_location /var/lib/mosquitto/
-
-log_dest file /var/log/mosquitto/mosquitto.log
-
-#include_dir /etc/mosquitto/conf.d
-
-# 기본 MQTT TCP (선택사항)
-listener 1883
-protocol mqtt
-allow_anonymous true
-
-# WebSocket (비보안)
-listener 8080
-protocol websockets
-allow_anonymous true
-
-# WebSocket Secure (wss)
-listener 8883
-protocol websockets
-certfile /etc/mosquitto/certs/fullchain.pem
-keyfile /etc/mosquitto/certs/privkey.pem
-allow_anonymous true
-```
-
-```
-sudo systemctl enable mosquitto
-```
-
 # MQTT mosquitto DNS 서버 설치
 
 ✅ 지금 구성 요약
@@ -3422,106 +3354,72 @@ Restart=on-failure
 WantedBy=multi-user.target
 ```
 
-# 자체 서명 인증서로 https 접속 설정
-✅ 실습 목표
-자체 서명된 SSL 인증서 생성
-Nginx 웹 서버에 HTTPS 설정
-Chrome에서 HTTPS 접속 (경고 무시 포함)
 
-🧰 사전 준비
-AWS EC2 Ubuntu 24.04 인스턴스 생성 (보안 그룹: 22, 80, 443 포트 개방)
-
-IP 주소 확인 (예: 3.88.112.50)
-
-SSH 접속 (ex: ssh -i key.pem ubuntu@3.88.112.50)
-
-웹 서버 기본 설정 확인 (/var/www/html/index.html 등)
-
-🛠️ 실습 단계
-1단계: Nginx 설치
+# MQTT mosquitto  IP 서버 ,
+모스키토 사용 포트는 다음과 같이 설정 합니다.
+|통신방식 | 포트 |
+|--------|-------|
+|mqtt    | 1883 |
+|ws      | 8080 |
+| wss    | 8883 |
+보안 인바운드에서 위에 포트를 열어 주어야 합니다.
+## ✅ 1단계: Mosquitto MQTT 브로커 설치 
 ```
 sudo apt update
-sudo apt install -y nginx
+sudo apt install mosquitto mosquitto-clients -y
 ```
-브라우저에서 http://3.88.112.50 접속 → “Welcome to Nginx” 페이지 확인
+✅ 2단계: 자체인증서 설치
+react로 mqtt 프로그램을 하면 wss 보안 프로그램을 요구 합니다. 하지
+❌ IP 주소만으로는 Let's Encrypt (또는 대부분의 공인 인증기관)에서 인증서를 발급받을 수 없습니다.
+대안으로 자체 서명 인증서(Self-Signed Certificate) 사용합니다. 경고는 나오지만 테스트용으로 개발할 수 있습니다.
+테스트용으로는 아래 명령으로 만들 수 있습니다.
+"/CN=54.174.7.125"는 자신의 IP를 입력하세요
+```
+sudo openssl req -x509 -newkey rsa:2048 -nodes \
+  -keyout /etc/mosquitto/certs/privkey.pem \
+  -out /etc/mosquitto/certs/fullchain.pem \
+  -days 365 \
+  -subj "/CN=54.174.7.125"
+```
+✅ 3단계: Mosquitto 설정용 디렉토리 만들기
+```
+sudo mkdir -p /etc/mosquitto/certs
+cd /etc/mosquitto/certs
+```
+✅ 4단계: Mosquitto 설정 수정
+```
+sudo nano /etc/mosquitto/mosquitto.conf
+```
+파일에 1883, 8080, 8883 포트 설정을 추가 합니다.
+```
+pid_file /run/mosquitto/mosquitto.pid
 
-2단계: 인증서용 디렉토리 생성 및 openssl.cnf 작성
-```
-sudo mkdir -p /etc/ssl/selfsigned
-sudo nano /etc/ssl/selfsigned/openssl.cnf
-```
-🔽 아래 내용 입력 (IP 주소 수정):
-```
-[ req ]
-default_bits       = 2048
-prompt             = no
-default_md         = sha256
-req_extensions     = req_ext
-distinguished_name = dn
+persistence true
+persistence_location /var/lib/mosquitto/
 
-[ dn ]
-C  = KR
-ST = Seoul
-L  = Gangnam-gu
-O  = MyCompany
-CN = 3.88.112.50
+log_dest file /var/log/mosquitto/mosquitto.log
 
-[ req_ext ]
-subjectAltName = @alt_names
+#include_dir /etc/mosquitto/conf.d
 
-[ alt_names ]
-IP.1 = 3.88.112.50
-```
-3단계: 자체 인증서 생성
-```
-sudo openssl req -x509 -nodes -days 365 \
-  -newkey rsa:2048 \
-  -keyout /etc/ssl/selfsigned/selfsigned.key \
-  -out /etc/ssl/selfsigned/selfsigned.crt \
-  -config /etc/ssl/selfsigned/openssl.cnf \
-  -extensions req_ext
-```
+# 기본 MQTT TCP (선택사항)
+listener 1883
+protocol mqtt
+allow_anonymous true
 
-4단계: Nginx HTTPS 설정
-```
-sudo nano /etc/nginx/sites-available/default
-```
+# WebSocket (비보안)
+listener 8080
+protocol websockets
+allow_anonymous true
 
-🔽 다음 내용으로 수정:
-```
-server {
-    listen 80;
-    server_name 3.88.112.50;
-    return 301 https://$host$request_uri;
-}
-
-server {
-    listen 443 ssl;
-    server_name 3.88.112.50;
-
-    ssl_certificate     /etc/ssl/selfsigned/selfsigned.crt;
-    ssl_certificate_key /etc/ssl/selfsigned/selfsigned.key;
-
-    root /var/www/html;
-    index index.html;
-
-    location / {
-        try_files $uri $uri/ =404;
-    }
-}
-```
-```
-sudo nginx -t
-sudo systemctl restart nginx
+# WebSocket Secure (wss)
+listener 8883
+protocol websockets
+certfile /etc/mosquitto/certs/fullchain.pem
+keyfile /etc/mosquitto/certs/privkey.pem
+allow_anonymous true
 ```
 
-5단계: 브라우저에서 테스트
-접속: https://3.88.112.50
-
-경고 메시지 → 고급 → 위험을 감수하고 계속
-
-🔍 추가: 인증서 확인 명령
 ```
-openssl s_client -connect localhost:443 -showcerts
+sudo systemctl enable mosquitto
 ```
-출력 결과 중 CN = 3.88.112.50 확인
+
