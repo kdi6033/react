@@ -3441,25 +3441,6 @@ sudo certbot certonly --standalone -d 54.221.133.252.nip.io
 /etc/letsencrypt/live/54.221.133.252.nip.io/fullchain.pem
 /etc/letsencrypt/live/54.221.133.252.nip.io/privkey.pem
 ```
-그 후 Nginx 설정을 아래처럼 바꾸면 됩니다:
-```
-server {
-    listen 8883 ssl;
-    server_name 54.221.133.252.nip.io;
-
-    ssl_certificate     /etc/letsencrypt/live/54.221.133.252.nip.io/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/54.221.133.252.nip.io/privkey.pem;
-
-    location / {
-        proxy_pass http://localhost:8080/;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "Upgrade";
-        proxy_set_header Host $host;
-    }
-}
-```
-
 ## ✅ 2: Nginx가 8883 포트에서 WSS를 받아 Mosquitto의 8080으로 프록시
 사용자 입장에선 wss://ip:8883로 접속하고,
 Nginx는 그걸 ws://localhost:8080으로 넘겨줍니다.
