@@ -2829,6 +2829,7 @@ filezilla 를 사용하여 복사할 때 권한을 부여해 줘야 한다. ubun
 ```
 sudo chown -R ubuntu:ubuntu /var/www/html
 ```
+/var/www/html 디렉토리 및 그 하위 모든 파일의 소유자(owner)와 그룹(group)을 ubuntu 사용자로 변경하는 명령입니다.
 
 ### ✅ 1-3. Nginx 서비스 재시작
 ```
