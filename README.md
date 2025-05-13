@@ -3582,6 +3582,11 @@ sudo systemctl reload nginx
 ✅ 5. 최종 접속 주소
 https://3.88.112.50.nip.io 로 접속 시 안전하게 HTTPS 동작해야 합니다.
 
+## mongoDB 설치
+다음 유튜브와 메누얼을 참조하여 mongoDB를 설치하세요
+유튜브 : https://www.youtube.com/watch?v=WJrOxAN7ZH0
+메뉴얼 : https://github.com/kdi6033/i2r/blob/main/txt/aws%20mongoDB%20install
+
 ## mongoDB 사용 설정 ( db-server.js )
 ✅ 1. db-server.js 내에 인증서 설정
 db-server.js 내에 인증서를 다음과 같이 설정한다.
