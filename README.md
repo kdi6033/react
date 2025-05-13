@@ -3534,6 +3534,7 @@ sudo apt install certbot python3-certbot-nginx -y
 ```
 
 ✅ 2. 인증서 발급
+3.88.112.50 는 자신의 IP로 대체해서 입력하세요
 ```
 sudo certbot --nginx -d 3.88.112.50.nip.io
 ```
@@ -3546,6 +3547,7 @@ nip.io는 무료로 도메인을 제공하지만 Let's Encrypt 인증서 자동 
 ```
 sudo nano /etc/nginx/sites-available/default
 ```
+3.88.112.50 는 자신의 IP로 대체해서 입력하세요
 ```
 server {
     listen 80;
@@ -3580,6 +3582,7 @@ sudo systemctl reload nginx
 ```
 
 ✅ 5. 최종 접속 주소
+3.88.112.50 는 자신의 IP로 대체해서 입력하세요
 https://3.88.112.50.nip.io 로 접속 시 안전하게 HTTPS 동작해야 합니다.
 
 ## mongoDB 설치
