@@ -3417,7 +3417,104 @@ protocol websockets
 
 ```
 sudo systemctl enable mosquitto
+sudo systemctl reatart mosquitto
+sudo systemctl status mosquitto
 ```
+여기까지 하면 1883 8080은 정상 동작 합니다. 
+"sudo systemctl status mosquitto"를 실행하면 메세지나 나오는데 이를 chatGPT에 복사해서 정상적으로 설치 되었는지 물어보세요.
+
+이제 wss 8883 포트를 사용하기 위해서 인증서 설치와 연결을 설명하겠습니다.
+### ip.nip.io를 이용한 인증서 설치
+✅ 1. 54.221.133.252.nip.io 도메인으로 Let's Encrypt 인증서 발급 (권장)
+🔹 전제 조건:
+Nginx 또는 Certbot가 설치된 상태
+포트 80과 443이 외부에 열려 있어야 함
+해당 도메인에 대해 인증 시도 가능해야 함
+🔹 발급 명령:
+```
+sudo certbot certonly --standalone -d 54.221.133.252.nip.io
+```
+성공하면 다음 경로에 인증서가 생성됩니다:
+```
+/etc/letsencrypt/live/54.221.133.252.nip.io/fullchain.pem
+/etc/letsencrypt/live/54.221.133.252.nip.io/privkey.pem
+```
+그 후 Nginx 설정을 아래처럼 바꾸면 됩니다:
+```
+server {
+    listen 8883 ssl;
+    server_name 54.221.133.252.nip.io;
+
+    ssl_certificate     /etc/letsencrypt/live/54.221.133.252.nip.io/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/54.221.133.252.nip.io/privkey.pem;
+
+    location / {
+        proxy_pass http://localhost:8080/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+        proxy_set_header Host $host;
+    }
+}
+```
+
+## ✅ 4단계: Nginx가 8883 포트에서 WSS를 받아 Mosquitto의 8080으로 프록시
+사용자 입장에선 wss://ip:8883로 접속하고,
+Nginx는 그걸 ws://localhost:8080으로 넘겨줍니다.
+
+🔧 설정 방법: Nginx가 8883 포트 리버스 프록시
+① Nginx 설치
+```
+sudo apt install nginx
+```
+② /etc/nginx/sites-available/mqtt-wss 생성
+```
+sudo nano /etc/nginx/sites-available/mqtt-wss
+```
+```
+server {
+    listen 8883 ssl;
+    server_name 54.221.133.252.nip.io;
+
+    ssl_certificate     /etc/letsencrypt/live/54.221.133.252.nip.io/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/54.221.133.252.nip.io/privkey.pem;
+
+    location / {
+        proxy_pass http://localhost:8080/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+        proxy_set_header Host $host;
+    }
+}
+```
+③  심볼릭 링크로 활성화
+```
+sudo ln -s /etc/nginx/sites-available/mqtt-wss /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl restart nginx
+
+```
+
+## ✅ 6단계  서비스 등록
+```
+sudo nano /lib/systemd/system/mosquitto.service
+```
+```
+[Unit]
+Description=Mosquitto MQTT Broker
+After=network.target
+
+[Service]
+ExecStart=/usr/sbin/mosquitto -c /etc/mosquitto/mosquitto.conf
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+```
+
+
+
 
 # ip.nip.io를 이용한 HTTPS & mongoDB 서버 구축 실습
 [소스프로그램 다운로드](https://github.com/kdi6033/react/releases/tag/react-nip-ip-v1.0)   
