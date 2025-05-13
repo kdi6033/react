@@ -3355,7 +3355,7 @@ WantedBy=multi-user.target
 ```
 
 
-# MQTT mosquitto  IP 서버 ,
+# MQTT mosquitto  IP 서버 (DNS 없이 사용할 때, 학생 실습용)
 모스키토 사용 포트는 다음과 같이 설정 합니다.
 |통신방식 | 포트 |
 |--------|-------|
