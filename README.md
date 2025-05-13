@@ -3515,10 +3515,9 @@ Topic: i2r/kdi6033@gmail.com/in → [Subscribe]
 Publish Topic: i2r/kdi6033@gmail.com/out, Message: {"order":1} → [Publish]    
 
 
-
-
-
 # ip.nip.io를 이용한 HTTPS & mongoDB 서버 구축 실습
+다음은 react로 제작한 서버프로그램 입니다. IoT PLC 가 MQTT로 접속하면 데이터가 mongoDB와 연동하여 동작합니다. 이 단원 끝까지 실행하여 mongoDB 를 설치 한 후에 연동 하면 동작 합니다.   
+IoT PLC를 와이파이에 접속 시키면 제어 판넬과 DB가 자동으로 생성되고 연동되는 프로그램이니 제작 과정이 궁금하신 분을 이 프로그램 소스를 chatGPT에 복사한 후에 설명해 달라고 하면 자세한게 분석 할 수 있습니다.    
 [소스프로그램 다운로드](https://github.com/kdi6033/react/releases/tag/react-nip-ip-v1.0)   
 
 nip.io는 IP 기반의 무료 DNS 서비스로, 3.88.112.50.nip.io처럼 사용하면 DNS 설정 없이도 SSL 및 도메인 기반 접속이 가능합니다. 이 문서는 AWS Ubuntu 서버에 Node.js 백엔드 서버를 HTTPS로 구성하는 전 과정을 담고 있습니다.    
