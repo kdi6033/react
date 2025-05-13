@@ -3012,6 +3012,12 @@ sudo rm -rf /var/www/html/*
 sudo cp -r /home/ubuntu/frontend/build/* /var/www/html/
 ```
 
+filezilla 를 사용하여 복사할 때 권한을 부여해 줘야 업로드 할 수 있습니다.. ubuntu에서
+```
+sudo chown -R ubuntu:ubuntu /var/www/html
+```
+/var/www/html 디렉토리 및 그 하위 모든 파일의 소유자(owner)와 그룹(group)을 ubuntu 사용자로 변경하는 명령입니다.
+
 
 
 ## 🗂️ 4단계: backend db-server.js 부팅시 자동실행 설정
