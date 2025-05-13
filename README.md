@@ -3430,8 +3430,10 @@ sudo systemctl status mosquitto
 Nginx 또는 Certbot가 설치된 상태
 포트 80과 443이 외부에 열려 있어야 함
 해당 도메인에 대해 인증 시도 가능해야 함
-🔹 발급 명령:
+🔹 설치 및 발급 명령:
 ```
+sudo apt update
+sudo apt install certbot
 sudo certbot certonly --standalone -d 54.221.133.252.nip.io
 ```
 성공하면 다음 경로에 인증서가 생성됩니다:
