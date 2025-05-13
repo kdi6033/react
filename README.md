@@ -3417,7 +3417,7 @@ protocol websockets
 
 ```
 sudo systemctl enable mosquitto
-sudo systemctl reatart mosquitto
+sudo systemctl restart mosquitto
 sudo systemctl status mosquitto
 ```
 여기까지 하면 1883 8080은 정상 동작 합니다. 
