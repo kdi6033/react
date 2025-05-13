@@ -3398,25 +3398,21 @@ persistence true
 persistence_location /var/lib/mosquitto/
 
 log_dest file /var/log/mosquitto/mosquitto.log
+# 클라이언트 인증은 필요 없음
+require_certificate false
 
-#include_dir /etc/mosquitto/conf.d
+# 익명 접속 허용 (운영 환경에서는 false 권장)
+allow_anonymous true
 
-# 기본 MQTT TCP (선택사항)
+include_dir /etc/mosquitto/conf.d
+
+# MQTT 기본 포트 (비암호화)
 listener 1883
 protocol mqtt
-allow_anonymous true
 
-# WebSocket (비보안)
+# WebSocket (ws://)
 listener 8080
 protocol websockets
-allow_anonymous true
-
-# WebSocket Secure (wss)
-listener 8883
-protocol websockets
-certfile /etc/mosquitto/certs/fullchain.pem
-keyfile /etc/mosquitto/certs/privkey.pem
-allow_anonymous true
 ```
 
 ```
