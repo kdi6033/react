@@ -3515,23 +3515,23 @@ Restart=on-failure
 WantedBy=multi-user.target
 ```
 
-✅ 4. 브라우저 MQTT WebSocket 테스트 도구 (HIVEMQ WebSocket Client)
+## ✅ 4. 브라우저 MQTT WebSocket 테스트 도구 (HIVEMQ WebSocket Client)
 🌐 링크:
-https://www.hivemq.com/demos/websocket-client/
-🔧 사용법:
-접속: 위 링크 클릭
+https://www.hivemq.com/demos/websocket-client/    
+🔧 사용법:    
+접속: 위 링크 클릭    
 
-아래처럼 입력:
-Host: 54.221.133.252.nip.io
-Port: 8883
-TLS: ✅ 체크 (→ wss)
-Path: /
-Client ID: test-client 등 자유 입력
-[Connect] 클릭
+아래처럼 입력:    
+Host: 54.221.133.252.nip.io    
+Port: 8883   
+TLS: ✅ 체크 (→ wss)    
+Path: /    
+Client ID: test-client 등 자유 입력    
+[Connect] 클릭    
 
-✅ 연결 후:
-Topic: i2r/kdi6033@gmail.com/in → [Subscribe]
-Publish Topic: i2r/kdi6033@gmail.com/out, Message: {"order":1} → [Publish]
+✅ 연결 후:    
+Topic: i2r/kdi6033@gmail.com/in → [Subscribe]    
+Publish Topic: i2r/kdi6033@gmail.com/out, Message: {"order":1} → [Publish]    
 
 
 
