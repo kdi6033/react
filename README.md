@@ -3660,3 +3660,14 @@ sudo systemctl status db-server.service
 sudo systemctl enable db-server.service
 ```
 이렇게 하면 서버가 재부팅될 때마다 db-server.js가 자동으로 실행됩니다.
+
+✅ 6. 서비스 동작 확인
+db-server.js 의 api 명령을 하나 실행해 봅니다. 3.88.112.50 은 자신의 ip를 입력하세요
+예시:
+```
+curl -X POST https://3.88.112.50:1804/api/records -k
+```
+응답: 저장되어 있는 데이터가 출력된다.
+```
+[{"_id":"6823eef0dec9a7b8b45ce2de","name":"a","temp":"27"},{"_id":"6823ef5cdec9a7b8b45ce2df","name":"a","temp":"27"}]
+```
