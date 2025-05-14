@@ -3657,6 +3657,6 @@ sudo systemctl status db-server.service
 
 ✅ 5. 서비스 자동 시작 설정
 ```
-stemctl enable db-server.service
+sudo systemctl enable db-server.service
 ```
 이렇게 하면 서버가 재부팅될 때마다 db-server.js가 자동으로 실행됩니다.
