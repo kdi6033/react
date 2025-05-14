@@ -3525,7 +3525,7 @@ Publish Topic: i2r/kdi6033@gmail.com/out, Message: {"order":1} → [Publish]
 # ip.nip.io를 이용한 HTTPS & mongoDB 서버 구축 실습
 다음은 react로 제작한 서버프로그램 입니다. IoT PLC 가 MQTT로 접속하면 데이터가 mongoDB와 연동하여 동작합니다. 이 단원 끝까지 실행하여 mongoDB 를 설치 한 후에 연동 하면 동작 합니다.   
 IoT PLC를 와이파이에 접속 시키면 제어 판넬과 DB가 자동으로 생성되고 연동되는 프로그램이니 제작 과정이 궁금하신 분을 이 프로그램 소스를 chatGPT에 복사한 후에 설명해 달라고 하면 자세한게 분석 할 수 있습니다.    
-[소스프로그램 다운로드](https://github.com/kdi6033/react/releases/tag/react-nip-ip-v1.0)   
+[IoT 서버 소스프로그램 다운로드](https://github.com/kdi6033/react/releases/tag/react-nip-ip-v1.0)   
 
 nip.io는 IP 기반의 무료 DNS 서비스로, 3.88.112.50.nip.io처럼 사용하면 DNS 설정 없이도 SSL 및 도메인 기반 접속이 가능합니다. 이 문서는 AWS Ubuntu 서버에 Node.js 백엔드 서버를 HTTPS로 구성하는 전 과정을 담고 있습니다.    
 aws에서 ip는 3.88.112.50 이라 가정하여 DNS 3.88.112.50.nip.io 로 설치하겠습니다.
@@ -3671,3 +3671,15 @@ curl -X POST https://3.88.112.50:1804/api/records -k
 node.js typescript 설치해야 합니다. 다음을 참조하세요     
 
 https://github.com/kdi6033/react#-2%EB%8B%A8%EA%B3%84-nodejs-typescript-%EC%84%A4%EC%B9%98    
+
+✅ Iot 서버 프로그램 AWS에 설치    
+서버에는 backend 와 frontend 가 있습니다.    
+backend : db-server.js 를 구동하고 시스템이 동작하면 자동으로 실행되게 한다.    
+frontend : react로 구성한 홈페이지 프로그램으로 "npm run build"로 build 를 만들고 AWS 서버의 html 디렉토리에 업로드 한다.    
+
+[IoT 서버 소스프로그램 다운로드](https://github.com/kdi6033/react/releases/tag/react-nip-ip-v1.0)     
+
+✅ 아두이노 프로그램
+i2r-03 IoT PLC 프로그램을 하여 AWS에 연동한다. 다음 사이트에서 프로그램을 다운로드 받아서 보드에 업로드 한다.    
+https://github.com/kdi6033/i2r-03/releases/tag/board-i2r-03-v1.0    
+
