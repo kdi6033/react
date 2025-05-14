@@ -3530,7 +3530,8 @@ IoT PLC를 와이파이에 접속 시키면 제어 판넬과 DB가 자동으로 
 nip.io는 IP 기반의 무료 DNS 서비스로, 3.88.112.50.nip.io처럼 사용하면 DNS 설정 없이도 SSL 및 도메인 기반 접속이 가능합니다. 이 문서는 AWS Ubuntu 서버에 Node.js 백엔드 서버를 HTTPS로 구성하는 전 과정을 담고 있습니다.    
 aws에서 ip는 3.88.112.50 이라 가정하여 DNS 3.88.112.50.nip.io 로 설치하겠습니다.
 서버 보안그룸 : 80, 443, 1804 (백엔드 포트), 22 (SSH) 포트를 열어 준다.
-node.js typescript 설치
+node.js typescript 설치해야 합니다. 다음을 참조하세요
+https://github.com/kdi6033/react#-2%EB%8B%A8%EA%B3%84-nodejs-typescript-%EC%84%A4%EC%B9%98
 mongodb 설치
 
 ## Let's Encrypt 인증서 자동 발급 + HTTPS 설정을 위한 Nginx 구성
