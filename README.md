@@ -3,7 +3,7 @@
 - 과정명: ChatGPT와 React UI로 배우는 IoT 서버 개발
 - 대상: React, IoT, 서버 통합에 관심 있는 개발자, 학생 및 초보자
 - 목표: ChatGPT와 React를 활용하여 IoT 시스템을 위한 서버 UI를 개발하고, MQTT와 MongoDB를 통해 클라우드 서버와 연동하는 기술을 습득
-- 
+  
 ## 2. 주요 학습 내용
 1. ChatGPT 기반 React UI 개발
 - ChatGPT를 활용한 React 프로젝트 가이드
@@ -1210,9 +1210,9 @@ const Display: React.FC<DisplayProps> = ({ message }) => {
 
 export default Display;
 ```
-** 25-11-1 프로그램을 좀더 간단하게 접속할 수 있게 맥어드레스를 삭제하고 email만 입력하여 topic 만 생성하여 모든 정보를 주고 받을 수 있게 하였습니다.    
+** 25-11-1 프로그램을 좀더 간단하게 접속할 수 있게 맥어드레스를 삭제하고 email만 입력하여 topic 만 생성하여 모든 정보를 주고 받을 수 있게 하였습니다. **    
 
-[프로그램 다운로드 25-11-2](https://github.com/kdi6033/react/releases/tag/react-iotplc-25-11.2-v1.0) **     
+[프로그램 다운로드 25-11-2](https://github.com/kdi6033/react/releases/tag/react-iotplc-25-11.2-v1.0)      
 
 ## 11. IoT PLC UI 만들기
 <a href="https://youtu.be/SWQ7683I-hw">
