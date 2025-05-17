@@ -1210,7 +1210,7 @@ const Display: React.FC<DisplayProps> = ({ message }) => {
 
 export default Display;
 ```
--- 25-11-1 프로그램을 좀더 간단하게 접속할 수 있게 맥어드레스를 삭제하고 email만 입력하여 topic 만 생성하여 모든 정보를 주고 받을 수 있게 하였습니다. --    
+<h1></h1> 25-11-1 프로그램을 좀더 간단하게 접속할 수 있게 맥어드레스를 삭제하고 email만 입력하여 topic 만 생성하여 모든 정보를 주고 받을 수 있게 하였습니다. </h1>    
 
 [프로그램 다운로드 25-11-2](https://github.com/kdi6033/react/releases/tag/react-iotplc-25-11.2-v1.0)      
 
