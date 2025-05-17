@@ -3375,25 +3375,12 @@ WantedBy=multi-user.target
 sudo apt update
 sudo apt install mosquitto mosquitto-clients -y
 ```
-✅ 2단계: 자체인증서 설치
-react로 mqtt 프로그램을 하면 wss 보안 프로그램을 요구 합니다. 하지
-❌ IP 주소만으로는 Let's Encrypt (또는 대부분의 공인 인증기관)에서 인증서를 발급받을 수 없습니다.
-대안으로 자체 서명 인증서(Self-Signed Certificate) 사용합니다. 경고는 나오지만 테스트용으로 개발할 수 있습니다.
-테스트용으로는 아래 명령으로 만들 수 있습니다.
-"/CN=54.174.7.125"는 자신의 IP를 입력하세요
-```
-sudo openssl req -x509 -newkey rsa:2048 -nodes \
-  -keyout /etc/mosquitto/certs/privkey.pem \
-  -out /etc/mosquitto/certs/fullchain.pem \
-  -days 365 \
-  -subj "/CN=54.174.7.125"
-```
-✅ 3단계: Mosquitto 설정용 디렉토리 만들기
+✅ 2단계: Mosquitto 설정용 디렉토리 만들기
 ```
 sudo mkdir -p /etc/mosquitto/certs
 cd /etc/mosquitto/certs
 ```
-✅ 4단계: Mosquitto 설정 수정
+✅ 3단계: Mosquitto 설정 수정
 ```
 sudo nano /etc/mosquitto/mosquitto.conf
 ```
