@@ -3636,6 +3636,8 @@ sudo systemctl daemon-reload
 sudo systemctl restart db-server.service
 sudo systemctl status db-server.service
 ```
+데이터베이스 프로그램을 서버에 설치한 후에 PM2를 사용하여 자동으로 실행되게 설정한다.
+https://github.com/kdi6033/react?tab=readme-ov-file#%EF%B8%8F-4%EB%8B%A8%EA%B3%84-backend-db-serverjs-%EB%B6%80%ED%8C%85%EC%8B%9C-%EC%9E%90%EB%8F%99%EC%8B%A4%ED%96%89-%EC%84%A4%EC%A0%95
 
 ✅ 5. 서비스 자동 시작 설정
 ```
