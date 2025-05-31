@@ -3595,57 +3595,16 @@ const sslOptions = {
 ```
 sudo systemctl restart db-server.service
 ```
-```
-sudo nano ~/backend/start-db-server.sh
-```
-```
-#!/bin/bash
-cd /home/ubuntu/backend
-/usr/bin/node db-server.js
-```
+✅ 사전준비    
+node.js typescript 설치해야 합니다. 다음을 참조하세요     
 
-✅ 2. db-server.service 설정 점검
-```
-sudo nano /etc/systemd/system/db-server.service
-```
-```
-[Unit]
-Description=Node.js DB Server
-After=network.target
+https://github.com/kdi6033/react#-2%EB%8B%A8%EA%B3%84-nodejs-typescript-%EC%84%A4%EC%B9%98    
 
-[Service]
-ExecStart=/home/ubuntu/backend/start-db-server.sh
-Restart=always
-Environment=NODE_ENV=production
-WorkingDirectory=/home/ubuntu/backend
-
-[Install]
-WantedBy=multi-user.target
-```
-
-✅ 3. 퍼미션 확인
-스크립트에 실행 권한이 있는지 확인:
-```
-sudo chmod +x /home/ubuntu/backend/start-db-server.sh
-```
-
-✅ 4. systemd 재시작
-```
-sudo systemctl daemon-reexec
-sudo systemctl daemon-reload
-sudo systemctl restart db-server.service
-sudo systemctl status db-server.service
-```
-데이터베이스 프로그램을 서버에 설치한 후에 PM2를 사용하여 자동으로 실행되게 설정한다.
+✅ 2. PM2 서비스 자동 시작 설정
+데이터베이스 프로그램을 서버에 설치한 후에 PM2를 사용하여 자동으로 실행되게 설정한다.    
 https://github.com/kdi6033/react?tab=readme-ov-file#%EF%B8%8F-4%EB%8B%A8%EA%B3%84-backend-db-serverjs-%EB%B6%80%ED%8C%85%EC%8B%9C-%EC%9E%90%EB%8F%99%EC%8B%A4%ED%96%89-%EC%84%A4%EC%A0%95
 
-✅ 5. 서비스 자동 시작 설정
-```
-sudo systemctl enable db-server.service
-```
-이렇게 하면 서버가 재부팅될 때마다 db-server.js가 자동으로 실행됩니다.
-
-✅ 6. 서비스 동작 확인
+✅ 3. 서비스 동작 확인
 db-server.js 의 api 명령을 하나 실행해 봅니다. 3.88.112.50 은 자신의 ip를 입력하세요
 예시:
 ```
@@ -3655,11 +3614,6 @@ curl -X POST https://3.88.112.50:1804/api/records -k
 ```
 [{"_id":"6823eef0dec9a7b8b45ce2de","name":"a","temp":"27"},{"_id":"6823ef5cdec9a7b8b45ce2df","name":"a","temp":"27"}]
 ```
-
-✅ 사전준비    
-node.js typescript 설치해야 합니다. 다음을 참조하세요     
-
-https://github.com/kdi6033/react#-2%EB%8B%A8%EA%B3%84-nodejs-typescript-%EC%84%A4%EC%B9%98    
 
 ✅ Iot 서버 프로그램 AWS에 설치    
 서버에는 backend 와 frontend 가 있습니다.    
