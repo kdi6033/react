@@ -84,6 +84,10 @@ code my-app
 ```
 npm start
 ```
+홈페이지를 서비스 할 때는 아래와 같이 하면 build 디렉토리와 index.html 이 만들어지고 이를 서비스 하면 됩니다.
+```
+npm install build
+```
 # React로 시작하는 IoT PLC UI 기초과정
 ## 1. 버튼, 설명문, 스타일, 데이터, 그림 만들기
 이 React 프로그램은 세 가지 컴포넌트로 구성된 간단한 웹 애플리케이션입니다. App 컴포넌트는 메인 컴포넌트로, MyButton, AboutPage, Profile 컴포넌트를 렌더링합니다. 
