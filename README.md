@@ -659,7 +659,7 @@ function App() {
 
 export default App;
 mqtt 연결프로그램 만들어줘
-브로커주소:ai.doowon.ac.kr 포트:1803 intopic:i2r/kdi6033@gmail.com/out  outtopic:i2r/kdi6033@gmail.com/in
+브로커주소:mqtt.i2r.link 포트:8883 intopic:i2r/kdi60331@gmail.com/out  outtopic:i2r/kdi60331@gmail.com/in
 mqtt 프로그램은 components/MQTTClient 에 만들어줘 들어온 데이터는 hook를 이용해서 App 전달하고 이것을 디스플레이 해줘 
 ```
 App.tsx
