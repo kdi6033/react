@@ -570,8 +570,8 @@ export default App;
 ```
 [MQTTClient.tsx]
 - MQTTClient.js는 실제 MQTT 통신을 처리하는 핵심 컴포넌트입니다.
-- mqtt 라이브러리를 사용하여 mqtt://ai.doowon.ac.kr:1803 브로커에 연결합니다.
-- 연결 후 i2r/kdi@gmail.com/out 토픽을 구독하고, 해당 토픽에서 수신한 메시지를 화면에 출력합니다.
+- mqtt 라이브러리를 사용하여 wss://mqtt.i2r.link:8883 브로커에 연결합니다.
+- 연결 후 i2r/kdi60331@gmail.com/out 토픽을 구독하고, 해당 토픽에서 수신한 메시지를 화면에 출력합니다.
 - 수신된 메시지는 messages라는 상태 변수에 저장되며, 이 값은 화면에 리스트로 나타납니다.
 - 메시지를 수신할 때마다 이전 메시지를 덮어씁니다.
 - 연결 오류가 발생하면 오류 로그를 출력하고 클라이언트를 종료합니다.
@@ -581,9 +581,9 @@ import mqtt from 'mqtt';
 
 const MQTTClient = () => {
   const [messages, setMessages] = useState<string[]>([]);
-  const brokerUrl = 'mqtt://ai.doowon.ac.kr:1803';
-  const intopic = 'i2r/kdi@gmail.com/out';
-  const outtopic = 'i2r/kdi@gmail.com/in';
+  const brokerUrl = 'wss://mqtt.i2r.link:8883';
+  const intopic = 'i2r/kdi60331@gmail.com/out';
+  const outtopic = 'i2r/kdi60331@gmail.com/in';
 
   useEffect(() => {
     const client = mqtt.connect(brokerUrl);
