@@ -814,8 +814,8 @@ interface MQTTClientProps {
 }
 
 const MQTTClient: React.FC<MQTTClientProps> = ({ onMessage }) => {
-  const brokerUrl = 'mqtt://ai.doowon.ac.kr:1803';
-  const intopic = 'i2r/kdi@gmail.com/out';
+  const brokerUrl = 'wss://i2r.link:8883';
+  const intopic = 'i2r/kdi60331@gmail.com/out';
 
   useEffect(() => {
     const client = mqtt.connect(brokerUrl);
