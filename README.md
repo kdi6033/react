@@ -440,10 +440,10 @@ const App: React.FC = () => {
 
 export default App;
 mqtt 연결프로그램 만들어줘
-브로커주소:ai.doowon.ac.kr 포트:1803 intopic:kdi6033@gmail.com/intopic  outtopic:kdi6033@gmail.com/outtopic
+브로커주소:mqtt.i2r.link 포트:8883 intopic:kdi60331@gmail.com/intopic  outtopic:kdi60331@gmail.com/outtopic
 mqtt 프로그램은 components 디렉토리 만들어서 여기에 만들어줘
 ```
-
+intopic outtopic 에는 자신의 email 주소를 입력하세요.
 유튜브 쵤연 후에 i2r 보드와 연결하기 위해 topic을 수정 했습니다.
 [생성된 프로그램] 
 App.tsx
@@ -472,7 +472,7 @@ import mqtt from 'mqtt';
 
 const MQTTClient = () => {
   const [messages, setMessages] = useState<string[]>([]); // string[] 타입으로 수정
-  const brokerUrl = 'mqtt://ai.doowon.ac.kr:1803';
+  const brokerUrl = 'wss://mqtt.i2r.link:8883';
   const intopic = 'i2r/kdi60331@gmail.com/out';
   const outtopic = 'i2r/kdi60331@gmail.com/in';
 
@@ -529,7 +529,7 @@ const MQTTClient = () => {
 
 export default MQTTClient;
 ```
-다음 nodered 프로그램을 만들어 react 프로그램과 mqtt 통신을 테스트 하겠습니다.  
+[mqtt 통신을 테스트는 다음 사이트를 이용하세요.](https://www.hivemq.com/demos/websocket-client/)
 아래 node red 프로그램 링크를 사용해서 프로그램 하세요.    
 <img src="https://github.com/user-attachments/assets/c7c7dde4-4a2a-44a8-838b-d63f9a6b3b63" alt="nodered 25-8" width="400">   
 [node red 25-8 소스파일](https://github.com/kdi6033/react/blob/main/file/nodere-25-8.json)   
