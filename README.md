@@ -3715,9 +3715,9 @@ sudo apt install certbot python3-certbot-nginx -y
 ```
 
 ✅ 2. 인증서 발급
-3.88.112.50 는 자신의 IP로 대체해서 입력하세요
+107.23.234.204 는 자신의 IP로 대체해서 입력하세요
 ```
-sudo certbot --nginx -d 3.88.112.50.nip.io
+sudo certbot --nginx -d 107.23.234.204.nip.io
 ```
 nip.io는 무료로 도메인을 제공하지만 Let's Encrypt 인증서 자동 갱신(Auto Renewal) 은 기본적으로 지원되지 않습니다.
 시험 테스트 후에는 DNS 구매하여 연결하세요    
@@ -3728,11 +3728,11 @@ nip.io는 무료로 도메인을 제공하지만 Let's Encrypt 인증서 자동 
 ```
 sudo nano /etc/nginx/sites-available/default
 ```
-3.88.112.50 는 자신의 IP로 대체해서 입력하세요
+107.23.234.204 는 자신의 IP로 대체해서 입력하세요
 ```
 server {
     listen 80;
-    server_name 3.88.112.50;
+    server_name 107.23.234.204;
 
     return 301 https://$host$request_uri;
 }
@@ -3741,8 +3741,8 @@ server {
     listen 443 ssl;
     server_name 3.88.112.50.nip.io;
 
-    ssl_certificate     /etc/letsencrypt/live/3.88.112.50.nip.io/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/3.88.112.50.nip.io/privkey.pem;
+    ssl_certificate     /etc/letsencrypt/live/107.23.234.204.nip.io/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/107.23.234.204.nip.io/privkey.pem;
 
     ssl_protocols       TLSv1.2 TLSv1.3;
     ssl_ciphers         HIGH:!aNULL:!MD5;
@@ -3763,8 +3763,8 @@ sudo systemctl reload nginx
 ```
 
 ✅ 5. 최종 접속 주소
-3.88.112.50 는 자신의 IP로 대체해서 입력하세요
-https://3.88.112.50.nip.io 로 접속 시 안전하게 HTTPS 동작해야 합니다.
+107.23.234.204 는 자신의 IP로 대체해서 입력하세요
+https://107.23.234.204.nip.io 로 접속 시 안전하게 HTTPS 동작해야 합니다.
 
 ## mongoDB 설치
 다음 유튜브와 메누얼을 참조하여 mongoDB를 설치하세요    
@@ -3776,8 +3776,8 @@ https://3.88.112.50.nip.io 로 접속 시 안전하게 HTTPS 동작해야 합니
 db-server.js 내에 인증서를 다음과 같이 설정한다.
 ```
 const sslOptions = {
-  key: fs.readFileSync('/etc/letsencrypt/live/3.88.112.50.nip.io/privkey.pem'),
-  cert: fs.readFileSync('/etc/letsencrypt/live/3.88.112.50.nip.io/fullchain.pem'),
+  key: fs.readFileSync('/etc/letsencrypt/live/107.23.234.204.nip.io/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/107.23.234.204.nip.io/fullchain.pem'),
 };
 ```
 수정 후 서버 재시작:
