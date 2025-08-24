@@ -3952,6 +3952,12 @@ const SSL_CERT = process.env.SSL_CERT || '/etc/letsencrypt/live/107.23.234.204.n
   });
 })();
 ```
+.env 는 다음과 같이 설정 합니다.
+```
+SECRET_KEY=8e******7d5e
+DATABASE_URL=mongodb://127.0.0.1:27000
+PORT=1804
+```
 수정 후 서버 재시작:
 ```
 sudo systemctl restart db-server.service
