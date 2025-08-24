@@ -4032,7 +4032,7 @@ curl http://127.0.0.1:1804/health
 db-server.js 의 api 명령을 하나 실행해 봅니다. 107.23.234.204 은 자신의 ip를 입력하세요
 예시:
 ```
-curl -X POST https://107.23.234.204:1804/api/records -k
+curl -s -X POST https://107.23.234.204.nip.io/api/records -k
 ```
 응답: 저장되어 있는 데이터가 출력된다.
 ```
