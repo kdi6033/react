@@ -4029,10 +4029,10 @@ curl http://127.0.0.1:1804/health
 [IoT 서버 소스프로그램 다운로드](https://github.com/kdi6033/react/releases/tag/react-nip-ip-v1.0)     
 
 ✅ 4. 서비스 동작 확인
-db-server.js 의 api 명령을 하나 실행해 봅니다. 3.88.112.50 은 자신의 ip를 입력하세요
+db-server.js 의 api 명령을 하나 실행해 봅니다. 107.23.234.204 은 자신의 ip를 입력하세요
 예시:
 ```
-curl -X POST https://3.88.112.50:1804/api/records -k
+curl -X POST https://107.23.234.204:1804/api/records -k
 ```
 응답: 저장되어 있는 데이터가 출력된다.
 ```
