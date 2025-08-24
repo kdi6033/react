@@ -3764,62 +3764,91 @@ sudo systemctl reload nginx
 107.23.234.204 는 자신의 IP로 대체해서 입력하세요
 https://107.23.234.204.nip.io 로 접속 시 안전하게 HTTPS 동작해야 합니다.
 
+##⚡ 서버 접속 흐름 (https://107.23.234.204.nip.io/  접속 시)
+
+1. 브라우저 요청
+사용자가 브라우저에서 https://107.23.234.204.nip.io/ 에 접속합니다.
+👉 이때 HTTPS 요청은 포트 443으로 들어옵니다.
+
+2. Nginx SSL 처리
+
+Nginx가 /etc/letsencrypt/live/도메인/에 저장된 인증서(fullchain.pem, privkey.pem)로 SSL Handshake를 처리합니다.
+
+즉, 브라우저와 서버 간의 암호화는 Nginx 레벨에서만 완료됩니다.
+
+정적 파일(리액트 build 결과물 /var/www/html)은 Nginx가 바로 응답합니다.
+
+3. API 요청 전달 (/api/)  내부 통신(HTTP) 으로 처리
+
+브라우저에서 /api/... 경로로 요청이 오면,
+Nginx가 프록시로 http://127.0.0.1:1804/ (Node.js) 에 전달합니다.
+
+이때 내부 통신은 HTTP이므로 Node.js에는 인증서가 필요 없습니다.
+
+4. Node.js 처리
+
+db-server.js가 MongoDB에 접근하여 요청을 처리합니다.
+
+결과(JSON)를 다시 Nginx → 브라우저로 전달합니다.
+
+5. 🛠️ 구조 다이어그램
+```
+[브라우저]  ⇔ 443 HTTPS
+      │
+      ▼
+ [ Nginx Reverse Proxy ]
+   ├─ 인증서(SSL/TLS) 처리
+   ├─ 정적 파일 서빙 (/var/www/html)
+   └─ API 프록시 (/api/ → 127.0.0.1:1804)
+
+      │ (HTTP 내부통신)
+      ▼
+ [ Node.js Express: db-server.js ]
+   └─ MongoDB (127.0.0.1:27000)
+```
+
 ## mongoDB 설치
 다음 유튜브와 메누얼을 참조하여 mongoDB를 설치하세요    
 유튜브 : https://www.youtube.com/watch?v=WJrOxAN7ZH0    
 메뉴얼 : https://github.com/kdi6033/i2r/blob/main/txt/aws%20mongoDB%20install     
 
 ## mongoDB 사용 설정 ( db-server.js )
-✅ 1. db-server.js 내에 인증서 설정
-db-server.js 내에 인증서를 다음과 같이 설정한다.
-```
-const sslOptions = {
-  key: fs.readFileSync('/etc/letsencrypt/live/107.23.234.204.nip.io/privkey.pem'),
-  cert: fs.readFileSync('/etc/letsencrypt/live/107.23.234.204.nip.io/fullchain.pem'),
-};
-```
+✅1. db-server.js 작성
 전체 내용은 다음과 같습니다.
 ```
-// db-server.js
+// db-server.js (단순화 버전)
 require('dotenv').config();
 
 const express = require('express');
 const { MongoClient } = require('mongodb');
 const cors = require('cors');
-const https = require('https');
-const fs = require('fs');
 
 const app = express();
 
 // ===== 환경 변수 =====
-const port = process.env.PORT || 1804;
-const url = process.env.DATABASE_URL || 'mongodb://127.0.0.1:27000';
+const PORT = process.env.PORT || 1804;
+const HOST = process.env.HOST || '127.0.0.1'; // 외부 접속 허용하려면 HOST=0.0.0.0
+const MONGO_URL = process.env.DATABASE_URL || 'mongodb://127.0.0.1:27000';
 
 // ===== DB 정보 =====
-const dbName = 'local';
-const collectionName = 'localRecord';
-const collectionNameUsers = 'users'; // (남겨두되, 인증/메일 기능은 삭제됨)
+const DB_NAME = 'local';
+const COL_RECORD = 'localRecord';
 
 // ===== 미들웨어 =====
 app.use(cors());
 app.use(express.json());
 
-// ===== 유틸 =====
-function generateTempPassword() {
-  return Math.random().toString(36).slice(-4);
-}
-
-// ===== 헬스체크 =====
+// ===== 루트 헬스(선택) =====
 app.get('/', (_req, res) => {
   res.send('✅ mongoDB 서버 정상 작동 중');
 });
 
 // ===== 레코드 전체 조회 =====
 app.post('/api/records', async (_req, res) => {
-  const client = new MongoClient(url);
+  const client = new MongoClient(MONGO_URL);
   try {
     await client.connect();
-    const records = await client.db(dbName).collection(collectionName).find({}).toArray();
+    const records = await client.db(DB_NAME).collection(COL_RECORD).find({}).toArray();
     res.json(records);
   } catch (err) {
     console.error('Error /api/records:', err);
@@ -3829,13 +3858,13 @@ app.post('/api/records', async (_req, res) => {
   }
 });
 
-// ===== 특정 email로 레코드 배열 조회 (인증과 무관한 데이터 조회용) =====
+// ===== 특정 email로 레코드 배열 조회 =====
 app.post('/api/findArray', async (req, res) => {
-  const client = new MongoClient(url);
+  const client = new MongoClient(MONGO_URL);
   const { email } = req.body;
   try {
     await client.connect();
-    const records = await client.db(dbName).collection(collectionName).find({ email }).toArray();
+    const records = await client.db(DB_NAME).collection(COL_RECORD).find({ email }).toArray();
     res.json(records);
   } catch (err) {
     console.error('Error /api/findArray:', err);
@@ -3847,11 +3876,11 @@ app.post('/api/findArray', async (req, res) => {
 
 // ===== MAC 단건 조회 =====
 app.post('/api/record', async (req, res) => {
-  const client = new MongoClient(url);
+  const client = new MongoClient(MONGO_URL);
   const { mac } = req.body;
   try {
     await client.connect();
-    const record = await client.db(dbName).collection(collectionName).findOne({ mac });
+    const record = await client.db(DB_NAME).collection(COL_RECORD).findOne({ mac });
     res.json(record);
   } catch (err) {
     console.error('Error /api/record:', err);
@@ -3863,12 +3892,12 @@ app.post('/api/record', async (req, res) => {
 
 // ===== 레코드 Upsert =====
 app.post('/api/upsert', async (req, res) => {
-  const client = new MongoClient(url);
+  const client = new MongoClient(MONGO_URL);
   const { mac, in: inArray = [], out: outArray = [], name, ...rest } = req.body;
 
   try {
     await client.connect();
-    const col = client.db(dbName).collection(collectionName);
+    const col = client.db(DB_NAME).collection(COL_RECORD);
 
     // name 배열 자동 생성(문서 없을 때만)
     const nameArrayLength = inArray.length + outArray.length + 1;
@@ -3896,14 +3925,13 @@ app.post('/api/upsert', async (req, res) => {
 
 // ===== 레코드 삭제 =====
 app.post('/api/delete', async (req, res) => {
-  const client = new MongoClient(url);
+  const client = new MongoClient(MONGO_URL);
   const { mac } = req.body;
-
   if (!mac) return res.status(400).send('MAC 주소가 필요합니다.');
 
   try {
     await client.connect();
-    const result = await client.db(dbName).collection(collectionName).deleteOne({ mac });
+    const result = await client.db(DB_NAME).collection(COL_RECORD).deleteOne({ mac });
     if (result.deletedCount === 1) {
       res.json({ message: '문서가 성공적으로 삭제되었습니다.' });
     } else {
@@ -3917,44 +3945,18 @@ app.post('/api/delete', async (req, res) => {
   }
 });
 
-// db-server.js 내 Express 초기화 후 가장 아래쪽쯤에 추가
-app.get('/health', (req, res) => {
+// ===== 헬스체크(프록시 경로와 일치) =====
+app.get('/api/health', (_req, res) => {
   res.json({ ok: true, pid: process.pid, time: new Date().toISOString() });
 });
 
-// ===== 서버 시작부(HTTPS 우선, 실패 시 HTTP로 자동 전환) =====
-const SSL_KEY  = process.env.SSL_KEY  || '/etc/letsencrypt/live/107.23.234.204.nip.io/privkey.pem';
-const SSL_CERT = process.env.SSL_CERT || '/etc/letsencrypt/live/107.23.234.204.nip.io/fullchain.pem';
-
-(function startServer() {
-  // 파일 존재 여부(경로) 확인
-  const hasFiles = fs.existsSync(SSL_KEY) && fs.existsSync(SSL_CERT);
-  if (hasFiles) {
-    try {
-      const sslOptions = {
-        key: fs.readFileSync(SSL_KEY),
-        cert: fs.readFileSync(SSL_CERT),
-      };
-      https.createServer(sslOptions, app).listen(port, '0.0.0.0', () => {
-        console.log(`✅ HTTPS Server running on port ${port}`);
-      });
-      return;
-    } catch (e) {
-      console.warn('⚠️  SSL 사용 불가(권한/파일 문제). HTTP로 기동합니다:', e.code || e.message);
-    }
-  } else {
-    console.warn('⚠️  SSL 파일 없음. HTTP로 기동합니다.', { SSL_KEY, SSL_CERT });
-  }
-
-  // Fallback: HTTP
-  app.listen(port, '0.0.0.0', () => {
-    console.log(`✅ HTTP Server running on port ${port}`);
-  });
-})();
+// ===== 서버 시작(HTTP만) =====
+app.listen(PORT, HOST, () => {
+  console.log(`✅ HTTP Server running on http://${HOST}:${PORT}`);
+});
 ```
 .env 는 다음과 같이 설정 합니다.
 ```
-SECRET_KEY=8e******7d5e
 DATABASE_URL=mongodb://127.0.0.1:27000
 PORT=1804
 ```
