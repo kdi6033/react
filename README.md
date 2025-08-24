@@ -3207,8 +3207,6 @@ sudo find /var/www/html -type d -exec chmod 2775 {} \;
 sudo find /var/www/html -type f -exec chmod 0664 {} \;
 ```
 
-
-
 ## 🗂️ 4단계: backend db-server.js 부팅시 자동실행 설정
 컴퓨터가 부팅시 자동으로 실행 하도롤 설정한다.
 ```
@@ -3779,6 +3777,180 @@ const sslOptions = {
   key: fs.readFileSync('/etc/letsencrypt/live/107.23.234.204.nip.io/privkey.pem'),
   cert: fs.readFileSync('/etc/letsencrypt/live/107.23.234.204.nip.io/fullchain.pem'),
 };
+```
+전체 내용은 다음과 같습니다.
+```
+// db-server.js
+require('dotenv').config();
+
+const express = require('express');
+const { MongoClient } = require('mongodb');
+const cors = require('cors');
+const https = require('https');
+const fs = require('fs');
+
+const app = express();
+
+// ===== 환경 변수 =====
+const port = process.env.PORT || 1804;
+const url = process.env.DATABASE_URL || 'mongodb://127.0.0.1:27000';
+
+// ===== DB 정보 =====
+const dbName = 'local';
+const collectionName = 'localRecord';
+const collectionNameUsers = 'users'; // (남겨두되, 인증/메일 기능은 삭제됨)
+
+// ===== 미들웨어 =====
+app.use(cors());
+app.use(express.json());
+
+// ===== 유틸 =====
+function generateTempPassword() {
+  return Math.random().toString(36).slice(-4);
+}
+
+// ===== 헬스체크 =====
+app.get('/', (_req, res) => {
+  res.send('✅ mongoDB 서버 정상 작동 중');
+});
+
+// ===== 레코드 전체 조회 =====
+app.post('/api/records', async (_req, res) => {
+  const client = new MongoClient(url);
+  try {
+    await client.connect();
+    const records = await client.db(dbName).collection(collectionName).find({}).toArray();
+    res.json(records);
+  } catch (err) {
+    console.error('Error /api/records:', err);
+    res.status(500).send('Error connecting to MongoDB');
+  } finally {
+    await client.close();
+  }
+});
+
+// ===== 특정 email로 레코드 배열 조회 (인증과 무관한 데이터 조회용) =====
+app.post('/api/findArray', async (req, res) => {
+  const client = new MongoClient(url);
+  const { email } = req.body;
+  try {
+    await client.connect();
+    const records = await client.db(dbName).collection(collectionName).find({ email }).toArray();
+    res.json(records);
+  } catch (err) {
+    console.error('Error /api/findArray:', err);
+    res.status(500).send('Error connecting to MongoDB');
+  } finally {
+    await client.close();
+  }
+});
+
+// ===== MAC 단건 조회 =====
+app.post('/api/record', async (req, res) => {
+  const client = new MongoClient(url);
+  const { mac } = req.body;
+  try {
+    await client.connect();
+    const record = await client.db(dbName).collection(collectionName).findOne({ mac });
+    res.json(record);
+  } catch (err) {
+    console.error('Error /api/record:', err);
+    res.status(500).send('Error connecting to MongoDB');
+  } finally {
+    await client.close();
+  }
+});
+
+// ===== 레코드 Upsert =====
+app.post('/api/upsert', async (req, res) => {
+  const client = new MongoClient(url);
+  const { mac, in: inArray = [], out: outArray = [], name, ...rest } = req.body;
+
+  try {
+    await client.connect();
+    const col = client.db(dbName).collection(collectionName);
+
+    // name 배열 자동 생성(문서 없을 때만)
+    const nameArrayLength = inArray.length + outArray.length + 1;
+    const defaultNameArray = Array.from({ length: nameArrayLength }, (_, i) =>
+      i === 0 ? mac : i.toString()
+    );
+
+    const result = await col.updateOne(
+      { mac },
+      {
+        $setOnInsert: { name: defaultNameArray },
+        $set: { ...rest, mac, in: inArray, out: outArray },
+      },
+      { upsert: true }
+    );
+
+    res.json(result);
+  } catch (err) {
+    console.error('Error /api/upsert:', err);
+    res.status(500).send('Error connecting to MongoDB');
+  } finally {
+    await client.close();
+  }
+});
+
+// ===== 레코드 삭제 =====
+app.post('/api/delete', async (req, res) => {
+  const client = new MongoClient(url);
+  const { mac } = req.body;
+
+  if (!mac) return res.status(400).send('MAC 주소가 필요합니다.');
+
+  try {
+    await client.connect();
+    const result = await client.db(dbName).collection(collectionName).deleteOne({ mac });
+    if (result.deletedCount === 1) {
+      res.json({ message: '문서가 성공적으로 삭제되었습니다.' });
+    } else {
+      res.status(404).send('해당 MAC 주소를 가진 문서를 찾을 수 없습니다.');
+    }
+  } catch (err) {
+    console.error('Error /api/delete:', err);
+    res.status(500).send('MongoDB에서 문서를 삭제하는 중 오류가 발생했습니다.');
+  } finally {
+    await client.close();
+  }
+});
+
+// db-server.js 내 Express 초기화 후 가장 아래쪽쯤에 추가
+app.get('/health', (req, res) => {
+  res.json({ ok: true, pid: process.pid, time: new Date().toISOString() });
+});
+
+// ===== 서버 시작부(HTTPS 우선, 실패 시 HTTP로 자동 전환) =====
+const SSL_KEY  = process.env.SSL_KEY  || '/etc/letsencrypt/live/107.23.234.204.nip.io/privkey.pem';
+const SSL_CERT = process.env.SSL_CERT || '/etc/letsencrypt/live/107.23.234.204.nip.io/fullchain.pem';
+
+(function startServer() {
+  // 파일 존재 여부(경로) 확인
+  const hasFiles = fs.existsSync(SSL_KEY) && fs.existsSync(SSL_CERT);
+  if (hasFiles) {
+    try {
+      const sslOptions = {
+        key: fs.readFileSync(SSL_KEY),
+        cert: fs.readFileSync(SSL_CERT),
+      };
+      https.createServer(sslOptions, app).listen(port, '0.0.0.0', () => {
+        console.log(`✅ HTTPS Server running on port ${port}`);
+      });
+      return;
+    } catch (e) {
+      console.warn('⚠️  SSL 사용 불가(권한/파일 문제). HTTP로 기동합니다:', e.code || e.message);
+    }
+  } else {
+    console.warn('⚠️  SSL 파일 없음. HTTP로 기동합니다.', { SSL_KEY, SSL_CERT });
+  }
+
+  // Fallback: HTTP
+  app.listen(port, '0.0.0.0', () => {
+    console.log(`✅ HTTP Server running on port ${port}`);
+  });
+})();
 ```
 수정 후 서버 재시작:
 ```
