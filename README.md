@@ -3020,6 +3020,16 @@ sudo chown -R ubuntu:ubuntu /var/www/html
 ```
 /var/www/html 디렉토리 및 그 하위 모든 파일의 소유자(owner)와 그룹(group)을 ubuntu 사용자로 변경하는 명령입니다.
 
+다음은 html 에 직접 업로드 하는 방법입니다. 이는 권장하지 않는 방법입니다.
+```
+# ubuntu 계정이 업로드할 수 있도록 소유권 변경
+sudo chown -R ubuntu:www-data /var/www/html
+
+# 퍼미션 (디렉토리 775, 파일 664)
+sudo find /var/www/html -type d -exec chmod 2775 {} \;
+sudo find /var/www/html -type f -exec chmod 0664 {} \;
+```
+
 
 
 ## 🗂️ 4단계: backend db-server.js 부팅시 자동실행 설정
