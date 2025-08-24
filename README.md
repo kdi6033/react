@@ -3960,14 +3960,61 @@ app.listen(PORT, HOST, () => {
 DATABASE_URL=mongodb://127.0.0.1:27000
 PORT=1804
 ```
+## DB를 포함한 Nginx 설정
+```
+ sudo nano /etc/nginx/sites-available/default
+```
+```
+server {
+  listen 80;
+  server_name 107.23.234.204.nip.io;
+  return 301 https://$host$request_uri;
+}
+
+server {
+  listen 443 ssl;
+  server_name 107.23.234.204.nip.io;
+
+  ssl_certificate     /etc/letsencrypt/live/107.23.234.204.nip.io/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/107.23.234.204.nip.io/privkey.pem;
+
+  # 1) 프론트엔드 정적 파일 위치
+  root /var/www/html;
+  index index.html;
+
+  # 2) 프론트 라우팅(리액트 SPA)
+  location / {
+    try_files $uri /index.html;
+  }
+
+  # 3) 백엔드 API 프록시 (Node: 127.0.0.1:1804)
+  location /api/ {
+    proxy_pass http://127.0.0.1:1804/;  # ← 슬래시 주의! (/api/ 유지)
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto https;
+  }
+}
+```
 수정 후 서버 재시작:
 ```
-sudo systemctl restart db-server.service
+sudo nginx -t && sudo systemctl reload nginx
 ```
 ✅2. 사전준비    
 node.js typescript 설치해야 합니다. 다음을 참조하세요     
-
 https://github.com/kdi6033/react#-2%EB%8B%A8%EA%B3%84-nodejs-typescript-%EC%84%A4%EC%B9%98    
+```
+npm init -y
+npm install express dotenv mongodb cors body-parser
+node db-server.js
+```
+pm2 설정
+
+db가 정상동작하는 테스트해본다.
+```
+curl http://127.0.0.1:1804/health
+```
 
 ✅3. Iot 서버 프로그램 AWS에 설치    
 서버에는 backend (데이터베이스 프로그램) 와 frontend (UI 프로그램) 가 있습니다.    
