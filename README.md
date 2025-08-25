@@ -3920,16 +3920,16 @@ PORT=1804
 ```
 server {
   listen 80;
-  server_name 107.23.234.204.nip.io;
+  server_name 54.163.143.32.nip.io;
   return 301 https://$host$request_uri;
 }
 
 server {
   listen 443 ssl;
-  server_name 107.23.234.204.nip.io;
+  server_name 54.163.143.32.nip.io;
 
-  ssl_certificate     /etc/letsencrypt/live/107.23.234.204.nip.io/fullchain.pem;
-  ssl_certificate_key /etc/letsencrypt/live/107.23.234.204.nip.io/privkey.pem;
+  ssl_certificate     /etc/letsencrypt/live/54.163.143.32.nip.io/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/54.163.143.32.nip.io/privkey.pem;
 
   # 1) 프론트엔드 정적 파일 위치
   root /var/www/html;
