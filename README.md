@@ -2889,46 +2889,39 @@ nodemon: 자동 리로드 (서버 개발 시 유용)
 fileZilla 에서 home/ubuntu 디렉토리에 backend 디렉토리를 만듭니다.    
 여기에 monogoDB 연결 API db-server.js 를 업로드 합니다.    
 ```
-// db-server.js
+// db-server.js (단순화 버전)
 require('dotenv').config();
 
 const express = require('express');
 const { MongoClient } = require('mongodb');
 const cors = require('cors');
-const https = require('https');
-const fs = require('fs');
 
 const app = express();
 
 // ===== 환경 변수 =====
-const port = process.env.PORT || 1804;
-const url = process.env.DATABASE_URL || 'mongodb://127.0.0.1:27000';
+const PORT = process.env.PORT || 1804;
+const HOST = process.env.HOST || '127.0.0.1'; // 외부 접속 허용하려면 HOST=0.0.0.0
+const MONGO_URL = process.env.DATABASE_URL || 'mongodb://127.0.0.1:27000';
 
 // ===== DB 정보 =====
-const dbName = 'local';
-const collectionName = 'localRecord';
-const collectionNameUsers = 'users'; // (남겨두되, 인증/메일 기능은 삭제됨)
+const DB_NAME = 'local';
+const COL_RECORD = 'localRecord';
 
 // ===== 미들웨어 =====
 app.use(cors());
 app.use(express.json());
 
-// ===== 유틸 =====
-function generateTempPassword() {
-  return Math.random().toString(36).slice(-4);
-}
-
-// ===== 헬스체크 =====
+// ===== 루트 헬스(선택) =====
 app.get('/', (_req, res) => {
   res.send('✅ mongoDB 서버 정상 작동 중');
 });
 
 // ===== 레코드 전체 조회 =====
 app.post('/api/records', async (_req, res) => {
-  const client = new MongoClient(url);
+  const client = new MongoClient(MONGO_URL);
   try {
     await client.connect();
-    const records = await client.db(dbName).collection(collectionName).find({}).toArray();
+    const records = await client.db(DB_NAME).collection(COL_RECORD).find({}).toArray();
     res.json(records);
   } catch (err) {
     console.error('Error /api/records:', err);
@@ -2938,13 +2931,13 @@ app.post('/api/records', async (_req, res) => {
   }
 });
 
-// ===== 특정 email로 레코드 배열 조회 (인증과 무관한 데이터 조회용) =====
+// ===== 특정 email로 레코드 배열 조회 =====
 app.post('/api/findArray', async (req, res) => {
-  const client = new MongoClient(url);
+  const client = new MongoClient(MONGO_URL);
   const { email } = req.body;
   try {
     await client.connect();
-    const records = await client.db(dbName).collection(collectionName).find({ email }).toArray();
+    const records = await client.db(DB_NAME).collection(COL_RECORD).find({ email }).toArray();
     res.json(records);
   } catch (err) {
     console.error('Error /api/findArray:', err);
@@ -2956,11 +2949,11 @@ app.post('/api/findArray', async (req, res) => {
 
 // ===== MAC 단건 조회 =====
 app.post('/api/record', async (req, res) => {
-  const client = new MongoClient(url);
+  const client = new MongoClient(MONGO_URL);
   const { mac } = req.body;
   try {
     await client.connect();
-    const record = await client.db(dbName).collection(collectionName).findOne({ mac });
+    const record = await client.db(DB_NAME).collection(COL_RECORD).findOne({ mac });
     res.json(record);
   } catch (err) {
     console.error('Error /api/record:', err);
@@ -2972,12 +2965,12 @@ app.post('/api/record', async (req, res) => {
 
 // ===== 레코드 Upsert =====
 app.post('/api/upsert', async (req, res) => {
-  const client = new MongoClient(url);
+  const client = new MongoClient(MONGO_URL);
   const { mac, in: inArray = [], out: outArray = [], name, ...rest } = req.body;
 
   try {
     await client.connect();
-    const col = client.db(dbName).collection(collectionName);
+    const col = client.db(DB_NAME).collection(COL_RECORD);
 
     // name 배열 자동 생성(문서 없을 때만)
     const nameArrayLength = inArray.length + outArray.length + 1;
@@ -3005,14 +2998,13 @@ app.post('/api/upsert', async (req, res) => {
 
 // ===== 레코드 삭제 =====
 app.post('/api/delete', async (req, res) => {
-  const client = new MongoClient(url);
+  const client = new MongoClient(MONGO_URL);
   const { mac } = req.body;
-
   if (!mac) return res.status(400).send('MAC 주소가 필요합니다.');
 
   try {
     await client.connect();
-    const result = await client.db(dbName).collection(collectionName).deleteOne({ mac });
+    const result = await client.db(DB_NAME).collection(COL_RECORD).deleteOne({ mac });
     if (result.deletedCount === 1) {
       res.json({ message: '문서가 성공적으로 삭제되었습니다.' });
     } else {
@@ -3026,41 +3018,15 @@ app.post('/api/delete', async (req, res) => {
   }
 });
 
-// db-server.js 내 Express 초기화 후 가장 아래쪽쯤에 추가
-app.get('/health', (req, res) => {
+// ===== 헬스체크(프록시 경로와 일치) =====
+app.get('/api/health', (_req, res) => {
   res.json({ ok: true, pid: process.pid, time: new Date().toISOString() });
 });
 
-// ===== 서버 시작부(HTTPS 우선, 실패 시 HTTP로 자동 전환) =====
-const SSL_KEY  = process.env.SSL_KEY  || '/etc/letsencrypt/live/23.20.157.191.nip.io/privkey.pem';
-const SSL_CERT = process.env.SSL_CERT || '/etc/letsencrypt/live/23.20.157.191.nip.io/fullchain.pem';
-
-(function startServer() {
-  // 파일 존재 여부(경로) 확인
-  const hasFiles = fs.existsSync(SSL_KEY) && fs.existsSync(SSL_CERT);
-  if (hasFiles) {
-    try {
-      const sslOptions = {
-        key: fs.readFileSync(SSL_KEY),
-        cert: fs.readFileSync(SSL_CERT),
-      };
-      https.createServer(sslOptions, app).listen(port, '0.0.0.0', () => {
-        console.log(`✅ HTTPS Server running on port ${port}`);
-      });
-      return;
-    } catch (e) {
-      console.warn('⚠️  SSL 사용 불가(권한/파일 문제). HTTP로 기동합니다:', e.code || e.message);
-    }
-  } else {
-    console.warn('⚠️  SSL 파일 없음. HTTP로 기동합니다.', { SSL_KEY, SSL_CERT });
-  }
-
-  // Fallback: HTTP
-  app.listen(port, '0.0.0.0', () => {
-    console.log(`✅ HTTP Server running on port ${port}`);
-  });
-})();
-
+// ===== 서버 시작(HTTP만) =====
+app.listen(PORT, HOST, () => {
+  console.log(`✅ HTTP Server running on http://${HOST}:${PORT}`);
+});
 ```
 ### ✅ 3-2. 빌드 및 실행
 ```
