@@ -3966,7 +3966,7 @@ pm2 설정
 
 db가 정상동작하는 테스트해본다.
 ```
-curl http://127.0.0.1:1804/health
+curl -i http://127.0.0.1:1804/api/health
 ```
 
 ✅3. Iot 서버 프로그램 AWS에 설치    
