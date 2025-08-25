@@ -2882,35 +2882,12 @@ sudo npm install -g ts-node nodemon
 ts-node: .ts 파일을 바로 실행
 nodemon: 자동 리로드 (서버 개발 시 유용)
 
-
-
 ## 🚀 3단계: Node.js + Express API 서버 구성
 (이미 Node.js, TypeScript 설치한 상태라고 가정합니다)
-### ✅ 3-1. API 서버 예제 (/home/ubuntu/server/index.ts)
-```
-import express from 'express';
-const app = express();
-const port = 3000;
-
-app.use(express.json());
-
-app.get('/api/hello', (_, res) => {
-  res.json({ message: '안녕하세요, 김동일 교수님의 API입니다.' });
-});
-
-app.listen(port, () => {
-  console.log(`API 서버 실행 중: http://localhost:${port}`);
-});
-```
-### ✅ 3-2. 빌드 및 실행
-```
-cd /home/ubuntu/server
-tsc
-node dist/index.js
-```
+### ✅ 3-1. API 서버 예제 (/home/ubuntu/backend/db-server.js)
 앞에서 작성한 PLC 제어를 위한 db-server.js 업로드와 실행을 설명 합니다.
-fileZilla 에서 home/ubuntu 디렉토리에 backend 디렉토리를 만듭니다.
-여기에 monogoDB 연결 API db-server.js 를 업로드 합니다.
+fileZilla 에서 home/ubuntu 디렉토리에 backend 디렉토리를 만듭니다.    
+여기에 monogoDB 연결 API db-server.js 를 업로드 합니다.    
 ```
 // db-server.js
 require('dotenv').config();
@@ -3085,6 +3062,14 @@ const SSL_CERT = process.env.SSL_CERT || '/etc/letsencrypt/live/23.20.157.191.ni
 })();
 
 ```
+### ✅ 3-2. 빌드 및 실행
+```
+cd /home/ubuntu/backend
+npm init -y
+npm install express dotenv mongodb cors body-parser
+node db-server.js
+```
+
 
 ## 🚀 4단계: Nginx 리버스 프록시 설정
 ### ✅ 4-1. Nginx 설정 파일 수정
