@@ -3559,7 +3559,7 @@ sudo systemctl status mosquitto
 
 이제 wss 8883 포트를 사용하기 위해서 인증서 설치와 연결을 설명하겠습니다.
 ### ip.nip.io를 이용한 인증서 설치
-✅ 1. 54.221.133.252.nip.io 도메인으로 Let's Encrypt 인증서 발급 (권장)
+✅ 1. 54.163.143.32.nip.io 도메인으로 Let's Encrypt 인증서 발급 (권장)
 🔹 전제 조건:
 Nginx 또는 Certbot가 설치된 상태
 포트 80과 443이 외부에 열려 있어야 함
@@ -3568,12 +3568,12 @@ Nginx 또는 Certbot가 설치된 상태
 ```
 sudo apt update
 sudo apt install certbot
-sudo certbot certonly --standalone -d 54.221.133.252.nip.io
+sudo certbot certonly --standalone -d 54.163.143.32.nip.io
 ```
 성공하면 다음 경로에 인증서가 생성됩니다:
 ```
-/etc/letsencrypt/live/54.221.133.252.nip.io/fullchain.pem
-/etc/letsencrypt/live/54.221.133.252.nip.io/privkey.pem
+/etc/letsencrypt/live/54.163.143.32.nip.io/fullchain.pem
+/etc/letsencrypt/live/54.163.143.32.nip.io/privkey.pem
 ```
 ## ✅ 2: Nginx가 8883 포트에서 WSS를 받아 Mosquitto의 8080으로 프록시
 사용자 입장에선 wss://ip:8883로 접속하고,
@@ -3591,10 +3591,10 @@ sudo nano /etc/nginx/sites-available/mqtt-wss
 ```
 server {
     listen 8883 ssl;
-    server_name 54.221.133.252.nip.io;
+    server_name 54.163.143.32.nip.io;
 
-    ssl_certificate     /etc/letsencrypt/live/54.221.133.252.nip.io/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/54.221.133.252.nip.io/privkey.pem;
+    ssl_certificate     /etc/letsencrypt/live/54.163.143.32.nip.io/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/54.163.143.32.nip.io/privkey.pem;
 
     location / {
         proxy_pass http://localhost:8080/;
@@ -3637,7 +3637,7 @@ https://www.hivemq.com/demos/websocket-client/
 접속: 위 링크 클릭    
 
 아래처럼 입력:    
-Host: 54.221.133.252.nip.io    
+Host: 54.163.143.32.nip.io    
 Port: 8883   
 TLS: ✅ 체크 (→ wss)    
 Path: /    
@@ -3654,8 +3654,8 @@ Publish Topic: i2r/kdi6033@gmail.com/out, Message: {"order":1} → [Publish]
 IoT PLC를 와이파이에 접속 시키면 제어 판넬과 DB가 자동으로 생성되고 연동되는 프로그램이니 제작 과정이 궁금하신 분을 이 프로그램 소스를 chatGPT에 복사한 후에 설명해 달라고 하면 자세한게 분석 할 수 있습니다.    
 [IoT 서버 소스프로그램 다운로드](https://github.com/kdi6033/react/releases/tag/react-nip-ip-v1.0)   
 
-nip.io는 IP 기반의 무료 DNS 서비스로, 3.88.112.50.nip.io처럼 사용하면 DNS 설정 없이도 SSL 및 도메인 기반 접속이 가능합니다. 이 문서는 AWS Ubuntu 서버에 Node.js 백엔드 서버를 HTTPS로 구성하는 전 과정을 담고 있습니다.    
-aws에서 ip는 3.88.112.50 이라 가정하여 DNS 3.88.112.50.nip.io 로 설치하겠습니다.
+nip.io는 IP 기반의 무료 DNS 서비스로, 54.163.143.32.nip.io처럼 사용하면 DNS 설정 없이도 SSL 및 도메인 기반 접속이 가능합니다. 이 문서는 AWS Ubuntu 서버에 Node.js 백엔드 서버를 HTTPS로 구성하는 전 과정을 담고 있습니다.    
+aws에서 ip는 54.163.143.32 이라 가정하여 DNS 54.163.143.32.nip.io 로 설치하겠습니다.
 서버 보안그룸 : 80, 443, 1804 (백엔드 포트), 22 (SSH) 포트를 열어 준다.    
 
 ## Let's Encrypt 인증서 자동 발급 + HTTPS 설정을 위한 Nginx 구성
@@ -3668,7 +3668,7 @@ sudo apt install certbot python3-certbot-nginx -y
 ✅ 2. 인증서 발급
 107.23.234.204 는 자신의 IP로 대체해서 입력하세요
 ```
-sudo certbot --nginx -d 107.23.234.204.nip.io
+sudo certbot --nginx -d 54.163.143.32.nip.io
 ```
 nip.io는 무료로 도메인을 제공하지만 Let's Encrypt 인증서 자동 갱신(Auto Renewal) 은 기본적으로 지원되지 않습니다.
 시험 테스트 후에는 DNS 구매하여 연결하세요    
@@ -3679,21 +3679,21 @@ nip.io는 무료로 도메인을 제공하지만 Let's Encrypt 인증서 자동 
 ```
 sudo nano /etc/nginx/sites-available/default
 ```
-107.23.234.204 는 자신의 IP로 대체해서 입력하세요
+54.163.143.32 는 자신의 IP로 대체해서 입력하세요
 ```
 server {
     listen 80;
-    server_name 107.23.234.204;
+    server_name 54.163.143.32;
 
     return 301 https://$host$request_uri;
 }
 
 server {
     listen 443 ssl;
-    server_name 3.88.112.50.nip.io;
+    server_name 54.163.143.32.nip.io;
 
-    ssl_certificate     /etc/letsencrypt/live/107.23.234.204.nip.io/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/107.23.234.204.nip.io/privkey.pem;
+    ssl_certificate     /etc/letsencrypt/live/54.163.143.32.nip.io/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/54.163.143.32.nip.io/privkey.pem;
 
     ssl_protocols       TLSv1.2 TLSv1.3;
     ssl_ciphers         HIGH:!aNULL:!MD5;
@@ -3714,8 +3714,8 @@ sudo systemctl reload nginx
 ```
 
 ✅ 5. 최종 접속 주소
-107.23.234.204 는 자신의 IP로 대체해서 입력하세요
-https://107.23.234.204.nip.io 로 접속 시 안전하게 HTTPS 동작해야 합니다.
+54.163.143.32 는 자신의 IP로 대체해서 입력하세요
+https://54.163.143.32.nip.io 로 접속 시 안전하게 HTTPS 동작해야 합니다.
 
 ##⚡ 서버 접속 흐름 (https://107.23.234.204.nip.io/  접속 시)
 
