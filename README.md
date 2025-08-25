@@ -3685,7 +3685,7 @@ server {
     listen 80;
     server_name 54.163.143.32;
 
-    return 301 https://$host$request_uri;
+    return 308 https://$host$request_uri;
 }
 
 server {
