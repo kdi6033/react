@@ -3921,7 +3921,7 @@ PORT=1804
 server {
   listen 80;
   server_name 54.163.143.32.nip.io;
-  return 301 https://$host$request_uri;
+  return 308 https://$host$request_uri;
 }
 
 server {
