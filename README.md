@@ -2814,7 +2814,7 @@ app.post('/api/updateName', async (req, res) => {
 
 # AWS 서버 구축
 
-## 🚀 1단계: Nginx 설치 및 React 정적 파일 서빙
+## 🚀 1단계: Nginx 설치 및 React 정적 파일 서빙 (frontend 홈페이지구동)
 ### ✅ 1-1. Nginx 설치
 ```
 sudo apt update
@@ -2839,9 +2839,11 @@ sudo systemctl restart nginx
 ```
 ### ✅ 1-4. 확인
 브라우저에서 http://your-ec2-ip 접속 시 React 웹 앱이 보이면 성공입니다.
-처음 공부하는 분들은 여기까지 해서 홈페이지를 접속하시고 다음 과정은 나중에 진행 하세요
+처음 공부하는 분들은 여기까지 해서 홈페이지를 접속하시고 다음 과정은 나중에 진행 하세요   
 
-## 🚀 2단계: Node.js, TypeScript 설치
+## 🚀 2단계: Node.js, TypeScript 설치 (backend mongoDB구동)
+mongoDB 데이터베이스를 구동 합니다. 이는 보안상 모든 과정이 인증서를 기반으로 하는 https로 동작하기에 과정이 다소 복잡합니다.    
+상업용 프로그램을 하시는 분은 필수로 해야 하는 과정입니다.
 
 ✅ 1. Node.js 설치 (최신 LTS 버전)
 Node.js는 공식 설치 스크립트를 통해 설치하는 것이 가장 안전합니다.
