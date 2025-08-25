@@ -3942,7 +3942,7 @@ server {
 
   # 3) 백엔드 API 프록시 (Node: 127.0.0.1:1804)
   location /api/ {
-    proxy_pass http://127.0.0.1:1804/;  # ← 슬래시 주의! (/api/ 유지)
+    proxy_pass http://127.0.0.1:1804;  # ← 슬래시 주의! (/api/ 유지)
     proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
