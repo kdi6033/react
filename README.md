@@ -3575,6 +3575,22 @@ sudo certbot certonly --standalone -d 54.163.143.32.nip.io
 /etc/letsencrypt/live/54.163.143.32.nip.io/fullchain.pem
 /etc/letsencrypt/live/54.163.143.32.nip.io/privkey.pem
 ```
+
+### ip.sslip.io를 이용한 인증서 설치
+nip.io 인증을 받을 수 없을 때는 다음 사이트를 사용해서 인증 받으세요
+```
+sudo certbot certonly --standalone \
+  -d <도메인명> \
+  -m <이메일주소> \
+  --agree-tos --no-eff-email
+```
+예시
+```
+sudo certbot certonly --standalone \
+  -d 18.212.214.14.sslip.io \
+  -m kdi6033@gmail.com \
+  --agree-tos --no-eff-email
+```
 ## ✅ 2: Nginx가 8883 포트에서 WSS를 받아 Mosquitto의 8080으로 프록시
 사용자 입장에선 wss://ip:8883로 접속하고,
 Nginx는 그걸 ws://localhost:8080으로 넘겨줍니다.
