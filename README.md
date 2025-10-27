@@ -3031,6 +3031,7 @@ app.listen(PORT, HOST, () => {
 ### ✅ 3-2. 빌드 및 실행
 ```
 cd /home/ubuntu/backend
+npm install
 npm init -y
 npm install express dotenv mongodb cors body-parser
 node db-server.js
