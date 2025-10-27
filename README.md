@@ -4025,4 +4025,61 @@ https://github.com/kdi6033/i2r-03/releases/tag/board-i2r-03-v1.0
 - i2r-05 Shield 보 프로그램을 하여 AWS에 연동한다. 다음 사이트에서 프로그램을 다운로드 받아서 보드에 업로드 한다.
 https://github.com/kdi6033/i2r-05/releases/tag/i2r-05-basic-v1.0
 
+mosquitto mongoDB 통합설치 후  설정
+```
+# ① MQTT over WebSocket 프록시 (port 8080 → 8883)
+server {
+    listen 8883 ssl;
+    server_name test.i2r.link;
 
+    ssl_certificate     /etc/letsencrypt/live/test.i2r.link/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/test.i2r.link/privkey.pem;
+
+    location / {
+        proxy_pass http://localhost:8080/;   # Mosquitto WebSocket 브로커
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+        proxy_set_header Host $host;
+    }
+}
+
+# ② HTTP → HTTPS 자동 리디렉션
+server {
+    listen 80;
+    server_name test.i2r.link;
+    return 308 https://$host$request_uri;
+}
+
+# ③ HTTPS (React UI + Node.js API)
+server {
+    listen 443 ssl;
+    server_name test.i2r.link;
+
+    ssl_certificate     /etc/letsencrypt/live/test.i2r.link/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/test.i2r.link/privkey.pem;
+
+    # React 정적 페이지
+    root /var/www/html;
+    index index.html;
+
+    location / {
+        try_files $uri /index.html;
+    }
+
+    # API 프록시 (Node.js + MongoDB backend)
+    location /api/ {
+        proxy_pass http://127.0.0.1:1804;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+    }
+}
+
+```
+
+```
+🔸 sudo ln -s /etc/nginx/sites-available/i2r.conf /etc/nginx/sites-enabled/
+🔸 sudo nginx -t → OK 후 sudo systemctl restart nginx
+```
