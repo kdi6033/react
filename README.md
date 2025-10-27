@@ -3672,9 +3672,18 @@ Path: /
 Client ID: test-client 등 자유 입력    
 [Connect] 클릭    
 
-✅ 연결 후:    
+✅ 연결 후 8883 포트 테스트:    
 Topic: i2r/kdi6033@gmail.com/in → [Subscribe]    
 Publish Topic: i2r/kdi6033@gmail.com/out, Message: {"order":1} → [Publish]    
+✅ 1883 포트 테스트 : AWS 터미널을 두개 열고 다음을 테스트 합니다. 이때 8883 과 토픽을 일치 하게 하면 1883 과도 통신이 됩니다.
+터미널 A (Subscriber)
+```
+mosquitto_sub -h localhost -p 1883 -t test/topic
+```
+터미널 B (Publisher)
+```
+mosquitto_pub -h localhost -p 1883 -t test/topic -m "Hello MQTT 1883"
+```
 
 
 # ip.nip.io를 이용한 HTTPS & mongoDB 서버 구축 실습
