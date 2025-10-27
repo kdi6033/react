@@ -3559,6 +3559,17 @@ sudo systemctl status mosquitto
 
 이제 wss 8883 포트를 사용하기 위해서 인증서 설치와 연결을 설명하겠습니다.
 ### ip.nip.io를 이용한 인증서 설치
+설치하기 전에 nginx mqtt는 중지를 해야 합니다.
+```
+sudo systemctl stop nginx
+sudo systemctl stop mosquitto
+```
+섳치 후에 재시작은 다음과 같습니다.
+```
+sudo systemctl start nginx
+sudo systemctl start mosquitto
+```
+
 ✅ 1. 54.163.143.32.nip.io 도메인으로 Let's Encrypt 인증서 발급 (권장)
 🔹 전제 조건:
 Nginx 또는 Certbot가 설치된 상태
