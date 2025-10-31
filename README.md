@@ -405,7 +405,7 @@ function MyButton({ count, onClick }: MyButtonProps) { // props에 타입 지정
 
 export default App;
 ```
-## 7. MQTT
+## ✅ 7. MQTT
 이 프로그램은 MQTT 브로커에 연결하고, 주기적으로 메시지를 전송하며, 지정된 토픽에서 수신한 메시지를 화면에 출력하는 기능을 수행합니다.
 - 브로커에 연결: MQTT 클라이언트가 브로커(ai.doowon.ac.kr:1803)에 연결됩니다.
 - 토픽 구독: outtopic을 구독하고, 5초마다 intopic에 '김동일' 메시지를 전송합니다.
@@ -422,25 +422,26 @@ export default App;
 npx create-react-app mqtt --template typescript
 ```
 생성된 App.tsx 에서 아래와 같이 필요한 부분만 가지고 프로그램을 시작 합니다.    
-[관련지식] 웹과 mqtt는 웹소켙으로 통신을 합니다. 보통은 1883포트로 사용하고 ai.doowon.ac.kr에서 웹소켙은 1803으로 설정 되었습니다. 그리고 프로그램을 구성하는데 필요한 서브프로그램은 /components 라는 디렉토리를 만들어 여기에 저장하는 것이 관리하기 용이 합니다.    
+[관련지식] 웹과 mqtt는 웹소켙으로 통신을 합니다. 보통은 1883포트로 사용하고, 프로그램을 구성하는데 필요한 서브프로그램은 /components 라는 디렉토리를 만들어 여기에 저장하는 것이 관리하기 용이 합니다.    
 <img src="https://github.com/user-attachments/assets/8d3ef6cc-9df4-47de-a5eb-6bd3402c9eb4" alt="chatgpt prompts" width="100">  [25-8]    
 
 ```
 import React from 'react';
+import logo from './logo.svg';
 import './App.css';
 
-const App: React.FC = () => {
+function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-      </header>
-    </div>
+    <main>
+      MQTT 프로그램을 시작합니다.
+    </main>
   );
 }
 
 export default App;
+
 mqtt 연결프로그램 만들어줘
-브로커주소:mqtt.i2r.link 포트:8883 intopic:kdi60331@gmail.com/intopic  outtopic:kdi60331@gmail.com/outtopic
+브로커주소:mqtt.i2r.link 포트:8883 intopic:i2r/kdi60331@gmail.com/out  outtopic:i2r/kdi60331@gmail.com/in
 mqtt 프로그램은 components 디렉토리 만들어서 여기에 만들어줘
 ```
 intopic outtopic 에는 자신의 email 주소를 입력하세요.
