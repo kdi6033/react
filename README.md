@@ -4094,3 +4094,24 @@ server {
 🔸 sudo ln -s /etc/nginx/sites-available/i2r.conf /etc/nginx/sites-enabled/
 🔸 sudo nginx -t → OK 후 sudo systemctl restart nginx
 ```
+
+
+
+✅ 과목 문단명
+▶️[유튜브] 유튜브
+📌🔰 개요 및 준비
+🎯 학습 목표 및 기대 효과
+📋 요약 / 정리 / 확장 학습
+⚙️ 개발 환경 및 준비물
+🚀 실행, 런칭
+🟢	시작 신호 (녹색: 실행 의미)
+📦  필요 라이브러리 설치 방법 
+💻 소프트웨어 
+🔍	결과 확인, 테스트
+🔗 링크
+🌐 확장 기능 (통신)
+📚 참고 자료 및 링크
+💡	팁 / 확장 아이디어
+🧠 학생 과제 또는 연습 문제
+🤖	로봇 프로젝트 / 자율 동작 시스템
+
