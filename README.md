@@ -405,7 +405,7 @@ function MyButton({ count, onClick }: MyButtonProps) { // props에 타입 지정
 
 export default App;
 ```
-## ✅ 7. MQTT
+# ✅ 7. MQTT
 이 프로그램은 MQTT 브로커에 연결하고, 주기적으로 메시지를 전송하며, 지정된 토픽에서 수신한 메시지를 화면에 출력하는 기능을 수행합니다.
 - 브로커에 연결: MQTT 클라이언트가 브로커(ai.doowon.ac.kr:1803)에 연결됩니다.
 - 토픽 구독: outtopic을 구독하고, 5초마다 intopic에 '김동일' 메시지를 전송합니다.
@@ -441,7 +441,7 @@ function App() {
 export default App;
 
 mqtt 연결프로그램 만들어줘
-브로커주소:mqtt.i2r.link 포트:8883 intopic:i2r/kdi60331@gmail.com/out  outtopic:i2r/kdi60331@gmail.com/in
+브로커주소:mqtt.i2r.link 포트:1883 intopic:i2r/kdi60331@gmail.com/out  outtopic:i2r/kdi60331@gmail.com/in
 mqtt 프로그램은 components 디렉토리 만들어서 여기에 만들어줘
 ```
 intopic outtopic 에는 자신의 email 주소를 입력하세요.
