@@ -4096,6 +4096,45 @@ server {
 🔸 sudo nginx -t → OK 후 sudo systemctl restart nginx
 ```
 
+1. EC2 인스턴스에 Docker로 설치 (가장 추천)
+테스트나 소규모 서비스에 가장 적합하며 설정이 매우 간편합니다.
+
+1단계: EC2 인스턴스 생성 및 보안 그룹 설정
+인스턴스 생성: Ubuntu 또는 Amazon Linux 2023 등을 선택합니다.
+
+보안 그룹(Security Group) 규칙 추가: 아래 포트들을 인바운드 규칙에 허용해 주어야 합니다.
+
+1883: MQTT 프로토콜 포트
+
+8883: MQTT over SSL 포트
+
+18083: EMQX 대시보드 관리 도구 (웹 UI)
+
+8083, 8084: MQTT over WebSocket/WSS 포트
+
+2단계: Docker 설치 및 EMQX 실행
+EC2에 접속(SSH)한 뒤 아래 명령어를 차례로 입력합니다.
+
+```
+# 1. Docker 설치 (Ubuntu 기준)
+sudo apt update && sudo apt install -y docker.io
+sudo systemctl start docker
+sudo systemctl enable docker
+
+# 2. EMQX 최신 버전 이미지 내려받기 및 실행
+sudo docker run -d --name emqx \
+  -p 1883:1883 -p 8883:8883 \
+  -p 8083:8083 -p 8084:8084 \
+  -p 18083:18083 \
+  emqx/emqx:latest
+```
+
+3단계: 대시보드 접속 확인
+브라우저에서 http://<EC2-퍼블릭-IP>:18083에 접속합니다.
+
+초기 계정: admin
+
+초기 비밀번호: public (첫 접속 시 변경 필요)
 
 
 ✅ 과목 문단명
