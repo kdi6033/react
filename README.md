@@ -4095,6 +4095,7 @@ server {
 🔸 sudo ln -s /etc/nginx/sites-available/i2r.conf /etc/nginx/sites-enabled/
 🔸 sudo nginx -t → OK 후 sudo systemctl restart nginx
 ```
+## EMQX MQTT 서버 설치
 
 1. EC2 인스턴스에 Docker로 설치 (가장 추천)
 테스트나 소규모 서비스에 가장 적합하며 설정이 매우 간편합니다.
