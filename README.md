@@ -4124,9 +4124,18 @@ sudo systemctl enable docker
 
 # 2. EMQX 최신 버전 이미지 내려받기 및 실행
 sudo docker run -d --name emqx \
-  -p 1883:1883 -p 8883:8883 \
-  -p 8083:8083 -p 8084:8084 \
+  -p 1883:1883 \
+  -p 8883:8883 \
+  -p 8083:8083 \
+  -p 8084:8084 \
   -p 18083:18083 \
+  -v ~/emqx/certs:/opt/emqx/etc/certs \
+  -e EMQX_ALLOW_ANONYMOUS=true \
+  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__KEYFILE="/opt/emqx/etc/certs/privkey.pem" \
+  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__CERTFILE="/opt/emqx/etc/certs/fullchain.pem" \
+  -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__KEYFILE="/opt/emqx/etc/certs/privkey.pem" \
+  -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__CERTFILE="/opt/emqx/etc/certs/fullchain.pem" \
+  -e EMQX_LISTENER__WSS__DEFAULT__MAX_PUBLISH_RATE="10/1s" \
   emqx/emqx:latest
 ```
 
