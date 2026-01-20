@@ -4215,13 +4215,13 @@ Let's Encrypt 인증서는 90일마다 만료됩니다. 갑자기 서비스가 �
 터미널에 아래 명령어를 복사해서 붙여넣기만 하시면 됩니다.
 ```
 # 크론탭 편집기 열기 (번호 선택 나오면 1번 nano 선택)
-crontab -e
+sudo crontab -e
 ```
 
 파일 맨 아래 빈 줄에 다음 내용을 한 줄로 붙여넣고 저장(Ctrl+O, Enter, Ctrl+X)하세요.
 ```
-# 매월 1일 새벽 3시에 인증서 갱신 시도 -> 파일 복사 -> EMQX 재시작
-0 3 1 * * sudo certbot renew --quiet --deploy-hook "cp -f /etc/letsencrypt/live/broker.i2r.link/*.pem /home/ubuntu/emqx/certs/ && chmod 644 /home/ubuntu/emqx/certs/* && docker restart emqx"
+# 매주 월요일 새벽 4시에 확인 (인증서가 갱신될 때만 복사 및 재시작 수행)
+0 4 * * 1 certbot renew --quiet --deploy-hook "cp -f /etc/letsencrypt/live/broker.i2r.link/*.pem /home/ubuntu/emqx/certs/ && chmod 644 /home/ubuntu/emqx/certs/* && docker restart emqx"
 ```
 접속테스트
 http://cloud-tools.emqx.com/
