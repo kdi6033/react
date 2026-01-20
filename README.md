@@ -4176,6 +4176,31 @@ sudo docker run -d --name emqx \
   emqx/emqx:latest
 ```
 
+위에 설치한 것을 username password로 가지고 접속하도록 수정합니다.
+```
+# 1. 기존 컨테이너 삭제 (재설정 시)
+sudo docker stop emqx 2>/dev/null || true
+sudo docker rm emqx 2>/dev/null || true
+
+# 2. 수정된 명령어로 실행
+sudo docker run -d --name emqx \
+  --restart always \
+  -p 1883:1883 \
+  -p 8883:8883 \
+  -p 8083:8083 \
+  -p 8084:8084 \
+  -p 18083:18083 \
+  -v ~/emqx/certs:/opt/emqx/etc/certs \
+  -v ~/emqx/data:/opt/emqx/data \
+  -e EMQX_ALLOW_ANONYMOUS=false \
+  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__KEYFILE="/opt/emqx/etc/certs/privkey.pem" \
+  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__CERTFILE="/opt/emqx/etc/certs/fullchain.pem" \
+  -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__KEYFILE="/opt/emqx/etc/certs/privkey.pem" \
+  -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__CERTFILE="/opt/emqx/etc/certs/fullchain.pem" \
+  -e EMQX_LISTENERS__WSS__DEFAULT__MAX_PUBLISH_RATE="10/1s" \
+  emqx/emqx:5.3.2
+```
+
 3단계: 대시보드 접속 확인
 브라우저에서 http://<EC2-퍼블릭-IP>:18083에 접속합니다.
 
