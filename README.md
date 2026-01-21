@@ -4143,13 +4143,9 @@ sudo chmod 644 /home/ubuntu/emqx/certs/*
 보안 그룹(Security Group) 규칙 추가: 아래 포트들을 인바운드 규칙에 허용해 주어야 합니다.
 
 1883: MQTT 프로토콜 포트
-
 8883: MQTT over SSL 포트
-
 18083: EMQX 대시보드 관리 도구 (웹 UI)
-
 8083, 8084: MQTT over WebSocket/WSS 포트
-
 2단계: Docker 설치 및 EMQX 실행
 EC2에 접속(SSH)한 뒤 아래 명령어를 차례로 입력합니다.
 
