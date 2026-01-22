@@ -3799,12 +3799,12 @@ db-server.js가 MongoDB에 접근하여 요청을 처리합니다.
    └─ MongoDB (127.0.0.1:27000)
 ```
 
-## mongoDB 설치
+# ✅ mongoDB 설치
 다음 유튜브와 메누얼을 참조하여 mongoDB를 설치하세요    
 유튜브 : https://www.youtube.com/watch?v=WJrOxAN7ZH0    
 메뉴얼 : https://github.com/kdi6033/i2r/blob/main/txt/aws%20mongoDB%20install     
 
-## mongoDB 사용 설정 ( db-server.js )
+## 📌 mongoDB 사용 설정 ( db-server.js )
 ✅1. db-server.js 작성
 전체 내용은 다음과 같습니다.
 ```
@@ -4097,21 +4097,23 @@ server {
 ```
 
 
-## EMQX MQTT 서버 설치
+# ✅ EMQX MQTT 서버 설치
+
+## 📌 인증서 설치
 
 broker.i2r.link 도메인에 SSL 인증서를 발급받고, 이를 Docker로 실행 중인 EMQX 브로커에 적용하여 MQTTS(8883) 및 WSS(8084) 보안 통신을 구축하는 방법을 안내해 드립니다.
 
 이전에 논의된 AWS EC2 및 Docker 환경을 기준으로 설명하겠습니다.
 
-1단계: Certbot으로 무료 SSL 인증서 발급 (호스트 머신)
+✅ 1단계: Certbot으로 무료 SSL 인증서 발급 (호스트 머신)
 먼저 AWS EC2 호스트(우분투 등)에서 certbot을 이용해 Let's Encrypt 인증서를 발급받습니다.
 
 ```
-# 1. Certbot 설치 (이미 설치되어 있다면 생략)
+1. Certbot 설치 (이미 설치되어 있다면 생략)
 sudo snap install --classic certbot
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
 
-# 2. 인증서 발급 (80번 포트가 비어있어야 합니다. Nginx가 80을 쓰고 있다면 잠시 멈추거나 --webroot 옵션 사용)
+2. 인증서 발급 (80번 포트가 비어있어야 합니다. Nginx가 80을 쓰고 있다면 잠시 멈추거나 --webroot 옵션 사용)
 sudo certbot certonly --standalone -d broker.i2r.link
 ```
 
@@ -4121,25 +4123,28 @@ fullchain.pem (인증서)
 
 privkey.pem (개인키)
 
-2단계: 인증서 파일 준비 및 권한 설정
+✅ 2단계: 인증서 파일 준비 및 권한 설정
 Docker 컨테이너가 /etc/letsencrypt 폴더에 직접 접근하면 권한 문제가 발생할 수 있으므로, 프로젝트 폴더로 인증서를 복사하거나 심볼릭 링크를 관리하는 것이 좋습니다. 여기서는 복사 방식으로 진행하여 권한 문제를 피하겠습니다.
 
 ```
-# 1. EMQX 데이터 폴더 내에 certs 디렉토리 생성 (예: /home/ubuntu/emqx/certs)
+1. EMQX 데이터 폴더 내에 certs 디렉토리 생성 (예: /home/ubuntu/emqx/certs)
 mkdir -p /home/ubuntu/emqx/certs
 
-# 2. 인증서 복사 (이 과정은 인증서 갱신 때마다 해줘야 하므로 나중에 스크립트로 만들면 좋습니다)
+2. 인증서 복사 (이 과정은 인증서 갱신 때마다 해줘야 하므로 나중에 스크립트로 만들면 좋습니다)
 sudo cp /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/
 sudo cp /etc/letsencrypt/live/broker.i2r.link/privkey.pem /home/ubuntu/emqx/certs/
 
-# 3. 권한 변경 (Docker가 읽을 수 있도록)
+3. 권한 변경 (Docker가 읽을 수 있도록)
 sudo chmod 644 /home/ubuntu/emqx/certs/*
 ```
 
-1. EC2 인스턴스에 Docker로 설치 (가장 추천)
+## 📌 EMQX Docker로 설치
+
+✅ 1. EC2 인스턴스에 Docker로 설치 (가장 추천)
+
 테스트나 소규모 서비스에 가장 적합하며 설정이 매우 간편합니다.
 
-1단계: EC2 인스턴스 생성 및 보안 그룹 설정
+📌 1단계: EC2 인스턴스 생성 및 보안 그룹 설정
 인스턴스 생성: Ubuntu 또는 Amazon Linux 2023 등을 선택합니다.
 
 보안 그룹(Security Group) 규칙 추가: 아래 포트들을 인바운드 규칙에 허용해 주어야 합니다.
@@ -4148,7 +4153,8 @@ sudo chmod 644 /home/ubuntu/emqx/certs/*
 8883: MQTT over SSL 포트
 18083: EMQX 대시보드 관리 도구 (웹 UI)
 8083, 8084: MQTT over WebSocket/WSS 포트
-2단계: Docker 설치 및 EMQX 실행
+
+📌 2단계: Docker 설치 및 EMQX 실행
 EC2에 접속(SSH)한 뒤 아래 명령어를 차례로 입력합니다.
 
 ```
@@ -4199,7 +4205,7 @@ sudo docker run -d --name emqx \
   emqx/emqx:5.3.2
 ```
 
-3단계: 대시보드 접속 확인
+📌 3단계: 대시보드 접속 확인
 브라우저에서 http://<EC2-퍼블릭-IP>:18083에 접속합니다.
 
 초기 계정: admin
@@ -4225,7 +4231,7 @@ sudo crontab -e
 http://cloud-tools.emqx.com/
 
 ----
-### ✅ EMQX 관리자(수동)와 일반 회원(mongoDB)    
+## 📌 EMQX 관리자(수동)와 일반 회원(mongoDB) 등록   
 
 EMQX 대시보드에서 관리자는 수동(내부 DB)으로, 일반 회원은 외부 DB와 연동하는 방식은 매우 권장되는 구성입니다. 이를 '인증 체인(Authentication Chain)'이라고 하며, EMQX는 위에서부터 순서대로 인증을 시도합니다.
 
