@@ -4181,6 +4181,10 @@ sudo docker run -d --name emqx \
 ```
 
 위에 설치한 것을 username password로 가지고 접속하도록 수정합니다.
+- 1883 (TCP): ENABLE_AUTHN=false (누구나 접속)
+- 8883 (SSL): ENABLE_AUTHN=false (IoT PLC 공장 세팅용, 인증서만 맞으면 ID/PW 없이 접속)
+- 8084 (WSS): ENABLE_AUTHN=true (MongoDB에 있는 사용자만 접속)
+  
 ```
 # 1. 기존 컨테이너 삭제 (재설정 시)
 sudo docker stop emqx 2>/dev/null || true
@@ -4188,21 +4192,31 @@ sudo docker rm emqx 2>/dev/null || true
 
 # 2. 수정된 명령어로 실행
 sudo docker run -d --name emqx \
-  --restart always \
   -p 1883:1883 \
   -p 8883:8883 \
   -p 8083:8083 \
   -p 8084:8084 \
   -p 18083:18083 \
   -v ~/emqx/certs:/opt/emqx/etc/certs \
-  -v ~/emqx/data:/opt/emqx/data \
+  \
+  # [1. 전역 설정] 기본적으로 익명 접속을 차단합니다.
   -e EMQX_ALLOW_ANONYMOUS=false \
+  \
+  # [2. 1883 (TCP)] 누구나 접속 가능 (인증 끔)
+  -e EMQX_LISTENERS__TCP__DEFAULT__ENABLE_AUTHN=false \
+  \
+  # [3. 8883 (SSL)] IoT PLC용: SSL 암호화는 하되, ID/PW 인증은 생략 (인증 끔)
+  -e EMQX_LISTENERS__SSL__DEFAULT__ENABLE_AUTHN=false \
   -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__KEYFILE="/opt/emqx/etc/certs/privkey.pem" \
   -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__CERTFILE="/opt/emqx/etc/certs/fullchain.pem" \
+  \
+  # [4. 8084 (WSS)] 일반 사용자용: MongoDB ID/PW 필수 (인증 켬)
+  -e EMQX_LISTENERS__WSS__DEFAULT__ENABLE_AUTHN=true \
   -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__KEYFILE="/opt/emqx/etc/certs/privkey.pem" \
   -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__CERTFILE="/opt/emqx/etc/certs/fullchain.pem" \
-  -e EMQX_LISTENERS__WSS__DEFAULT__MAX_PUBLISH_RATE="10/1s" \
-  emqx/emqx:5.3.2
+  -e EMQX_LISTENER__WSS__DEFAULT__MAX_PUBLISH_RATE="10/1s" \
+  \
+  emqx/emqx:latest
 ```
 
 📌 3단계: 대시보드 접속 확인
