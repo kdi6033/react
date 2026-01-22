@@ -4268,6 +4268,62 @@ Password: 원하는 비밀번호 입력
 
 ------
 
+## 📌 mongoDB username password 설정
+MongoDB에 보안(계정/비밀번호)을 설정하여 아무나 접속하지 못하도록 막고, EMQX가 그 계정으로 안전하게 접속하도록 변경하는 과정을 설명합니다.
+이미 MongoDB Compass를 사용하고 계시므로, 이를 활용해 쉽게 진행하겠습니다.
+
+✅ 1단계: MongoDB 관리자 계정 생성 (Compass 사용)
+먼저, MongoDB를 관리하고 EMQX가 사용할 계정을 만들어야 합니다.
+
+MongoDB Compass를 실행하고 현재 설정(인증 없음)으로 접속합니다.
+
+화면 하단에 있는 >_MONGOSH 버튼을 클릭하여 쉘(Shell)을 엽니다.
+
+아래 명령어를 복사하여 붙여넣고 엔터키를 누릅니다. (비밀번호는 원하시는 것으로 변경하세요)
+```
+use admin
+db.createUser(
+  {
+    user: "admin",
+    pwd: "securePassword123!", // 원하는 비밀번호로 꼭 변경하세요
+    roles: [ { role: "root", db: "admin" } ]
+  }
+)
+```
+
+✅ 2단계: MongoDB 인증 모드 활성화
+계정을 만들었으니, 이제 MongoDB가 "ID/PW 없이는 접속 불가"하도록 설정을 바꿔야 합니다.
+
+이전 단계에서 수정했던 mongod.cfg 파일을 다시 엽니다 (관리자 권한으로 메모장 실행).
+
+security: 항목을 찾아 아래와 같이 주석(#)을 제거하고 수정합니다. (없다면 net: 항목 아래 등에 새로 적어주세요). 주의: authorization: 앞의 들여쓰기(스페이스바) 간격을 정확히 맞춰야 합니다.
+
+```
+security:
+  authorization: enabled
+```
+파일을 저장하고 닫습니다.
+
+✅ 3단계: MongoDB 서비스 재시작
+설정을 적용하기 위해 윈도우 서비스를 재시작합니다.
+
+Win + R을 누르고 services.msc 입력.
+
+MongoDB Server를 찾아 우클릭 -> 다시 시작(Restart).
+
+✅ 4단계: EMQX 설정 업데이트
+이제 EMQX가 방금 만든 계정으로 MongoDB에 접속하도록 설정해 줍니다. 질문해주신 이미지 화면으로 돌아가세요.
+- Username: admin (1단계에서 만든 ID)
+- Password: securePassword123! (1단계에서 설정한 비밀번호)
+- Auth Source: admin
+중요: 계정을 admin 데이터베이스에 만들었으므로, 이곳에 반드시 admin이라고 적어야 합니다. 비워두면 로그인에 실패할 수 있습니다.
+
+✅  5단계: 최종 확인
+EMQX 대시보드의 Actions 영역에서 Update 혹은 Connect 버튼을 눌러 상태가 다시 초록색 Connected가 되는지 확인합니다.
+(확인) 이제 Compass에서 기존 방식(인증 없음)으로 접속을 시도하면 실패해야 정상입니다.
+
+-----
+
 ✅ 과목 문단명
 ▶️[유튜브] 유튜브
 📌🔰 개요 및 준비
