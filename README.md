@@ -4240,37 +4240,23 @@ EMQX 대시보드에서 관리자는 수동(내부 DB)으로, 일반 회원은 �
 
 📌 2단계: 관리자 계정 생성 및 슈퍼유저 설정
 - 이제 목록에 Password-based: Built-in Database가 생겼을 것입니다.
-
 - 생성된 항목의 Actions 열에 있는 Users (사용자 관리 아이콘, 보통 사람 모양)를 클릭합니다.
-
 - + Add (또는 Create User) 버튼을 누릅니다.
-
 - 사용자 정보 입력:
-
-- Username: admin (또는 원하는 관리자 ID)
-
-- Password: 원하는 비밀번호 입력
-
+Username: admin (또는 원하는 관리자 ID)
+Password: 원하는 비밀번호 입력
 - Is Superuser (중요): 이 체크박스를 반드시 켜주세요 (ON).
-
 - 설명: 슈퍼유저가 되면 ACL(권한 목록) 검사를 건너뛰고 모든 토픽에 대해 발행/구독(Pub/Sub) 할 수 있는 권한을 가집니다. 따라서 별도로 # 토픽 권한을 설정할 필요가 없습니다.
-
 - Save를 눌러 저장합니다.
 
 📌 3단계: 일반 회원용 DB 연동 (참고)
-관리자 설정이 끝났으면, 다시 Authentication 메인 화면으로 돌아옵니다.
-
-다시 **+ Create**를 눌러 이번에는 Password-based -> MySQL (또는 PostgreSQL)을 선택하여 일반 회원용 DB 설정을 진행합니다.
-
-설정을 마치면 목록에 두 가지 인증 방식이 보일 것입니다.
-
-1순위: Built-in Database (관리자용)
-
-2순위: MySQL/PostgreSQL (일반 회원용)
-
-목록 순서는 드래그 앤 드롭으로 조정할 수 있습니다. Built-in Database가 항상 위에 오도록 설정하세요.
-
-작동 원리: 누군가 로그인하면 EMQX는 먼저 '내장 DB'를 뒤져보고, 거기에 없으면 '외부 DB'를 확인하게 됩니다.
+- 관리자 설정이 끝났으면, 다시 Authentication 메인 화면으로 돌아옵니다.
+- 다시 **+ Create**를 눌러 이번에는 Password-based -> MySQL (또는 PostgreSQL)을 선택하여 일반 회원용 DB 설정을 진행합니다.
+- 설정을 마치면 목록에 두 가지 인증 방식이 보일 것입니다.
+- 1순위: Built-in Database (관리자용)
+- 2순위: MySQL/PostgreSQL (일반 회원용)
+- 목록 순서는 드래그 앤 드롭으로 조정할 수 있습니다. Built-in Database가 항상 위에 오도록 설정하세요.
+- 작동 원리: 누군가 로그인하면 EMQX는 먼저 '내장 DB'를 뒤져보고, 거기에 없으면 '외부 DB'를 확인하게 됩니다.
 
 ------
 
