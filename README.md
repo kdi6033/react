@@ -4095,6 +4095,8 @@ server {
 🔸 sudo ln -s /etc/nginx/sites-available/i2r.conf /etc/nginx/sites-enabled/
 🔸 sudo nginx -t → OK 후 sudo systemctl restart nginx
 ```
+
+
 ## EMQX MQTT 서버 설치
 
 broker.i2r.link 도메인에 SSL 인증서를 발급받고, 이를 Docker로 실행 중인 EMQX 브로커에 적용하여 MQTTS(8883) 및 WSS(8084) 보안 통신을 구축하는 방법을 안내해 드립니다.
@@ -4223,7 +4225,7 @@ sudo crontab -e
 http://cloud-tools.emqx.com/
 
 ----
-####✅ EMQX 관리자(수동)와 일반 회원(mongoDB)    
+### ✅ EMQX 관리자(수동)와 일반 회원(mongoDB)    
 
 EMQX 대시보드에서 관리자는 수동(내부 DB)으로, 일반 회원은 외부 DB와 연동하는 방식은 매우 권장되는 구성입니다. 이를 '인증 체인(Authentication Chain)'이라고 하며, EMQX는 위에서부터 순서대로 인증을 시도합니다.
 
