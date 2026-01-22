@@ -4232,10 +4232,12 @@ sudo crontab -e
 # 매주 월요일 새벽 4시에 확인 (인증서가 갱신될 때만 복사 및 재시작 수행)
 0 4 * * 1 certbot renew --quiet --deploy-hook "cp -f /etc/letsencrypt/live/broker.i2r.link/*.pem /home/ubuntu/emqx/certs/ && chmod 644 /home/ubuntu/emqx/certs/* && docker restart emqx"
 ```
+----
 접속테스트
 http://cloud-tools.emqx.com/
 
-----
+대시보드 접속: http://[서버IP]:18083 (ID: admin / PW: public - 초기화되었으므로 비밀번호도 다시 public일 수 있습니다)
+
 ## 📌 EMQX 관리자(수동)와 일반 회원(mongoDB) 등록   
 
 EMQX 대시보드에서 관리자는 수동(내부 DB)으로, 일반 회원은 외부 DB와 연동하는 방식은 매우 권장되는 구성입니다. 이를 '인증 체인(Authentication Chain)'이라고 하며, EMQX는 위에서부터 순서대로 인증을 시도합니다.
