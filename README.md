@@ -4198,24 +4198,15 @@ sudo docker run -d --name emqx \
   -p 8084:8084 \
   -p 18083:18083 \
   -v ~/emqx/certs:/opt/emqx/etc/certs \
-  \
-  # [1. 전역 설정] 기본적으로 익명 접속을 차단합니다.
   -e EMQX_ALLOW_ANONYMOUS=false \
-  \
-  # [2. 1883 (TCP)] 누구나 접속 가능 (인증 끔)
   -e EMQX_LISTENERS__TCP__DEFAULT__ENABLE_AUTHN=false \
-  \
-  # [3. 8883 (SSL)] IoT PLC용: SSL 암호화는 하되, ID/PW 인증은 생략 (인증 끔)
   -e EMQX_LISTENERS__SSL__DEFAULT__ENABLE_AUTHN=false \
   -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__KEYFILE="/opt/emqx/etc/certs/privkey.pem" \
   -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__CERTFILE="/opt/emqx/etc/certs/fullchain.pem" \
-  \
-  # [4. 8084 (WSS)] 일반 사용자용: MongoDB ID/PW 필수 (인증 켬)
   -e EMQX_LISTENERS__WSS__DEFAULT__ENABLE_AUTHN=true \
   -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__KEYFILE="/opt/emqx/etc/certs/privkey.pem" \
   -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__CERTFILE="/opt/emqx/etc/certs/fullchain.pem" \
-  -e EMQX_LISTENER__WSS__DEFAULT__MAX_PUBLISH_RATE="10/1s" \
-  \
+  -e EMQX_LISTENERS__WSS__DEFAULT__MAX_PUBLISH_RATE="10/1s" \
   emqx/emqx:latest
 ```
 
