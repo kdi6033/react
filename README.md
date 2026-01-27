@@ -4149,6 +4149,23 @@ sudo chmod -R 755 ~/emqx/certs
 sudo chmod 644 ~/emqx/certs/*.pem
 ```
 
+✅ 6 단계: 실행 전 체크리스트
+
+① 파일 존재 여부 확인 (가장 중요)
+명령어에서 -v ~/emqx/certs:/opt/emqx/etc/certs라고 지정하셨기 때문에, 서버의 해당 경로에 파일이 반드시 있어야 합니다. 터미널에서 아래 명령어를 입력해 파일이 리스트에 나오는지 확인하세요.
+```
+ls -l ~/emqx/certs/fullchain.pem
+ls -l ~/emqx/certs/privkey.pem
+```
+
+② 기존 컨테이너 확인
+이미 emqx라는 이름의 컨테이너가 실행 중이라면 이름 충돌로 에러가 날 수 있습니다. 아래 명령어로 먼저 정리해 주는 것이 안전합니다.
+```
+sudo docker stop emqx || true
+sudo docker rm emqx || true
+```
+
+
 ## 📌 인증서 설치
 
 broker.i2r.link 도메인에 SSL 인증서를 발급받고, 이를 Docker로 실행 중인 EMQX 브로커에 적용하여 MQTTS(8883) 및 WSS(8084) 보안 통신을 구축하는 방법을 안내해 드립니다.
