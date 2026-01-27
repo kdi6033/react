@@ -4098,6 +4098,39 @@ server {
 
 
 # ✅ EMQX MQTT 서버 설치
+인증서 설치와 인증서 복사 두 경우를 설명 합니다.
+
+## 📌 인증서 복사
+
+인증서 파일은 보안상 일반 사용자가 접근할 수 없는 root 권한 지역(/etc/letsencrypt 등)에 저장되어 있는 경우가 많습니다. FileZilla로 바로 접속하면 권한 문제로 파일이 보이지 않거나 복사가 안 될 수 있으므로, 권한을 부여하거나 파일을 복사해두는 사전 작업이 필요합니다.
+
+✅ 1단계: 서버에서 인증서 파일 준비 (SSH 터미널)
+FileZilla로 접속하기 전에, SSH 터미널(PuTTY나 CMD 등)에서 인증서 파일을 ubuntu 사용자가 가져갈 수 있는 곳으로 복사하고 권한을 열어줘야 합니다.
+```
+# 1. 인증서가 있는 경로로 이동 (보통 Certbot을 사용했다면 아래 경로입니다)
+sudo ls -l /etc/letsencrypt/live/broker.i2r.link/
+
+# 2. 내 홈 디렉토리에 임시 복사 폴더 생성
+mkdir ~/cert-copy
+
+# 3. 인증서 파일들을 임시 폴더로 복사 (심볼릭 링크 실제 파일로 복사)
+sudo cp -L /etc/letsencrypt/live/broker.i2r.link/* ~/cert-copy/
+
+# 4. FileZilla에서 다운로드할 수 있도록 소유권 변경
+sudo chown -R ubuntu:ubuntu ~/cert-copy/
+```
+
+✅ 2단계: FileZilla를 이용해 내 PC로 복사
+이제 준비된 파일을 내 컴퓨터로 가져옵니다.
+FileZilla 접속: broker.i2r.link 서버에 ubuntu 계정으로 접속합니다.
+
+경로 이동: 오른쪽(리모트 사이트) 창에서 /home/ubuntu/my_certs 폴더로 들어갑니다.
+
+다운로드: 왼쪽(로컬 사이트) 창에서 파일을 저장할 내 PC 폴더를 선택한 뒤, 오른쪽의 인증서 파일들을 드래그해서 왼쪽으로 가져옵니다.
+
+보통 fullchain.pem (인증서)과 privkey.pem (개인키) 파일이 핵심입니다.
+
+
 
 ## 📌 인증서 설치
 
