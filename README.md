@@ -4121,18 +4121,17 @@ sudo chown -R ubuntu:ubuntu ~/cert-copy/
 ```
 
 ✅ 2단계: FileZilla를 이용해 내 PC로 복사
+- 이제 준비된 파일을 내 컴퓨터로 가져옵니다.
+- FileZilla 접속: broker.i2r.link 서버에 ubuntu 계정으로 접속합니다.
+- 경로 이동: 오른쪽(리모트 사이트) 창에서 /home/ubuntu/my_certs 폴더로 들어갑니다.
+- 다운로드: 왼쪽(로컬 사이트) 창에서 파일을 저장할 내 PC 폴더를 선택한 뒤, 오른쪽의 인증서 파일들을 드래그해서 왼쪽으로 가져옵니다.
+- 보통 fullchain.pem (인증서)과 privkey.pem (개인키) 파일이 핵심입니다.
 
-이제 준비된 파일을 내 컴퓨터로 가져옵니다.
-
-FileZilla 접속: broker.i2r.link 서버에 ubuntu 계정으로 접속합니다.
-
-경로 이동: 오른쪽(리모트 사이트) 창에서 /home/ubuntu/my_certs 폴더로 들어갑니다.
-
-다운로드: 왼쪽(로컬 사이트) 창에서 파일을 저장할 내 PC 폴더를 선택한 뒤, 오른쪽의 인증서 파일들을 드래그해서 왼쪽으로 가져옵니다.
-
-보통 fullchain.pem (인증서)과 privkey.pem (개인키) 파일이 핵심입니다.
-
-
+✅ 3단계: 새로운 서버(EC2)로 인증서 전송
+- 이제 새 서버에 Docker EMQX를 설치할 준비를 합니다.
+- 새 서버 접속: FileZilla에서 새로 만든 EC2 서버의 IP로 접속합니다.
+- 폴더 생성: 오른쪽 창 /home/ubuntu 아래에 certs 폴더를 만듭니다.
+- 업로드: 내 PC에 받아두었던 인증서 파일들을 새 서버의 certs 폴더로 드래그하여 업로드합니다.
 
 ## 📌 인증서 설치
 
