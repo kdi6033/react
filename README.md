@@ -4121,7 +4121,9 @@ sudo chown -R ubuntu:ubuntu ~/cert-copy/
 ```
 
 ✅ 2단계: FileZilla를 이용해 내 PC로 복사
+
 이제 준비된 파일을 내 컴퓨터로 가져옵니다.
+
 FileZilla 접속: broker.i2r.link 서버에 ubuntu 계정으로 접속합니다.
 
 경로 이동: 오른쪽(리모트 사이트) 창에서 /home/ubuntu/my_certs 폴더로 들어갑니다.
