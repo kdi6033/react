@@ -4133,6 +4133,11 @@ sudo chown -R ubuntu:ubuntu ~/cert-copy/
 - 폴더 생성: 오른쪽 창 /home/ubuntu 아래에 certs 폴더를 만듭니다.
 - 업로드: 내 PC에 받아두었던 인증서 파일들을 새 서버의 certs 폴더로 드래그하여 업로드합니다.
 
+✅ 4단계: FileZilla를 이용한 복사
+- 새 서버(EC2) 접속: FileZilla에서 ubuntu 계정으로 접속합니다.
+- 디렉토리 생성: 오른쪽(원격) 창의 /home/ubuntu에서 마우스 우클릭 후 emqx 폴더를 만들고, 그 안에 들어가서 다시 certs 폴더를 만듭니다. (최종 경로: /home/ubuntu/emqx/certs)
+- 파일 업로드: 왼쪽(로컬) 창에 있는 privkey.pem과 fullchain.pem을 오른쪽의 certs 폴더로 드래그하여 업로드합니다.
+
 ## 📌 인증서 설치
 
 broker.i2r.link 도메인에 SSL 인증서를 발급받고, 이를 Docker로 실행 중인 EMQX 브로커에 적용하여 MQTTS(8883) 및 WSS(8084) 보안 통신을 구축하는 방법을 안내해 드립니다.
