@@ -4312,7 +4312,9 @@ sudo docker run -d --name emqx \
 sudo docker logs emqx
 ```
 📌 3단계: 대시보드 접속 확인
+
 브라우저에서 http://<EC2-퍼블릭-IP>:18083에 접속합니다.
+
 ```
 초기 계정: admin
 초기 비밀번호: public (첫 접속 시 변경 필요)
