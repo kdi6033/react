@@ -4248,9 +4248,60 @@ sudo docker run -d --name emqx \
   -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__CERTFILE="/opt/emqx/etc/certs/fullchain.pem" \
   -e EMQX_LISTENERS__WSS__DEFAULT__MAX_PUBLISH_RATE="10/1s" \
   emqx/emqx:latest
+
+
+sudo docker run -d --name emqx \
+  -p 1883:1883 \
+  -p 8883:8883 \
+  -p 8084:8084 \
+  -p 18083:18083 \
+  -v /home/ubuntu/emqx/certs:/opt/emqx/etc/certs \
+  -e EMQX_NODE__COOKIE="i2r_plc_secret" \
+  -e EMQX_ALLOW_ANONYMOUS=true \
+  --restart always \
+  \
+  # [1883: 기본 TCP] - 인증 없이 접속 허용
+  -e EMQX_LISTENERS__TCP__DEFAULT__ENABLE_AUTHN=false \
+  \
+  # [8883: MQTTS] - 제공된 인증서(mTLS)로만 접속
+  -e EMQX_LISTENERS__SSL__DEFAULT__ENABLE_AUTHN=false \
+  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__CACERTFILE="/opt/emqx/etc/certs/fullchain.pem" \
+  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__CERTFILE="/opt/emqx/etc/certs/fullchain.pem" \
+  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__KEYFILE="/opt/emqx/etc/certs/privkey.pem" \
+  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__VERIFY=verify_peer \
+  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__FAIL_IF_NO_PEER_CERT=true \
+  \
+  # [8084: WSS] - 보안 웹소켓 + MongoDB ID/PW 인증
+  -e EMQX_LISTENERS__WSS__DEFAULT__ENABLE_AUTHN=true \
+  -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__CERTFILE="/opt/emqx/etc/certs/fullchain.pem" \
+  -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__KEYFILE="/opt/emqx/etc/certs/privkey.pem" \
+  -e EMQX_LISTENERS__WSS__DEFAULT__LIMIT_PUBLISH_RATE="10/1s" \
+  emqx/emqx:latest
+
+sudo docker run -d --name emqx \
+  --restart always \
+  -p 1883:1883 \
+  -p 8883:8883 \
+  -p 8084:8084 \
+  -p 18083:18083 \
+  -v /home/ubuntu/emqx/certs:/opt/emqx/etc/certs \
+  -e EMQX_NODE__COOKIE="i2r_plc_secret" \
+  -e EMQX_ALLOW_ANONYMOUS=true \
+  -e EMQX_LISTENERS__TCP__DEFAULT__ENABLE_AUTHN=false \
+  -e EMQX_LISTENERS__SSL__DEFAULT__ENABLE_AUTHN=false \
+  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__CACERTFILE="/opt/emqx/etc/certs/fullchain.pem" \
+  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__CERTFILE="/opt/emqx/etc/certs/fullchain.pem" \
+  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__KEYFILE="/opt/emqx/etc/certs/privkey.pem" \
+  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__VERIFY=verify_peer \
+  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__FAIL_IF_NO_PEER_CERT=true \
+  -e EMQX_LISTENERS__WSS__DEFAULT__ENABLE_AUTHN=true \
+  -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__CERTFILE="/opt/emqx/etc/certs/fullchain.pem" \
+  -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__KEYFILE="/opt/emqx/etc/certs/privkey.pem" \
+  -e EMQX_LISTENERS__WSS__DEFAULT__LIMIT_PUBLISH_RATE="10/1s" \
+  emqx/emqx:latest
 ```
 
-위에 설치한 것을 username password로 가지고 접속하도록 수정합니다.
+1883은 Free하게, 8883은 인증서로 깐깐하게, 8084는 로그인 방식으로 각각 다르게 작동하게 됩니다.
 - 1883 (TCP): ENABLE_AUTHN=false (누구나 접속)
 - 8883 (SSL): ENABLE_AUTHN=false (IoT PLC 공장 세팅용, 인증서만 맞으면 ID/PW 없이 접속)
 - 8084 (WSS): ENABLE_AUTHN=true (MongoDB에 있는 사용자만 접속)
