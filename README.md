@@ -4201,8 +4201,16 @@ mkdir -p /home/ubuntu/emqx/certs
 sudo cp /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/
 sudo cp /etc/letsencrypt/live/broker.i2r.link/privkey.pem /home/ubuntu/emqx/certs/
 
-3. 권한 변경 (Docker가 읽을 수 있도록)
+3. MQX가 요구하는 파일명으로 복사
+sudo cp fullchain.pem cert.pem
+sudo cp privkey.pem key.pem
+sudo cp fullchain.pem cacert.pem
+
+4. 권한 변경 (Docker가 읽을 수 있도록)
 sudo chmod 644 /home/ubuntu/emqx/certs/*
+
+5. 인증서 폴더로 이동 해서 파일 확인
+cd /home/ubuntu/emqx/certs
 ```
 
 ## 📌 EMQX Docker로 설치
