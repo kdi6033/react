@@ -4341,8 +4341,6 @@ sudo crontab -e
 ```
 # 매주 월요일 새벽 4시에 확인 (인증서가 갱신될 때만 복사 및 재시작 수행)
 0 4 * * 1 certbot renew --quiet --deploy-hook "cp -f /etc/letsencrypt/live/broker.i2r.link/*.pem /home/ubuntu/emqx/certs/ && chmod 644 /home/ubuntu/emqx/certs/* && docker restart emqx"
-수정된 내용
-0 4 * * 1 certbot renew --quiet --deploy-hook "cp -f /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/fullchain.pem && cp -f /etc/letsencrypt/live/broker.i2r.link/privkey.pem /home/ubuntu/emqx/certs/privkey.pem && chmod 644 /home/ubuntu/emqx/certs/*.pem && docker restart emqx"
 ```
 ----
 ✅ MQTT 접속테스트
