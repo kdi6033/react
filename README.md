@@ -4387,7 +4387,8 @@ Password: 원하는 비밀번호 입력
 
 ------
 
-✅ mongoDB username password 설정
+✅ mongoDB username password 설정    
+
 MongoDB에 보안(계정/비밀번호)을 설정하여 아무나 접속하지 못하도록 막고, EMQX가 그 계정으로 안전하게 접속하도록 변경하는 과정을 설명합니다.    
 이미 MongoDB Compass를 사용하고 계시므로, 이를 활용해 쉽게 진행하겠습니다.
 
@@ -4396,6 +4397,7 @@ MongoDB에 보안(계정/비밀번호)을 설정하여 아무나 접속하지 �
 MongoDB Compass를 실행하고 현재 설정(인증 없음)으로 접속합니다.    
 화면 하단에 있는 >_MONGOSH 버튼을 클릭하여 쉘(Shell)을 엽니다.    
 아래 명령어를 복사하여 붙여넣고 엔터키를 누릅니다. (비밀번호는 원하시는 것으로 변경하세요)
+user 는 EQMX 에서 superuser로 등록한 이름을 등록 합니다.
 ```
 use admin
 db.createUser(
