@@ -4184,11 +4184,8 @@ sudo ln -s /snap/bin/certbot /usr/bin/certbot
 sudo certbot certonly --standalone -d broker.i2r.link
 ```
 
-발급이 완료되면 인증서는 /etc/letsencrypt/live/broker.i2r.link/ 경로에 생성됩니다.
-
-fullchain.pem (인증서)
-
-privkey.pem (개인키)
+발급이 완료되면 인증서는 /etc/letsencrypt/live/broker.i2r.link/ 경로에 생성됩니다.    
+fullchain.pem (인증서), privkey.pem (개인키)    
 
 ✅ 2단계: 인증서 파일 준비 및 권한 설정
 Docker 컨테이너가 /etc/letsencrypt 폴더에 직접 접근하면 권한 문제가 발생할 수 있으므로, 프로젝트 폴더로 인증서를 복사하거나 심볼릭 링크를 관리하는 것이 좋습니다. 여기서는 복사 방식으로 진행하여 권한 문제를 피하겠습니다.
