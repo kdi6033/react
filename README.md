@@ -4429,6 +4429,8 @@ EMQX 대시보드의 Actions 영역에서 Update 혹은 Connect 버튼을 눌러
 ```
 MQTT 테스트 : http://cloud-tools.emqx.com/
 ```
+<img height="300" alt="image" src="https://github.com/user-attachments/assets/ff778160-d374-4ea0-ae73-5083c7699530" />
+
 
 -----
 
