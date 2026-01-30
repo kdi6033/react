@@ -4332,6 +4332,29 @@ sudo docker run -d --name emqx \
   -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__KEYFILE="/opt/emqx/etc/certs/key.pem" \
   -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__CACERTFILE="/opt/emqx/etc/certs/cacert.pem" \
   emqx/emqx:latest
+
+
+sudo docker run -d --name emqx \
+  --restart always \
+  -p 1883:1883 \
+  -p 8883:8883 \
+  -p 8084:8084 \
+  -p 18083:18083 \
+  -v /home/ubuntu/emqx/certs:/opt/emqx/etc/certs \
+  -e EMQX_NODE__COOKIE="i2r_plc_secret" \
+  -e EMQX_ALLOW_ANONYMOUS=true \
+  -e EMQX_LISTENERS__TCP__DEFAULT__ENABLE_AUTHN=false \
+  -e EMQX_LISTENERS__SSL__DEFAULT__ENABLE_AUTHN=false \
+  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__CERTFILE="/opt/emqx/etc/certs/cert.pem" \
+  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__KEYFILE="/opt/emqx/etc/certs/key.pem" \
+  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__CACERTFILE="/opt/emqx/etc/certs/cacert.pem" \
+  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__VERIFY=verify_none \
+  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__FAIL_IF_NO_PEER_CERT=false \
+  -e EMQX_LISTENERS__WSS__DEFAULT__ENABLE_AUTHN=false \
+  -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__CERTFILE="/opt/emqx/etc/certs/cert.pem" \
+  -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__KEYFILE="/opt/emqx/etc/certs/key.pem" \
+  -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__CACERTFILE="/opt/emqx/etc/certs/cacert.pem" \
+  emqx/emqx:latest
 ```
 
 1883은 Free하게, 8883은 인증서로 깐깐하게, 8084는 로그인 방식으로 각각 다르게 작동하게 됩니다.
