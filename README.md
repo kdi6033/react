@@ -4195,14 +4195,6 @@ Docker 컨테이너가 /etc/letsencrypt 폴더에 직접 접근하면 권한 문
 mkdir -p /home/ubuntu/emqx/certs
 
 2. 인증서 복사 (이 과정은 인증서 갱신 때마다 해줘야 하므로 나중에 스크립트로 만들면 좋습니다)
-sudo cp /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/
-sudo cp /etc/letsencrypt/live/broker.i2r.link/privkey.pem /home/ubuntu/emqx/certs/
-<br>
-# 1. 원본에서 직접 3가지 이름으로 복사
-sudo cp /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/cert.pem
-sudo cp /etc/letsencrypt/live/broker.i2r.link/privkey.pem /home/ubuntu/emqx/certs/key.pem
-sudo cp /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/cacert.pem
-
 sudo cp /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/fullchain.pem
 sudo cp /etc/letsencrypt/live/broker.i2r.link/privkey.pem /home/ubuntu/emqx/certs/privkey.pem
 sudo cp /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/cert.pem
@@ -4242,95 +4234,6 @@ sudo systemctl start docker
 sudo systemctl enable docker
 
 # 2. EMQX 최신 버전 이미지 내려받기 및 실행
-sudo docker run -d --name emqx \
-  --restart always \
-  -p 1883:1883 \
-  -p 8883:8883 \
-  -p 8084:8084 \
-  -p 18083:18083 \
-  -v /home/ubuntu/emqx/certs:/opt/emqx/etc/certs \
-  -e EMQX_NODE__COOKIE="i2r_plc_secret" \
-  -e EMQX_ALLOW_ANONYMOUS=true \
-  -e EMQX_LISTENERS__TCP__DEFAULT__ENABLE_AUTHN=false \
-  -e EMQX_LISTENERS__SSL__DEFAULT__ENABLE_AUTHN=false \
-  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__CACERTFILE="/opt/emqx/etc/certs/fullchain.pem" \
-  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__CERTFILE="/opt/emqx/etc/certs/fullchain.pem" \
-  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__KEYFILE="/opt/emqx/etc/certs/privkey.pem" \
-  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__VERIFY=verify_peer \
-  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__FAIL_IF_NO_PEER_CERT=true \
-  -e EMQX_LISTENERS__WSS__DEFAULT__ENABLE_AUTHN=true \
-  -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__CERTFILE="/opt/emqx/etc/certs/fullchain.pem" \
-  -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__KEYFILE="/opt/emqx/etc/certs/privkey.pem" \
-  -e EMQX_LISTENERS__WSS__DEFAULT__LIMIT_PUBLISH_RATE="10/1s" \
-  emqx/emqx:latest
-
-sudo docker run -d --name emqx \
-  --restart always \
-  -p 1883:1883 \
-  -p 8883:8883 \
-  -p 8084:8084 \
-  -p 18083:18083 \
-  -v /home/ubuntu/emqx/certs:/opt/emqx/etc/certs \
-  -e EMQX_NODE__COOKIE="i2r_plc_secret" \
-  -e EMQX_ALLOW_ANONYMOUS=true \
-  -e EMQX_LISTENERS__TCP__DEFAULT__ENABLE_AUTHN=false \
-  -e EMQX_LISTENERS__SSL__DEFAULT__ENABLE_AUTHN=false \
-  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__CERTFILE="/opt/emqx/etc/certs/fullchain.pem" \
-  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__KEYFILE="/opt/emqx/etc/certs/privkey.pem" \
-  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__VERIFY=verify_none \
-  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__FAIL_IF_NO_PEER_CERT=false \
-  -e EMQX_LISTENERS__WSS__DEFAULT__ENABLE_AUTHN=true \
-  -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__CERTFILE="/opt/emqx/etc/certs/fullchain.pem" \
-  -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__KEYFILE="/opt/emqx/etc/certs/privkey.pem" \
-  -e EMQX_LISTENERS__WSS__DEFAULT__LIMIT_PUBLISH_RATE="10/1s" \
-  emqx/emqx:latest
-
-sudo docker run -d --name emqx \
-  --restart always \
-  -p 1883:1883 \
-  -p 8883:8883 \
-  -p 8084:8084 \
-  -p 18083:18083 \
-  -v /home/ubuntu/emqx/certs:/opt/emqx/etc/certs \
-  -e EMQX_NODE__COOKIE="i2r_plc_secret" \
-  -e EMQX_ALLOW_ANONYMOUS=true \
-  -e EMQX_LISTENERS__TCP__DEFAULT__ENABLE_AUTHN=false \
-  -e EMQX_LISTENERS__SSL__DEFAULT__ENABLE_AUTHN=false \
-  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__CERTFILE="/opt/emqx/etc/certs/fullchain.pem" \
-  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__KEYFILE="/opt/emqx/etc/certs/privkey.pem" \
-  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__CACERTFILE="/opt/emqx/etc/certs/fullchain.pem" \
-  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__VERIFY=verify_none \
-  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__FAIL_IF_NO_PEER_CERT=false \
-  -e EMQX_LISTENERS__WSS__DEFAULT__ENABLE_AUTHN=true \
-  -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__CERTFILE="/opt/emqx/etc/certs/fullchain.pem" \
-  -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__KEYFILE="/opt/emqx/etc/certs/privkey.pem" \
-  -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__CACERTFILE="/opt/emqx/etc/certs/fullchain.pem" \
-  -e EMQX_LISTENERS__WSS__DEFAULT__MAX_PUBLISH_RATE="10/1s" \
-  emqx/emqx:latest
-
-sudo docker run -d --name emqx \
-  --restart always \
-  -p 1883:1883 \
-  -p 8883:8883 \
-  -p 8084:8084 \
-  -p 18083:18083 \
-  -v /home/ubuntu/emqx/certs:/opt/emqx/etc/certs \
-  -e EMQX_NODE__COOKIE="i2r_plc_secret" \
-  -e EMQX_ALLOW_ANONYMOUS=true \
-  -e EMQX_LISTENERS__TCP__DEFAULT__ENABLE_AUTHN=false \
-  -e EMQX_LISTENERS__SSL__DEFAULT__ENABLE_AUTHN=false \
-  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__CERTFILE="/opt/emqx/etc/certs/cert.pem" \
-  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__KEYFILE="/opt/emqx/etc/certs/key.pem" \
-  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__CACERTFILE="/opt/emqx/etc/certs/cacert.pem" \
-  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__VERIFY=verify_none \
-  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__FAIL_IF_NO_PEER_CERT=false \
-  -e EMQX_LISTENERS__WSS__DEFAULT__ENABLE_AUTHN=false \
-  -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__CERTFILE="/opt/emqx/etc/certs/cert.pem" \
-  -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__KEYFILE="/opt/emqx/etc/certs/key.pem" \
-  -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__CACERTFILE="/opt/emqx/etc/certs/cacert.pem" \
-  emqx/emqx:latest
-
-
 sudo docker run -d --name emqx \
   --restart always \
   -p 1883:1883 \
