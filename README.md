@@ -4411,7 +4411,7 @@ EMQX 대시보드의 Actions 영역에서 Update 혹은 Connect 버튼을 눌러
 (확인) 이제 Compass에서 기존 방식(인증 없음)으로 접속을 시도하면 실패해야 정상입니다.    
 
 ----
-✅ MQTT 접속테스트
+✅ MQTT 접속테스트 (1883, 8084, 8883)
 다음사이트에서 접속 테스트를 합니다.
 ```
 MQTT 테스트 : http://cloud-tools.emqx.com/
