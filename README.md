@@ -4406,12 +4406,19 @@ MongoDB Server를 찾아 우클릭 -> 다시 시작(Restart).
 - Auth Source: admin
 중요: 계정을 admin 데이터베이스에 만들었으므로, 이곳에 반드시 admin이라고 적어야 합니다. 비워두면 로그인에 실패할 수 있습니다.    
 
-📌  5단계: 최종 확인
+📌 5단계: 최종 확인
 EMQX 대시보드의 Actions 영역에서 Update 혹은 Connect 버튼을 눌러 상태가 다시 초록색 Connected가 되는지 확인합니다.    
 (확인) 이제 Compass에서 기존 방식(인증 없음)으로 접속을 시도하면 실패해야 정상입니다.    
 
 ----
 ✅ MQTT 접속테스트 (1883, 8084, 8883)
+📌 1883 포트 접속 테스트
+1883은 기기들이 인증서 없이 mqtt 통신을 합니다. 다음 사이트에서 다운로드 하여 pc에서 테스트 할 수 있습니다.    
+이 포트는 보안이 되어 있지 않으므로 상업용에서는 사용을 자제 합니다.
+사이트 : https://mqtt-explorer.com/   
+<img width="995" height="703" alt="image" src="https://github.com/user-attachments/assets/8d12adf9-fb25-4a29-bc94-1096b3aa426e" />
+
+
 다음사이트에서 접속 테스트를 합니다.
 ```
 MQTT 테스트 : http://cloud-tools.emqx.com/
