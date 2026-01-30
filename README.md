@@ -4206,6 +4206,12 @@ sudo cp /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/ce
 sudo cp /etc/letsencrypt/live/broker.i2r.link/privkey.pem /home/ubuntu/emqx/certs/key.pem
 sudo cp /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/cacert.pem
 
+sudo cp /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/fullchain.pem
+sudo cp /etc/letsencrypt/live/broker.i2r.link/privkey.pem /home/ubuntu/emqx/certs/privkey.pem
+sudo cp /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/cert.pem
+sudo cp /etc/letsencrypt/live/broker.i2r.link/privkey.pem /home/ubuntu/emqx/certs/key.pem
+sudo cp /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/cacert.pem
+
 3. 권한 변경 (Docker가 읽을 수 있도록)
 sudo chmod 644 /home/ubuntu/emqx/certs/*.pem
 
