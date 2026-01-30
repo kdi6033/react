@@ -4555,7 +4555,9 @@ void loop() {
 }
 ```
 </details>
-
+root_ca : ESP32가 broker.i2r.link (Let's Encrypt 사용) 서버가 진짜인지 확인할 때 사용하는 것으로 gemini 에게 만들어 달라고 해서 제작했습니다.    
+client_cert : client.crt 를 복사합니다.
+private_key : client.key 를 복사합니다.
 <br>     
 <details>
     <summary>💻 certificate.h 아두이노 프로그램</summary>
