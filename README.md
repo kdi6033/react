@@ -4419,6 +4419,8 @@ EMQX 대시보드의 Actions 영역에서 Update 혹은 Connect 버튼을 눌러
 사이트 : https://mqtt-explorer.com/   
 <img height="300" alt="image" src="https://github.com/user-attachments/assets/8d12adf9-fb25-4a29-bc94-1096b3aa426e" />
 
+📌 8883 포트 접속 테스트     
+현장의 기기들이 인증서를 가지고 mqtt 통신으로 접속하게 됩니다.
 
 다음사이트에서 접속 테스트를 합니다.
 ```
