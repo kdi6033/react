@@ -4423,7 +4423,11 @@ EMQX 대시보드의 Actions 영역에서 Update 혹은 Connect 버튼을 눌러
 웹프로그램을 만들어 mqtt 통신을 하려면 wss 로 접속해야 하는데 이 포트를 이용합니다.
 
 📌 8883 포트 접속 테스트     
-현장의 기기들이 인증서를 가지고 mqtt 통신으로 접속하게 됩니다.
+현장의 기기들이 인증서를 가지고 mqtt 통신으로 접속하게 됩니다.    
+다음은 Gemini Antigravity 에서 작성해준 아두이노 프로그램 입니다.    
+iotPlc.ino 와 certificate.h 로 구성되어 있습니다.
+
+
 
 다음사이트에서 접속 테스트를 합니다. Superuser와 mongoDB에 기록된 유져들 모두 접속이 되어야 합니다.
 ```
