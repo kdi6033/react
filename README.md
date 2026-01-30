@@ -4425,7 +4425,7 @@ EMQX 대시보드의 Actions 영역에서 Update 혹은 Connect 버튼을 눌러
 📌 8883 포트 접속 테스트     
 현장의 기기들이 인증서를 가지고 mqtt 통신으로 접속하게 됩니다.
 
-다음사이트에서 접속 테스트를 합니다.
+다음사이트에서 접속 테스트를 합니다. Superuser와 mongoDB에 기록된 유져들 모두 접속이 되어야 합니다.
 ```
 MQTT 테스트 : http://cloud-tools.emqx.com/
 ```
