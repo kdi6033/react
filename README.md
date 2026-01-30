@@ -4420,14 +4420,7 @@ EMQX 대시보드의 Actions 영역에서 Update 혹은 Connect 버튼을 눌러
 <img height="300" alt="image" src="https://github.com/user-attachments/assets/8d12adf9-fb25-4a29-bc94-1096b3aa426e" />
 
 📌 8084 포트 접속 테스트     
-웹프로그램을 만들어 mqtt 통신을 하려면 wss 로 접속해야 하는데 이 포트를 이용합니다.
-
-📌 8883 포트 접속 테스트     
-현장의 기기들이 인증서를 가지고 mqtt 통신으로 접속하게 됩니다.    
-다음은 Gemini Antigravity 에서 작성해준 아두이노 프로그램 입니다.    
-iotPlc.ino 와 certificate.h 로 구성되어 있습니다.
-
-
+웹프로그램을 만들어 mqtt 통신을 하려면 wss 로 접속해야 하는데 이 포트를 이용합니다.    
 
 다음사이트에서 접속 테스트를 합니다. Superuser와 mongoDB에 기록된 유져들 모두 접속이 되어야 합니다.
 ```
@@ -4436,7 +4429,193 @@ MQTT 테스트 : http://cloud-tools.emqx.com/
 <img height="300" alt="image" src="https://github.com/user-attachments/assets/ff778160-d374-4ea0-ae73-5083c7699530" />
 
 
+📌 8883 포트 접속 테스트     
+현장의 기기들이 인증서를 가지고 mqtt 통신으로 접속하게 됩니다.    
+다음은 Gemini Antigravity 에서 작성해준 아두이노 프로그램 입니다.    
+iotPlc.ino 와 certificate.h 로 구성되어 있습니다.
+
+<br>     
+<details>
+    <summary>💻 iotPlc.ino 아두이노 프로그램</summary>
+
+```c
+
+const char* ssid = "i2r";
+const char* password = "00000000";
+const char* mqtt_server = "broker.i2r.link";
+const int mqtt_port = 8883;
+
+WiFiClientSecure espClient;
+PubSubClient client(espClient);
+
+unsigned long lastMsg = 0;
+#define MSG_BUFFER_SIZE  (50)
+char msg[MSG_BUFFER_SIZE];
+int value = 0;
+
+void setup_wifi() {
+  delay(10);
+  Serial.println();
+  Serial.print("Connecting to ");
+  Serial.println(ssid);
+
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+
+  Serial.println("");
+  Serial.println("WiFi connected");
+  Serial.println("IP address: ");
+  Serial.println(WiFi.localIP());
+
+  Serial.print("Setting time using SNTP");
+  configTime(9 * 3600, 0, "pool.ntp.org", "time.nist.gov");
+  time_t now = time(nullptr);
+  while (now < 8 * 3600 * 2) {
+    delay(500);
+    Serial.print(".");
+    now = time(nullptr);
+  }
+  Serial.println("");
+  struct tm timeinfo;
+  gmtime_r(&now, &timeinfo);
+  Serial.print("Current time: ");
+  Serial.print(asctime(&timeinfo));
+
+  Serial.println("Skipping Root CA for testing (setInsecure)...");
+  // espClient.setCACert(root_ca);
+  espClient.setInsecure(); // This allows connection without validating server cert
+
+  Serial.println("Loading Client Cert...");
+  espClient.setCertificate(client_cert);
+  Serial.println("Loading Private Key...");
+  espClient.setPrivateKey(private_key);
+  Serial.println("Certificates loaded.");
+}
+
+void callback(char* topic, byte* payload, unsigned int length) {
+  Serial.print("Message arrived [");
+  Serial.print(topic);
+  Serial.print("] ");
+  for (int i = 0; i < length; i++) {
+    Serial.print((char)payload[i]);
+  }
+  Serial.println();
+}
+
+void reconnect() {
+  while (!client.connected()) {
+    Serial.print("Attempting MQTT connection...");
+    String clientId = "ESP32Client-";
+    clientId += String(random(0xffff), HEX);
+    
+    if (client.connect(clientId.c_str())) {
+      Serial.println("connected");
+      client.publish("outTopic", "hello world");
+      client.subscribe("inTopic");
+    } else {
+      Serial.print("failed, rc=");
+      Serial.print(client.state());
+      char err_buf[128];
+      espClient.lastError(err_buf, 128);
+      Serial.print(" SSL error: ");
+      Serial.print(err_buf);
+      Serial.println(" try again in 5 seconds");
+      delay(5000);
+    }
+  }
+}
+
+void setup() {
+  Serial.begin(115200);
+  setup_wifi();
+  client.setServer(mqtt_server, mqtt_port);
+  client.setCallback(callback);
+  Serial.println("Setup done");
+}
+
+void loop() {
+  if (!client.connected()) {
+    reconnect();
+  }
+  client.loop();
+
+  unsigned long now = millis();
+  if (now - lastMsg > 2000) {
+    lastMsg = now;
+    ++value;
+    snprintf (msg, MSG_BUFFER_SIZE, "hello world #%ld", value);
+    Serial.print("Publish message: ");
+    Serial.println(msg);
+    client.publish("outTopic", msg);
+  }
+}
+```
+</details>
+
+<br>     
+<details>
+    <summary>💻 certificate.h 아두이노 프로그램</summary>
+
+```c
+#ifndef CERTIFICATE_H
+#define CERTIFICATE_H
+
+const char* root_ca = \
+"-----BEGIN CERTIFICATE-----\n" \
+"MIIFazCCA1OgAwIBAgIRAIIQz7DSQONZRGPgu2OCiwAwDQYJKoZIhvcNAQELBQAw\n" \
+"TzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2Vh\n" \
+"cmNoIEdyb3VwMRUwEwYDVQQDEwxJU1JHIFJvb3QgWDEwHhcNMTUwNjA0MTEwNDM4\n" \
+"B6R6Xq954kBrRCfexpY535qU94t5abQKjB9M6S60y1i1WiN5sA0W8i0FntMhyw1r\n" \
+"f54iv306N24ry1F+g5xQ+58tZ1O7tO76a2h+qQ152O8gE6x0dB4m1q7Kq6mF6j2d\n" \
+"0M26t6g1kXK9c3B5a8y+04SW6AT9yQ5vW0yEC6qP6P5Xo79Fj8hJ8i3Ophd8g26d\n" \
+"54iQ3k6h1r0W6wS8oO6Q7r6m\n" \
+"-----END CERTIFICATE-----\n";
+
+const char* client_cert = \
+"-----BEGIN CERTIFICATE-----\n" \
+"MIIDgzCCAmsCFBzc6Idy2yLDWdsiVHpEJX2qbOCVMA0GCSqGSIb3DQEBCwUAMIGE\n" \
+"MQswCQYDVQQGEwJLUjEUMBIGA1UECAwLR3llb25nZ2ktZG8xEjAQBgNVBAcMCUdv\n" \
+"eWFuZy1zaTEMMAoGA1UECgwDaTJyMRswGQYDVQQDDBJNeSBQcml2YXRlIFJvb3Qg\n" \
+"F38mAzg09z94K8NJGbLeu10oDbjM+8ZeuwqfvUI3oo8Ftjb11Y3lGxCKk8dZ8Kue\n" \
+"wQ//7uIVPugN0cmjWOCSKOoHgR9/o6R4H+j8mzr3VaWdgtkreXr9sO/bdvSSGK36\n" \
+"Rqug/WRnhrgKkkqn2hEarWpidvGkZgpqisLAu4X+2ICPIfqK0IwA\n" \
+"-----END CERTIFICATE-----\n";
+
+const char* private_key = \
+"-----BEGIN PRIVATE KEY-----\n" \
+"MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCl5yLQlnDer2Ce\n" \
+"zSiqC1dFACLBmvVUo+ZVGO4UyeWUGRS+9N9WBn4nw61ZCzoo3le7ByBAOk7We3w4\n" \
+"26ICgBWio4eCl2rPlwVUcwDzgjFimZ455tEvZXsuQCLLdUleWT9X/yzq2cBxqtyT\n" \
+"j9AVUeHW4aceWxCezgVFwmFNa47sQn9ZYi3F9H3PZ9VYrLYoT7uiW7ov61Dq9EeQ\n" \
+"pCkZhWKkW95anzU51m3Dx0AuEI2ii3U4XJk8lliEA2qAq0rfjyrnQwWCc3/0rpcJ\n" \
+"8To+pQb4mevn1qPMjib/INhcqpaKuLBUPE950w8IEEg0SOsMvgBgvG2y1nBeNc1x\n" \
+"lL7CzUu+Zz6itbxpsj77VKhbFpjxE4OqTY1uYlW4nJVJugqdj9Cy6Njwfj/u8Jg2\n" \
+"6qUcdoRybWV7zsCNExBPDyA0MA==\n" \
+"-----END PRIVATE KEY-----\n";
+
+#endif
+
+```
+</details>
+
+
+
+
+
+
 -----
+<br>     
+<details>
+    <summary>💻 아두이노 프로그램</summary>
+
+```c
+  ✅ 프로그램
+```
+</details>
 
 ✅ 과목 문단명
 ▶️[유튜브] 유튜브
