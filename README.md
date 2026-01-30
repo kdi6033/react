@@ -4200,16 +4200,16 @@ mkdir -p /home/ubuntu/emqx/certs
 2. 인증서 복사 (이 과정은 인증서 갱신 때마다 해줘야 하므로 나중에 스크립트로 만들면 좋습니다)
 sudo cp /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/
 sudo cp /etc/letsencrypt/live/broker.i2r.link/privkey.pem /home/ubuntu/emqx/certs/
+<br>
+# 1. 원본에서 직접 3가지 이름으로 복사
+sudo cp /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/cert.pem
+sudo cp /etc/letsencrypt/live/broker.i2r.link/privkey.pem /home/ubuntu/emqx/certs/key.pem
+sudo cp /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/cacert.pem
 
-3. MQX가 요구하는 파일명으로 복사
-sudo cp fullchain.pem cert.pem
-sudo cp privkey.pem key.pem
-sudo cp fullchain.pem cacert.pem
+3. 권한 변경 (Docker가 읽을 수 있도록)
+sudo chmod 644 /home/ubuntu/emqx/certs/*.pem
 
-4. 권한 변경 (Docker가 읽을 수 있도록)
-sudo chmod 644 /home/ubuntu/emqx/certs/*
-
-5. 인증서 폴더로 이동 해서 파일 확인
+4. 인증서 폴더로 이동 해서 파일 확인
 cd /home/ubuntu/emqx/certs
 ```
 
@@ -4305,6 +4305,27 @@ sudo docker run -d --name emqx \
   -e EMQX_LISTENERS__WSS__DEFAULT__MAX_PUBLISH_RATE="10/1s" \
   emqx/emqx:latest
 
+sudo docker run -d --name emqx \
+  --restart always \
+  -p 1883:1883 \
+  -p 8883:8883 \
+  -p 8084:8084 \
+  -p 18083:18083 \
+  -v /home/ubuntu/emqx/certs:/opt/emqx/etc/certs \
+  -e EMQX_NODE__COOKIE="i2r_plc_secret" \
+  -e EMQX_ALLOW_ANONYMOUS=true \
+  -e EMQX_LISTENERS__TCP__DEFAULT__ENABLE_AUTHN=false \
+  -e EMQX_LISTENERS__SSL__DEFAULT__ENABLE_AUTHN=false \
+  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__CERTFILE="/opt/emqx/etc/certs/cert.pem" \
+  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__KEYFILE="/opt/emqx/etc/certs/key.pem" \
+  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__CACERTFILE="/opt/emqx/etc/certs/cacert.pem" \
+  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__VERIFY=verify_none \
+  -e EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__FAIL_IF_NO_PEER_CERT=false \
+  -e EMQX_LISTENERS__WSS__DEFAULT__ENABLE_AUTHN=false \
+  -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__CERTFILE="/opt/emqx/etc/certs/cert.pem" \
+  -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__KEYFILE="/opt/emqx/etc/certs/key.pem" \
+  -e EMQX_LISTENERS__WSS__DEFAULT__SSL_OPTIONS__CACERTFILE="/opt/emqx/etc/certs/cacert.pem" \
+  emqx/emqx:latest
 ```
 
 1883은 Free하게, 8883은 인증서로 깐깐하게, 8084는 로그인 방식으로 각각 다르게 작동하게 됩니다.
@@ -4347,12 +4368,27 @@ Let's Encrypt 인증서는 90일마다 만료됩니다. 갑자기 서비스가 �
 # 크론탭 편집기 열기 (번호 선택 나오면 1번 nano 선택)
 sudo crontab -e
 ```
-
+매주 월요일 새벽 4시, 크론탭이 인증서 만료 여부를 체크합니다. 만료 30일 이내일 경우에만 Certbot이 Let's Encrypt 서버와 통신해 인증서를 자동 갱신합니다. 갱신 성공 시 Deploy Hook이 발동되어 최신 인증서를 EMQX가 인식하는 경로로 복사하고, 권한을 수정한 뒤 Docker 컨테이너를 재시작합니다. 이 과정 덕분에 사용자의 개입 없이도 365일 중단 없는 보안 연결(SSL)이 유지됩니다.
 파일 맨 아래 빈 줄에 다음 내용을 한 줄로 붙여넣고 저장(Ctrl+O, Enter, Ctrl+X)하세요.
 ```
 # 매주 월요일 새벽 4시에 확인 (인증서가 갱신될 때만 복사 및 재시작 수행)
 0 4 * * 1 certbot renew --quiet --deploy-hook "cp -f /etc/letsencrypt/live/broker.i2r.link/*.pem /home/ubuntu/emqx/certs/ && chmod 644 /home/ubuntu/emqx/certs/* && docker restart emqx"
+
+0 4 * * 1 certbot renew --quiet --deploy-hook "cp -f /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/cert.pem && cp -f /etc/letsencrypt/live/broker.i2r.link/privkey.pem /home/ubuntu/emqx/certs/key.pem && cp -f /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/cacert.pem && chmod 644 /home/ubuntu/emqx/certs/*.pem && docker restart emqx"
 ```
+인증서 갱신확인
+1. 터미널에서 인증서 정보 조회 (가장 확실함)
+모든 인증서의 도메인 이름, 만료일, 남은 기간을 한눈에 볼 수 있습니다.
+```
+sudo certbot certificates
+```
+2. 복사된 파일의 시간 확인
+EMQX 폴더 내 파일들의 '수정 시간'을 보면 됩니다.
+```
+ls -l /home/ubuntu/emqx/certs/
+```
+
+
 ----
 ✅ MQTT 접속테스트
 다음사이트에서 접속 테스트를 합니다.
