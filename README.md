@@ -4377,14 +4377,6 @@ sudo rm -rf /home/ubuntu/emqx/certs/*
 ```
 sudo docker logs emqx
 ```
-📌 3단계: 대시보드 접속 확인
-
-브라우저에서 http://<EC2-퍼블릭-IP>:18083에 접속합니다.
-
-```
-초기 계정: admin
-초기 비밀번호: public (첫 접속 시 변경 필요)
-```
 
 ✅ 3. 인증서 자동 갱신 등록 (필수)
 Let's Encrypt 인증서는 90일마다 만료됩니다. 갑자기 서비스가 중단되는 것을 막기 위해, 한 달에 한 번씩 자동으로 갱신하고 EMQX에 적용하도록 설정을 걸어두겠습니다.
@@ -4398,10 +4390,6 @@ sudo crontab -e
 파일 맨 아래 빈 줄에 다음 내용을 한 줄로 붙여넣고 저장(Ctrl+O, Enter, Ctrl+X)하세요.
 ```
 # 매주 월요일 새벽 4시에 확인 (인증서가 갱신될 때만 복사 및 재시작 수행)
-0 4 * * 1 certbot renew --quiet --deploy-hook "cp -f /etc/letsencrypt/live/broker.i2r.link/*.pem /home/ubuntu/emqx/certs/ && chmod 644 /home/ubuntu/emqx/certs/* && docker restart emqx"
-
-0 4 * * 1 certbot renew --quiet --deploy-hook "cp -f /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/cert.pem && cp -f /etc/letsencrypt/live/broker.i2r.link/privkey.pem /home/ubuntu/emqx/certs/key.pem && cp -f /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/cacert.pem && chmod 644 /home/ubuntu/emqx/certs/*.pem && docker restart emqx"
-
 0 4 * * 1 certbot renew --quiet --deploy-hook "cp -f /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/cert.pem && cp -f /etc/letsencrypt/live/broker.i2r.link/privkey.pem /home/ubuntu/emqx/certs/key.pem && cp -f /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/cacert.pem && chmod 644 /home/ubuntu/emqx/certs/*.pem && docker restart emqx"
 ```
 인증서 갱신확인
@@ -4418,11 +4406,21 @@ ls -l /home/ubuntu/emqx/certs/
 
 
 ----
-✅ MQTT 접속테스트
-다음사이트에서 접속 테스트를 합니다.
+
+
+✅ EMQX 대시보드 계정 이원화 등록
+
+EMQX의 계정 관리는 보안과 효율성을 위해 이원화 구성이 권장됩니다.
+
+먼저, 소수의 관리자 계정은 변경이 적고 브로커 가동 시 즉각 확인이 필요하므로 **내장 데이터베이스(Built-in Database)**에 직접 등록합니다. 이때 Superuser 옵션을 켜주면 모든 토픽(#)을 제약 없이 발행/구독할 수 있는 강력한 권한이 부여됩니다.
+
+반면, 수많은 일반 회원 정보는 **외부 DB(MongoDB/MySQL 등)**와 연동하여 관리합니다. EMQX는 위에서 아래로 인증을 시도하는 '인증 체인' 방식을 사용하므로, 1순위를 내장 DB, 2순위를 외부 DB로 설정하면 관리자는 빠르고 안전하게, 일반 사용자는 유연하게 대규모로 관리할 수 있는 최적의 환경이 구축됩니다.
+
+📌 1단계: 대시보드 접속 확인
 ```
-MQTT 테스트 : http://cloud-tools.emqx.com/
-대시보드 접속: http://[서버IP]:18083 (ID: admin / PW: public - 초기화되었으므로 비밀번호도 다시 public일 수 있습니다)
+브라우저에서 http://<EC2-퍼블릭-IP>:18083에 접속합니다.
+초기 계정: admin
+초기 비밀번호: public (첫 접속 시 변경 필요)
 ```
 
 📌 EMQX 관리자(수동)와 일반 회원(mongoDB) 등록   
@@ -4459,6 +4457,13 @@ Password: 원하는 비밀번호 입력
 - 2순위: MySQL/PostgreSQL (일반 회원용)
 - 목록 순서는 드래그 앤 드롭으로 조정할 수 있습니다. Built-in Database가 항상 위에 오도록 설정하세요.
 - 작동 원리: 누군가 로그인하면 EMQX는 먼저 '내장 DB'를 뒤져보고, 거기에 없으면 '외부 DB'를 확인하게 됩니다.
+
+----
+✅ MQTT 접속테스트
+다음사이트에서 접속 테스트를 합니다.
+```
+MQTT 테스트 : http://cloud-tools.emqx.com/
+```
 
 ------
 
