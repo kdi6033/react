@@ -4312,10 +4312,21 @@ sudo docker run -d --name emqx \
 - 8883 (SSL): ENABLE_AUTHN=false (IoT PLC 공장 세팅용, 인증서만 맞으면 ID/PW 없이 접속)
 - 8084 (WSS): ENABLE_AUTHN=true (MongoDB에 있는 사용자만 접속)
 
+이전 버전의 EMQX를 삭제할 경우 다음과 같이 하세요.
+기존 컨테이너 제거
+```
+# 1. 기존 컨테이너 중지 및 삭제
+sudo docker stop emqx
+sudo docker rm emqx
+
+# 2. 기존 인증서 폴더 정리 (깨끗한 상태에서 시작)
+sudo rm -rf /home/ubuntu/emqx/certs/*
+```
+
 ✅ 2. 설치 후 정상 작동 확인법
 설치가 완료되면 컨테이너가 잘 돌고 있는지, SSL 설정에 문제는 없는지 확인해야 합니다.
 
-로그 확인: 인증서 파일 경로가 틀렸거나 권한이 없으면 로그에 에러가 뜹니다.
+📌 로그 확인: 인증서 파일 경로가 틀렸거나 권한이 없으면 로그에 에러가 뜹니다.
 ```
 sudo docker logs emqx
 ```
