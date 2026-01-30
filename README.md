@@ -4419,6 +4419,9 @@ EMQX 대시보드의 Actions 영역에서 Update 혹은 Connect 버튼을 눌러
 사이트 : https://mqtt-explorer.com/   
 <img height="300" alt="image" src="https://github.com/user-attachments/assets/8d12adf9-fb25-4a29-bc94-1096b3aa426e" />
 
+📌 8084 포트 접속 테스트     
+웹프로그램을 만들어 mqtt 통신을 하려면 wss 로 접속해야 하는데 이 포트를 이용합니다.
+
 📌 8883 포트 접속 테스트     
 현장의 기기들이 인증서를 가지고 mqtt 통신으로 접속하게 됩니다.
 
