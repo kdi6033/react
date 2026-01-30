@@ -4404,6 +4404,8 @@ sudo crontab -e
 0 4 * * 1 certbot renew --quiet --deploy-hook "cp -f /etc/letsencrypt/live/broker.i2r.link/*.pem /home/ubuntu/emqx/certs/ && chmod 644 /home/ubuntu/emqx/certs/* && docker restart emqx"
 
 0 4 * * 1 certbot renew --quiet --deploy-hook "cp -f /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/cert.pem && cp -f /etc/letsencrypt/live/broker.i2r.link/privkey.pem /home/ubuntu/emqx/certs/key.pem && cp -f /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/cacert.pem && chmod 644 /home/ubuntu/emqx/certs/*.pem && docker restart emqx"
+
+0 4 * * 1 certbot renew --quiet --deploy-hook "cp -f /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/cert.pem && cp -f /etc/letsencrypt/live/broker.i2r.link/privkey.pem /home/ubuntu/emqx/certs/key.pem && cp -f /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/cacert.pem && chmod 644 /home/ubuntu/emqx/certs/*.pem && docker restart emqx"
 ```
 인증서 갱신확인
 1. 터미널에서 인증서 정보 조회 (가장 확실함)
