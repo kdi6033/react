@@ -4606,7 +4606,14 @@ const char* private_key = \
 </details>
 
 
-
+디스크(저장 공간)의 전체 용량과 사용량을 검사합니다.
+```
+df -h
+```
+메모리(RAM)와 스왑(Swap)의 사용 현황
+```
+free -h
+```
 
 
 
