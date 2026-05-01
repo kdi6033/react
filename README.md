@@ -4108,13 +4108,13 @@ server {
 FileZilla로 접속하기 전에, SSH 터미널(PuTTY나 CMD 등)에서 인증서 파일을 ubuntu 사용자가 가져갈 수 있는 곳으로 복사하고 권한을 열어줘야 합니다.
 ```
 # 1. 인증서가 있는 경로로 이동 (보통 Certbot을 사용했다면 아래 경로입니다)
-sudo ls -l /etc/letsencrypt/live/broker.i2r.link/
+sudo ls -l /etc/letsencrypt/live/mqtt.i2r.link/
 
 # 2. 내 홈 디렉토리에 임시 복사 폴더 생성
 mkdir ~/cert-copy
 
 # 3. 인증서 파일들을 임시 폴더로 복사 (심볼릭 링크 실제 파일로 복사)
-sudo cp -L /etc/letsencrypt/live/broker.i2r.link/* ~/cert-copy/
+sudo cp -L /etc/letsencrypt/live/mqtt.i2r.link/* ~/cert-copy/
 
 # 4. FileZilla에서 다운로드할 수 있도록 소유권 변경
 sudo chown -R ubuntu:ubuntu ~/cert-copy/
@@ -4122,7 +4122,7 @@ sudo chown -R ubuntu:ubuntu ~/cert-copy/
 
 ✅ 2단계: FileZilla를 이용해 내 PC로 복사
 - 이제 준비된 파일을 내 컴퓨터로 가져옵니다.
-- FileZilla 접속: broker.i2r.link 서버에 ubuntu 계정으로 접속합니다.
+- FileZilla 접속: mqtt.i2r.link 서버에 ubuntu 계정으로 접속합니다.
 - 경로 이동: 오른쪽(리모트 사이트) 창에서 /home/ubuntu/my_certs 폴더로 들어갑니다.
 - 다운로드: 왼쪽(로컬 사이트) 창에서 파일을 저장할 내 PC 폴더를 선택한 뒤, 오른쪽의 인증서 파일들을 드래그해서 왼쪽으로 가져옵니다.
 - 보통 fullchain.pem (인증서)과 privkey.pem (개인키) 파일이 핵심입니다.
@@ -4168,7 +4168,7 @@ sudo docker rm emqx || true
 
 ## 📌 인증서 설치
 
-broker.i2r.link 도메인에 SSL 인증서를 발급받고, 이를 Docker로 실행 중인 EMQX 브로커에 적용하여 MQTTS(8883) 및 WSS(8084) 보안 통신을 구축하는 방법을 안내해 드립니다.
+mqtt.i2r.link 도메인에 SSL 인증서를 발급받고, 이를 Docker로 실행 중인 EMQX 브로커에 적용하여 MQTTS(8883) 및 WSS(8084) 보안 통신을 구축하는 방법을 안내해 드립니다.
 
 이전에 논의된 AWS EC2 및 Docker 환경을 기준으로 설명하겠습니다.
 
@@ -4181,10 +4181,10 @@ sudo snap install --classic certbot
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
 
 2. 인증서 발급 (80번 포트가 비어있어야 합니다. Nginx가 80을 쓰고 있다면 잠시 멈추거나 --webroot 옵션 사용)
-sudo certbot certonly --standalone -d broker.i2r.link
+sudo certbot certonly --standalone -d mqtt.i2r.link
 ```
 
-발급이 완료되면 인증서는 /etc/letsencrypt/live/broker.i2r.link/ 경로에 생성됩니다.    
+발급이 완료되면 인증서는 /etc/letsencrypt/live/mqtt.i2r.link/ 경로에 생성됩니다.    
 fullchain.pem (인증서), privkey.pem (개인키)    
 
 ✅ 2단계: 인증서 파일 준비 및 권한 설정
@@ -4195,11 +4195,11 @@ Docker 컨테이너가 /etc/letsencrypt 폴더에 직접 접근하면 권한 문
 mkdir -p /home/ubuntu/emqx/certs
 
 2. 인증서 복사 (이 과정은 인증서 갱신 때마다 해줘야 하므로 나중에 스크립트로 만들면 좋습니다)
-sudo cp /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/fullchain.pem
-sudo cp /etc/letsencrypt/live/broker.i2r.link/privkey.pem /home/ubuntu/emqx/certs/privkey.pem
-sudo cp /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/cert.pem
-sudo cp /etc/letsencrypt/live/broker.i2r.link/privkey.pem /home/ubuntu/emqx/certs/key.pem
-sudo cp /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/cacert.pem
+sudo cp /etc/letsencrypt/live/mqtt.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/fullchain.pem
+sudo cp /etc/letsencrypt/live/mqtt.i2r.link/privkey.pem /home/ubuntu/emqx/certs/privkey.pem
+sudo cp /etc/letsencrypt/live/mqtt.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/cert.pem
+sudo cp /etc/letsencrypt/live/mqtt.i2r.link/privkey.pem /home/ubuntu/emqx/certs/key.pem
+sudo cp /etc/letsencrypt/live/mqtt.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/cacert.pem
 
 3. 권한 변경 (Docker가 읽을 수 있도록)
 sudo chmod 644 /home/ubuntu/emqx/certs/*.pem
@@ -4293,7 +4293,7 @@ sudo crontab -e
 파일 맨 아래 빈 줄에 다음 내용을 한 줄로 붙여넣고 저장(Ctrl+O, Enter, Ctrl+X)하세요.
 ```
 # 매주 월요일 새벽 4시에 확인 (인증서가 갱신될 때만 복사 및 재시작 수행)
-0 4 * * 1 certbot renew --quiet --deploy-hook "cp -f /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/cert.pem && cp -f /etc/letsencrypt/live/broker.i2r.link/privkey.pem /home/ubuntu/emqx/certs/key.pem && cp -f /etc/letsencrypt/live/broker.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/cacert.pem && chmod 644 /home/ubuntu/emqx/certs/*.pem && docker restart emqx"
+0 4 * * 1 certbot renew --quiet --deploy-hook "cp -f /etc/letsencrypt/live/mqtt.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/cert.pem && cp -f /etc/letsencrypt/live/mqtt.i2r.link/privkey.pem /home/ubuntu/emqx/certs/key.pem && cp -f /etc/letsencrypt/live/mqtt.i2r.link/fullchain.pem /home/ubuntu/emqx/certs/cacert.pem && chmod 644 /home/ubuntu/emqx/certs/*.pem && docker restart emqx"
 ```
 인증서 갱신확인
 1. 터미널에서 인증서 정보 조회 (가장 확실함)
@@ -4443,7 +4443,7 @@ iotPlc.ino 와 certificate.h 로 구성되어 있습니다.
 
 const char* ssid = "i2r";
 const char* password = "00000000";
-const char* mqtt_server = "broker.i2r.link";
+const char* mqtt_server = "mqtt.i2r.link";
 const int mqtt_port = 8883;
 
 WiFiClientSecure espClient;
@@ -4556,7 +4556,7 @@ void loop() {
 }
 ```
 </details>
-root_ca : ESP32가 broker.i2r.link (Let's Encrypt 사용) 서버가 진짜인지 확인할 때 사용하는 것으로 gemini 에게 만들어 달라고 해서 제작했습니다.    
+root_ca : ESP32가 mqtt.i2r.link (Let's Encrypt 사용) 서버가 진짜인지 확인할 때 사용하는 것으로 gemini 에게 만들어 달라고 해서 제작했습니다.    
 client_cert : client.crt 를 복사합니다.
 private_key : client.key 를 복사합니다.
 <br>     
